@@ -8,7 +8,8 @@ typedef struct{
 	int *grille;
 }jeu;
 
-/*!
+/*! * void initialiseJeu(jeu *p, int n, int valMax)
+	* 
 	* Alloue la grille de la variable jeu passée par adresse
 	* Initialise les cases de la grille avec des cases vides  (valeurs nulles)
 	* Initialise les champs n et valmax avec les valeurs passées en paramètre
@@ -34,7 +35,8 @@ void initialiseJeu(jeu *p, int n, int valMax){
 	p->valMax = valMax;
 }
 
-/*!
+/*! * void libereMemoire(jeu *p)
+	*
 	* Libère la mémoire allouée pour la grille de jeu passée par adresse
 	*
 	* \param p : pointeur sur une partie de 2048
@@ -45,12 +47,13 @@ void libereMemoire(jeu *p){
 	free(p->grille);
 }
 
-/*!
+/*! * int indiceValide(jeu *p, int i, int j)
+	*
 	* Fonction retournant 1 si la case (i,j) existe, 0 sinon
 	* 
 	* \param p : pointeur sur une partie de jeu 2048
-	* \param i : indice de ligne
-	* \param j : indice de colonne
+	* \param i : indice de "ligne"
+	* \param j : indice de "colonne"
 	*/
 
 int indiceValide(jeu *p, int i, int j){
