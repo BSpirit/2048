@@ -9,7 +9,7 @@ typedef struct{
 }jeu;
 
 /*! * void initialiseJeu(jeu *p, int n, int valMax)
-	* 
+	*
 	* Alloue la grille de la variable jeu passée par adresse
 	* Initialise les cases de la grille avec des cases vides  (valeurs nulles)
 	* Initialise les champs n et valmax avec les valeurs passées en paramètre
@@ -21,18 +21,19 @@ typedef struct{
 
 void initialiseJeu(jeu *p, int n, int valMax){
 
-	p->grille = (int*) malloc(n*n*sizeof(int));
+	p->n = n*n;
+	p->valMax = valMax;
+	//Initialiser nbCasesLibres ?
+
+	p->grille = (int*) malloc(p->n*sizeof(int));
 	if(p->grille==NULL){
 		printf("Erreur allocation ! \n");
 		exit(-1);
 	}
 
 	int i;
-	for(i=0;i<n;i++)
+	for(i=0;i<p->n;i++)
 		p->grille[i] = 0;
-
-	p->n = n;
-	p->valMax = valMax;
 }
 
 /*! * void libereMemoire(jeu *p)
@@ -50,15 +51,32 @@ void libereMemoire(jeu *p){
 /*! * int indiceValide(jeu *p, int i, int j)
 	*
 	* Fonction retournant 1 si la case (i,j) existe, 0 sinon
-	* 
+	*
 	* \param p : pointeur sur une partie de jeu 2048
-	* \param i : indice de "ligne"
-	* \param j : indice de "colonne"
+	* \param i : entier correspondant au numéro de "ligne"
+	* \param j : entier correspondant au numéro de "colonne"
 	*/
 
 int indiceValide(jeu *p, int i, int j){
 
 	return(i>=0 && i < p->n && j>=0 && j < p->n);
+}
+
+/*! * int getVal(jeu *p, int ligne, int colonne)
+	*
+	* Fonction retournant la valeur de la case (ligne, colonne) de la partie
+	* ou -1 si la case n'existe pas
+	* \param p : pointeur sur une partie de jeu 2048
+	* \param ligne : entier correspondant au numéro de ligne
+	* \param colonne : entier correspondant au numéro de colonne
+	*/
+
+int getVal(jeu *p, int ligne, int colonne){
+
+	if(indiceValide(&p, ligne, colonne))
+		return p->grille[p->n*ligne+colonne]; // à corriger 
+	else
+		return -1;
 }
 
 int main(){
