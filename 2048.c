@@ -107,7 +107,7 @@ void setVal(jeu *p, int ligne, int colonne, int val){
 
 
 	if(indiceValide(p, ligne, colonne)){
-		if(caseVide(p, i, j))
+		if(caseVide(p, ligne, colonne))
 			p->nbCasesLibres-=1;
 		p->grille[p->n*ligne+colonne] = val;
 	}
@@ -206,7 +206,7 @@ int main(){
 	setVal(&p, 1, 1, 512);
 	setVal(&p, 1, 2, 52);
 	setVal(&p, 2, 0, 512);
- 	setVal(&p, 2, 1, 52);
+ 	setVal(&p, 2, 1, 512);
 	setVal(&p, 2, 2, 512);
 
 	affichage(&p);
