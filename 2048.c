@@ -214,32 +214,63 @@ int finPartie(jeu *p){
  	*/
 int mouvementLigne(jeu *p, int ligne, int direction){
 	int colonne;
-	int nbrZeros = 0;
-	for(colonne=0; colonne<p->n; colonne++){
-		if(getVal(p, ligne, colonne) == 0)
-			nbrZeros++;
+	int i;
+	int nbrZero = 0;
+	int compteur=0;
+
+	for(colonne=0 ; colonne<p->n; colonne++){
+		if(getVal(p, ligne, colonne)==0)
+			nbrZero++;
 	}
 
-	if(nbrZeros > 0){
-		int i;
-		if(direction == 1){
-			for(i=0; i < nbrZeros+1; i++){
+	if(direction == 1){
+		if(nbrZero!=0){
+			for(i=0 ; i<nbrZero; i++){
 				for(colonne=0 ; colonne<p->n-1; colonne++){
 					if(getVal(p, ligne, colonne) == 0 && getVal(p, ligne, colonne+1) != 0 ){
 						setVal(p, ligne, colonne, getVal(p, ligne, colonne+1));
 						setVal(p, ligne, colonne+1, 0);
-					}
-					if(getVal(p, ligne, colonne) != 0 && getVal(p, ligne, colonne) == getVal(p, ligne, colonne+1)){
-						setVal(p, ligne, colonne, 2*getVal(p, ligne, colonne));
-						setVal(p, ligne, colonne+1, 0);
-						printf("test\n");
+						compteur++;
 					}
 				}
 			}
 		}
-	}else
-		return 0;
+		for(colonne=0 ; colonne<p->n-1; colonne++){
+			if(getVal(p, ligne, colonne) != 0 && getVal(p, ligne, colonne) == getVal(p, ligne, colonne+1)){
+				setVal(p, ligne, colonne, 2*getVal(p, ligne, colonne));
+				for(i=colonne+1; i<p->n-1; i++)
+					setVal(p, ligne, i, getVal(p, ligne, i+1));
+				compteur++;
+			}
+		}
+	}
 
+	if(direction == -1){
+		if(nbrZero!=0){
+			for(i=0 ; i<nbrZero; i++){
+				for(colonne=p->n-1 ; colonne>0; colonne--){
+					if(getVal(p, ligne, colonne) == 0 && getVal(p, ligne, colonne-1) != 0 ){
+						setVal(p, ligne, colonne, getVal(p, ligne, colonne-1));
+						setVal(p, ligne, colonne-1, 0);
+						compteur++;
+					}
+				}
+			}
+		}
+		for(colonne=p->n-1 ; colonne>0; colonne--){
+			if(getVal(p, ligne, colonne) != 0 && getVal(p, ligne, colonne) == getVal(p, ligne, colonne-1)){
+				setVal(p, ligne, colonne, 2*getVal(p, ligne, colonne));
+				for(i=colonne-1; i>0; i--)
+					setVal(p, ligne, i, getVal(p, ligne, i-1));
+				compteur++;
+			}
+		}
+	}
+
+	if(compteur>0)
+		return 1;
+
+	return 0;
 }
 
 int main(){
@@ -247,13 +278,13 @@ int main(){
 	jeu p;
 
 	initialiseJeu(&p, 6, 2048 );
-	setVal(&p, 5, 2, 512);
-	setVal(&p, 5, 3, 512);
-	setVal(&p, 5, 4, 512);	
-	setVal(&p, 5, 5, 512);
+	setVal(&p, 5, 6, 128);
+	setVal(&p, 5, 5, 64);
+	setVal(&p, 5, 4, 16);
+	setVal(&p, 5, 3, 16);
 	printf("%d \n", getVal(&p, 5, 5));
 	affichage(&p);
-	mouvementLigne(&p,5, 1);
+	printf("%d\n", mouvementLigne(&p,5, 1));
 	affichage(&p);
 
 	libereMemoire(&p);
