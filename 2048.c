@@ -59,6 +59,22 @@ int indiceValide(jeu *p, int i, int j){
 	return(i>=0 && i < p->n && j>=0 && j < p->n);
 }
 
+/*! * int getVal(jeu *p, int ligne, int colonne)
+	*
+	* Fonction retournant la valeur de la case (ligne, colonne) de la partie
+	* ou -1 si la case n'existe pas
+	* \param p : pointeur sur une partie de jeu 2048
+	* \param ligne : entier correspondant au numéro de ligne
+	* \param colonne : entier correspondant au numéro de colonne
+	*/
+int getVal(jeu *p, int ligne, int colonne){
+
+	if(indiceValide(p, ligne, colonne))
+		return p->grille[p->n*ligne+colonne];
+	else
+		return -1;
+}
+
 /*! * int caseVide(jeu *p, int i, int j)
 	*
 	* Retourne 1 si la case (i,j) est vide
@@ -75,22 +91,6 @@ int caseVide(jeu *p, int i, int j){
 	}
 
 	return 0;
-}
-
-/*! * int getVal(jeu *p, int ligne, int colonne)
-	*
-	* Fonction retournant la valeur de la case (ligne, colonne) de la partie
-	* ou -1 si la case n'existe pas
-	* \param p : pointeur sur une partie de jeu 2048
-	* \param ligne : entier correspondant au numéro de ligne
-	* \param colonne : entier correspondant au numéro de colonne
-	*/
-int getVal(jeu *p, int ligne, int colonne){
-
-	if(indiceValide(p, ligne, colonne))
-		return p->grille[p->n*ligne+colonne];
-	else
-		return -1;
 }
 
 /*! * void setVal(jeu *p, int ligne, int colonne, int val)
@@ -194,23 +194,68 @@ int perdu(jeu *p){
 	return test;
 }
 
+/*! * int finPartie(jeu *p)
+	* Retoune 1 si la partie est terminée
+	* retourne 0 sinon
+	*
+ 	* \param p : pointeur sur la partie en cours
+ 	*/
+int finPartie(jeu *p){
+	return perdu(p) || gagne(p);
+}
+
+/*! * int mouvementLigne(jeu *p, int ligne, int direction)
+	* Effectue les mouvements (à gauche et à droite) des cases d'une ligne.
+	* Renvoie 1 si l'on a déplacé au moins une case, 0 sinon
+	*
+ 	* \param p : pointeur sur la partie en cours
+	* \param ligne : indice de ligne
+	* \param direction : 1 pour déplacement vers la gauche, -1 pour déplacement vers la droite
+ 	*/
+int mouvementLigne(jeu *p, int ligne, int direction){
+	int colonne;
+	int nbrZeros = 0;
+	for(colonne=0; colonne<p->n; colonne++){
+		if(getVal(p, ligne, colonne) == 0)
+			nbrZeros++;
+	}
+
+	if(nbrZeros > 0){
+		int i;
+		if(direction == 1){
+			for(i=0; i < nbrZeros+1; i++){
+				for(colonne=0 ; colonne<p->n-1; colonne++){
+					if(getVal(p, ligne, colonne) == 0 && getVal(p, ligne, colonne+1) != 0 ){
+						setVal(p, ligne, colonne, getVal(p, ligne, colonne+1));
+						setVal(p, ligne, colonne+1, 0);
+					}
+					if(getVal(p, ligne, colonne) != 0 && getVal(p, ligne, colonne) == getVal(p, ligne, colonne+1)){
+						setVal(p, ligne, colonne, 2*getVal(p, ligne, colonne));
+						setVal(p, ligne, colonne+1, 0);
+						printf("test\n");
+					}
+				}
+			}
+		}
+	}else
+		return 0;
+
+}
+
 int main(){
 
 	jeu p;
 
-	initialiseJeu(&p, 3, 2048 );
-	setVal(&p, 0, 0, 2046);
-	setVal(&p, 0, 1, 2045);
-	setVal(&p, 0, 2, 512);
-	setVal(&p, 1, 0, 1024);
-	setVal(&p, 1, 1, 512);
-	setVal(&p, 1, 2, 52);
-	setVal(&p, 2, 0, 512);
- 	setVal(&p, 2, 1, 512);
-	setVal(&p, 2, 2, 512);
-
+	initialiseJeu(&p, 6, 2048 );
+	setVal(&p, 5, 2, 512);
+	setVal(&p, 5, 3, 512);
+	setVal(&p, 5, 4, 512);	
+	setVal(&p, 5, 5, 512);
+	printf("%d \n", getVal(&p, 5, 5));
 	affichage(&p);
-	printf("%d \n", perdu(&p));
+	mouvementLigne(&p,5, 1);
+	affichage(&p);
+
 	libereMemoire(&p);
 
 	return 0;
