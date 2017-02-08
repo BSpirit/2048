@@ -1,6 +1,8 @@
 #include <stdio.h>
 #include <stdlib.h>
+#include <time.h>
 
+//Définition de la structure jeu
 typedef struct{
 	int n; //taille de la grille = n*n 
 	int valMax; // valeur à atteindre pour gagner
@@ -111,6 +113,28 @@ int setVal(jeu *p, int ligne, int colonne, int val){
 	return 0;
 }
 
+/*! * void ajouteValAlea(jeu *p)
+	*
+	* Ajoute une valeur (2 ou 4 choisi aléatoirement) sur une case vide
+	* (elle aussi choisie aléatoirement)
+	*
+	* \param p : pointeur sur la partie en cours
+	*/
+void ajouteValAlea(jeu *p){
+	int ligne;
+	int colonne;
+
+	do{
+		ligne = rand()%p->n;
+		colonne = rand()%p->n;
+	}while(!caseVide(p, ligne, colonne));
+
+	if(rand()%2)
+		setVal(p, ligne, colonne, 2);
+	else
+		setVal(p, ligne, colonne, 4);
+}
+
 /*! * void affichage(jeu * p)
 	* Fonction de affichant la grille à l'écran.
 	*
@@ -135,18 +159,19 @@ void affichage(jeu * p){
  	*/
 int gagne(jeu *p){
 	int flag = 0;
-	int i = 0;
-	int j = 0;
+	int i = 0;// indice de ligne
+	int j = 0;// indice de colonne
 
+	//boucles imbriquées pour parcourir la grille
 	while(i<p->n && flag==0){
 		j = 0;
 		while(j<p->n && flag==0){
 			if(getVal(p, i, j)==p->valMax)
-				test = 1;
+				flag = 1;
 			j++;
 		}
 		i++;
-	}//sortie : grille entièrement parcourue et/ou une case de la grille a pour valeur valMax (flag==1)
+	}//sortie : grille entièrement parcourue ou une case de la grille a pour valeur valMax (flag==1)
 
 	return flag;
 }
@@ -158,36 +183,36 @@ int gagne(jeu *p){
  	* \param p : pointeur sur la partie en cours
  	*/
 int perdu(jeu *p){
-
 	if(p->nbCasesLibres>0)
 		return 0;
 
-	int test = 1;
-	int i = 0;
-	int j = 0;
+	int flag = 1;
+	int i = 0; //indice de ligne
+	int j = 0;// indice de colonne
 
-	while(i<p->n&& test==1){
+	//Boucles imbriquées pour parcourir la grille, on commence à la case (0,0)
+	while(i<p->n && flag==1){
 		j = 0;
-		while(j<p->n&& test==1){
-			if(i==p->n-1 && j==p->n-1){
-				break;
-			}else if(i==p->n-1){
-				if(getVal(p, i, j) == getVal(p, i, j+1))
-					test = 0;
-			}else if(j==p->n-1){
+		while(j<p->n && flag==1){
+			if(i==p->n-1 && j==p->n-1){ // si on arrive à la dernière case de la grille, c'est qu'on a perdu
+				return flag;
+			}else if(i==p->n-1){ //si on est placé à la dernière ligne on compare uniquement la case actuelle avec celle à droite
+				if(getVal(p, i, j) == getVal(p, i, j+1)) 
+					flag = 0;
+			}else if(j==p->n-1){//si on est placé à la dernière colonne on compare uniquement la case actuelle avec celle en dessous
 				if(getVal(p, i, j) == getVal(p, i+1, j))
-					test = 0;
+					flag = 0;
 				}
-			else {
+			else {// sinon on compare la case actuelle avec celle à droite et celle en dessous
 				if(getVal(p, i, j)==getVal(p, i+1, j) || getVal(p, i, j)==getVal(p, i, j+1))
-					test = 0;
+					flag = 0;
 			}
 			j++;
 		}
 		i++;
-	}
+	}//sortie : grille entièrement parcourue (flag==1) ou deux cases adjacentes ont les mêmes valeurs (flag==0 i.e. on n'a pas encore perdu)
 
-	return test;
+	return flag;
 }
 
 /*! * int finPartie(jeu *p)
@@ -269,8 +294,30 @@ int mouvementLigne(jeu *p, int ligne, int direction){
 	return 0;
 }
 
+/*! * int mouvementLignes(jeu *p, int direction)
+ 	*
+ 	* Effectue les mouvements (à gauche et à droite) des cases sur toutes les lignes
+	* Retoune 1 si l'on a déplacé au moins une case
+	* Retourne 0 sinon
+	* \param p : pointeur sur la partie en cours
+	* \param direction : 1 pour déplacement vers la gauche, -1 pour déplacement vers la droite
+	*/
+int mouvementLignes(jeu *p, int direction){
+	int compteur = 0;
+	int i; //indice de ligne
+	
+	for(i=0; i<p->n; i++)
+		compteur = mouvementLigne(p, i, direction);
+
+	if(compteur>0)
+		return 1;
+
+	return 0;
+}
+
 int main(){
 
+	srand((unsigned int)time(NULL));
 	jeu p;
 
 	initialiseJeu(&p, 6, 2048 );
@@ -282,7 +329,13 @@ int main(){
 	affichage(&p);
 	printf("%d\n", mouvementLigne(&p,5, 1));
 	affichage(&p);
-
+	ajouteValAlea(&p);
+	affichage(&p);
+	ajouteValAlea(&p);
+	affichage(&p);
+	ajouteValAlea(&p);
+	affichage(&p);
+	
 	libereMemoire(&p);
 
 	return 0;
