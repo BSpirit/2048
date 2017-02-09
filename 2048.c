@@ -234,61 +234,35 @@ int finPartie(jeu *p){
 	* \param direction : 1 pour déplacement vers la gauche, -1 pour déplacement vers la droite
  	*/
 int mouvementLigne(jeu *p, int ligne, int direction){
-	int colonne;
+	int colonne; // pour parcourir la ligne
+	int flag;
+	int compteur = 0;
+
+	// première boucle : tasser toutes les valeurs à droite ou à gauche
+	do{ 
+		flag = 0;
+		for(colonne=0;colonne<p->n;colonne++){
+			if(getVal(p, ligne, colonne) == 0 && getVal(p, ligne, colonne+direction) > 0 ){
+				setVal(p, ligne, colonne, getVal(p, ligne, colonne+direction));
+				setVal(p, ligne, colonne+direction, 0);
+				flag = 1;
+				compteur++;
+			}
+		}
+	}while(flag==1); //sortie : Plus aucun de mouvements à faire
+
+	//Deuxième boucle : "Fusionner" les valeurs en double + retasser à droite ou à gauche
 	int i;
-	int nbrZero = 0;
-	int compteur=0;
-
-	for(colonne=0 ; colonne<p->n; colonne++){
-		if(getVal(p, ligne, colonne)==0)
-			nbrZero++;
-	}
-
-	if(direction == 1){
-		if(nbrZero!=0){
-			for(i=0 ; i<nbrZero; i++){
-				for(colonne=0 ; colonne<p->n-1; colonne++){
-					if(getVal(p, ligne, colonne) == 0 && getVal(p, ligne, colonne+1) != 0 ){
-						setVal(p, ligne, colonne, getVal(p, ligne, colonne+1));
-						setVal(p, ligne, colonne+1, 0);
-						compteur++;
-					}
-				}
-			}
-		}
-		for(colonne=0 ; colonne<p->n-1; colonne++){
-			if(getVal(p, ligne, colonne) != 0 && getVal(p, ligne, colonne) == getVal(p, ligne, colonne+1)){
-				setVal(p, ligne, colonne, 2*getVal(p, ligne, colonne));
-				for(i=colonne+1; i<p->n-1; i++)
-					setVal(p, ligne, i, getVal(p, ligne, i+1));
-				compteur++;
-			}
+	for(colonne=0;colonne<p->n;colonne++){
+		if(getVal(p, ligne, colonne) > 0 && getVal(p, ligne, colonne) == getVal(p, ligne, colonne+direction)){
+			setVal(p, ligne, colonne, 2*getVal(p, ligne, colonne));
+			for(i=colonne+direction;i<p->n-1 && i>0; i+=direction)
+				setVal(p, ligne, i, getVal(p, ligne, i+direction));
+			compteur++;
 		}
 	}
 
-	if(direction == -1){
-		if(nbrZero!=0){
-			for(i=0 ; i<nbrZero; i++){
-				for(colonne=p->n-1 ; colonne>0; colonne--){
-					if(getVal(p, ligne, colonne) == 0 && getVal(p, ligne, colonne-1) != 0 ){
-						setVal(p, ligne, colonne, getVal(p, ligne, colonne-1));
-						setVal(p, ligne, colonne-1, 0);
-						compteur++;
-					}
-				}
-			}
-		}
-		for(colonne=p->n-1 ; colonne>0; colonne--){
-			if(getVal(p, ligne, colonne) != 0 && getVal(p, ligne, colonne) == getVal(p, ligne, colonne-1)){
-				setVal(p, ligne, colonne, 2*getVal(p, ligne, colonne));
-				for(i=colonne-1; i>0; i--)
-					setVal(p, ligne, i, getVal(p, ligne, i-1));
-				compteur++;
-			}
-		}
-	}
-
-	if(compteur>0)
+	if(compteur >0)
 		return 1;
 
 	return 0;
@@ -304,10 +278,10 @@ int mouvementLigne(jeu *p, int ligne, int direction){
 	*/
 int mouvementLignes(jeu *p, int direction){
 	int compteur = 0;
-	int i; //indice de ligne
+	int ligne;
 	
-	for(i=0; i<p->n; i++)
-		compteur = mouvementLigne(p, i, direction);
+	for(ligne=0; ligne<p->n; ligne++)
+		compteur = mouvementLigne(p, ligne, direction);
 
 	if(compteur>0)
 		return 1;
@@ -321,21 +295,28 @@ int main(){
 	jeu p;
 
 	initialiseJeu(&p, 6, 2048 );
-	setVal(&p, 5, 6, 128);
-	setVal(&p, 5, 5, 64);
-	setVal(&p, 5, 4, 16);
-	setVal(&p, 5, 3, 16);
-	printf("%d \n", getVal(&p, 5, 5));
-	affichage(&p);
-	printf("%d\n", mouvementLigne(&p,5, 1));
-	affichage(&p);
+	ajouteValAlea(&p);
+	ajouteValAlea(&p);
+	ajouteValAlea(&p);
+	ajouteValAlea(&p);
+	ajouteValAlea(&p);
+	ajouteValAlea(&p);
+	ajouteValAlea(&p);
+	ajouteValAlea(&p);
+	ajouteValAlea(&p);
+	ajouteValAlea(&p);
+	ajouteValAlea(&p);
+	ajouteValAlea(&p);
+	ajouteValAlea(&p);
+	ajouteValAlea(&p);
+	ajouteValAlea(&p);
+	ajouteValAlea(&p);
+	ajouteValAlea(&p);
 	ajouteValAlea(&p);
 	affichage(&p);
-	ajouteValAlea(&p);
+	printf("%d\n", mouvementLignes(&p, 1));
 	affichage(&p);
-	ajouteValAlea(&p);
-	affichage(&p);
-	
+
 	libereMemoire(&p);
 
 	return 0;
