@@ -236,8 +236,7 @@ int finPartie(jeu *p){
 int mouvementLigne(jeu *p, int ligne, int direction){
 	int colonne; 
 	int flag;
-	int aBouge1; // test si une case a bougée dans la première boucle
-	int aBouge2; //test si une case a bougée dans deuxième boucle
+	int compteur = 0;
 
 	//Première boucle : tasser toutes les valeurs à droite ou à gauche
 	do{ 
@@ -247,12 +246,12 @@ int mouvementLigne(jeu *p, int ligne, int direction){
 				setVal(p, ligne, colonne, getVal(p, ligne, colonne+direction));
 				setVal(p, ligne, colonne+direction, 0);
 				flag = 1;
-				aBouge1 = 1;
+				compteur++;
 			}
 		}
 	}while(flag==1); //sortie : Plus aucun mouvements à faire i.e. (flag==0)
 
-	//Deuxième boucle : "Fusionner" les valeurs en double 
+	//Deuxième boucle : "Fusionner" les valeurs en double + retasser si besoin
 	int depBoucle;
 	if(direction==1)
 		depBoucle = 0;
@@ -263,25 +262,18 @@ int mouvementLigne(jeu *p, int ligne, int direction){
 		if(getVal(p, ligne, colonne) > 0 && getVal(p, ligne, colonne) == getVal(p, ligne, colonne+direction)){
 			setVal(p, ligne, colonne, 2*getVal(p, ligne, colonne));
 			setVal(p, ligne, colonne+direction, 0);
-			aBouge2=1;
+			compteur++;
+			int i;
+			for(i=colonne; i<p->n && i>=0; i+=direction){
+				if(getVal(p, ligne, i) == 0 && getVal(p, ligne, i+direction) > 0 ){
+					setVal(p, ligne, i, getVal(p, ligne, i+direction));
+					setVal(p, ligne, i+direction, 0);
+				}
+			}
 		}
 	}
 
-	//Troisième boucle : On tasse de nouveau à droite ou gauche s'il y a eu fusion de case
-	if(aBouge2==1){
-		do{ 
-			flag = 0;
-			for(colonne=0;colonne<p->n;colonne++){
-				if(getVal(p, ligne, colonne) == 0 && getVal(p, ligne, colonne+direction) > 0 ){
-					setVal(p, ligne, colonne, getVal(p, ligne, colonne+direction));
-					setVal(p, ligne, colonne+direction, 0);
-					flag = 1;
-				}
-			}
-		}while(flag==1); //sortie : Plus aucun mouvements à faire (flag==0)
-	}
-
-	if(aBouge1==1 || aBouge2==1)
+	if(compteur > 0)
 		return 1;
 
 	return 0;
@@ -300,7 +292,7 @@ int mouvementLignes(jeu *p, int direction){
 	int ligne;
 	
 	for(ligne=0; ligne<p->n; ligne++)
-		compteur = mouvementLigne(p, ligne, direction);
+		compteur += mouvementLigne(p, ligne, direction);
 
 	if(compteur>0)
 		return 1;
@@ -314,9 +306,12 @@ int main(){
 	jeu p;
 
 	initialiseJeu(&p, 6, 2048 );
-	ajouteValAlea(&p);
-	ajouteValAlea(&p);
-	ajouteValAlea(&p);
+	setVal(&p, 0, 0, 2);
+	setVal(&p, 0, 1, 2);
+	setVal(&p, 0, 2, 2);
+	setVal(&p, 0, 3, 2);
+	setVal(&p, 0, 4, 2);
+	setVal(&p, 0, 5, 2);
 	ajouteValAlea(&p);
 	ajouteValAlea(&p);
 	ajouteValAlea(&p);
@@ -330,7 +325,7 @@ int main(){
 	ajouteValAlea(&p);
 	ajouteValAlea(&p);
 	affichage(&p);
-	printf("%d\n", mouvementLignes(&p, -1));
+	printf("%d\n", mouvementLignes(&p, 1));
 	affichage(&p);
 
 	libereMemoire(&p);
