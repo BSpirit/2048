@@ -234,11 +234,12 @@ int finPartie(jeu *p){
 	* \param direction : 1 pour déplacement vers la gauche, -1 pour déplacement vers la droite
  	*/
 int mouvementLigne(jeu *p, int ligne, int direction){
-	int colonne; // pour parcourir la ligne
+	int colonne; 
 	int flag;
-	int compteur = 0;
+	int aBouge1; // test si une case a bougée dans la première boucle
+	int aBouge2; //test si une case a bougée dans deuxième boucle
 
-	// première boucle : tasser toutes les valeurs à droite ou à gauche
+	//Première boucle : tasser toutes les valeurs à droite ou à gauche
 	do{ 
 		flag = 0;
 		for(colonne=0;colonne<p->n;colonne++){
@@ -246,23 +247,41 @@ int mouvementLigne(jeu *p, int ligne, int direction){
 				setVal(p, ligne, colonne, getVal(p, ligne, colonne+direction));
 				setVal(p, ligne, colonne+direction, 0);
 				flag = 1;
-				compteur++;
+				aBouge1 = 1;
 			}
 		}
-	}while(flag==1); //sortie : Plus aucun de mouvements à faire
+	}while(flag==1); //sortie : Plus aucun mouvements à faire i.e. (flag==0)
 
-	//Deuxième boucle : "Fusionner" les valeurs en double + retasser à droite ou à gauche
-	int i;
-	for(colonne=0;colonne<p->n;colonne++){
+	//Deuxième boucle : "Fusionner" les valeurs en double 
+	int depBoucle;
+	if(direction==1)
+		depBoucle = 0;
+	else
+		depBoucle = p->n-1;
+	
+	for(colonne=depBoucle; colonne<p->n && colonne>=0; colonne+=direction){
 		if(getVal(p, ligne, colonne) > 0 && getVal(p, ligne, colonne) == getVal(p, ligne, colonne+direction)){
 			setVal(p, ligne, colonne, 2*getVal(p, ligne, colonne));
-			for(i=colonne+direction;i<p->n-1 && i>0; i+=direction)
-				setVal(p, ligne, i, getVal(p, ligne, i+direction));
-			compteur++;
+			setVal(p, ligne, colonne+direction, 0);
+			aBouge2=1;
 		}
 	}
 
-	if(compteur >0)
+	//Troisième boucle : On tasse de nouveau à droite ou gauche s'il y a eu fusion de case
+	if(aBouge2==1){
+		do{ 
+			flag = 0;
+			for(colonne=0;colonne<p->n;colonne++){
+				if(getVal(p, ligne, colonne) == 0 && getVal(p, ligne, colonne+direction) > 0 ){
+					setVal(p, ligne, colonne, getVal(p, ligne, colonne+direction));
+					setVal(p, ligne, colonne+direction, 0);
+					flag = 1;
+				}
+			}
+		}while(flag==1); //sortie : Plus aucun mouvements à faire (flag==0)
+	}
+
+	if(aBouge1==1 || aBouge2==1)
 		return 1;
 
 	return 0;
@@ -310,11 +329,8 @@ int main(){
 	ajouteValAlea(&p);
 	ajouteValAlea(&p);
 	ajouteValAlea(&p);
-	ajouteValAlea(&p);
-	ajouteValAlea(&p);
-	ajouteValAlea(&p);
 	affichage(&p);
-	printf("%d\n", mouvementLignes(&p, 1));
+	printf("%d\n", mouvementLignes(&p, -1));
 	affichage(&p);
 
 	libereMemoire(&p);
