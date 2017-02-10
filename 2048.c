@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <time.h>
+#include "saisieM.h"
 
 //Définition de la structure jeu
 typedef struct{
@@ -65,6 +66,7 @@ int indiceValide(jeu *p, int i, int j){
 	*
 	* Fonction retournant la valeur de la case (ligne, colonne) de la partie
 	* ou -1 si la case n'existe pas
+	* 
 	* \param p : pointeur sur une partie de jeu 2048
 	* \param ligne : entier correspondant au numéro de ligne
 	* \param colonne : entier correspondant au numéro de colonne
@@ -106,6 +108,12 @@ int caseVide(jeu *p, int i, int j){
 	*/
 int setVal(jeu *p, int ligne, int colonne, int val){
 	if(indiceValide(p, ligne, colonne)){
+		if(getVal(p, ligne, colonne) == val)
+			return 0;
+		if(caseVide(p, ligne, colonne) && val > 0)
+			p->nbCasesLibres--;
+		if(!caseVide(p, ligne, colonne) && val == 0 )
+			p->nbCasesLibres++;
 		p->grille[p->n*ligne+colonne] = val;
 		return 1;
 	}
@@ -133,9 +141,12 @@ void ajouteValAlea(jeu *p){
 		setVal(p, ligne, colonne, 2);
 	else
 		setVal(p, ligne, colonne, 4);
+		
+	p->nbCasesLibres--;
 }
 
 /*! * void affichage(jeu * p)
+	* 
 	* Fonction de affichant la grille à l'écran.
 	*
 	* \param p : pointeur sur la partie que l'on souhaite afficher
@@ -152,6 +163,7 @@ void affichage(jeu * p){
 }
 
 /*! * int gagne(jeu *p)
+	*
 	* Retoune 1 si la partie est gagnée
 	* retourne 0 sinon
 	*
@@ -177,6 +189,7 @@ int gagne(jeu *p){
 }
 
 /*! * int perdu(jeu *p)
+	* 
 	* Retoune 1 si la partie est perdue
 	* retourne 0 sinon
 	*
@@ -194,19 +207,12 @@ int perdu(jeu *p){
 	while(i<p->n && flag==1){
 		j = 0;
 		while(j<p->n && flag==1){
-			if(i==p->n-1 && j==p->n-1){ // si on arrive à la dernière case de la grille, c'est qu'on a perdu
-				return flag;
-			}else if(i==p->n-1){ //si on est placé à la dernière ligne on compare uniquement la case actuelle avec celle à droite
-				if(getVal(p, i, j) == getVal(p, i, j+1)) 
-					flag = 0;
-			}else if(j==p->n-1){//si on est placé à la dernière colonne on compare uniquement la case actuelle avec celle en dessous
-				if(getVal(p, i, j) == getVal(p, i+1, j))
-					flag = 0;
-				}
-			else {// sinon on compare la case actuelle avec celle à droite et celle en dessous
-				if(getVal(p, i, j)==getVal(p, i+1, j) || getVal(p, i, j)==getVal(p, i, j+1))
-					flag = 0;
-			}
+			// si on arrive à la dernière case de la grille, c'est qu'on a perdu
+			if(i==p->n-1 && j==p->n-1)
+				flag = 1;
+			// sinon on compare la case actuelle avec celle à droite et celle en dessous	
+			else if(getVal(p, i, j)==getVal(p, i+1, j) || getVal(p, i, j)==getVal(p, i, j+1))
+				flag = 0;
 			j++;
 		}
 		i++;
@@ -216,6 +222,7 @@ int perdu(jeu *p){
 }
 
 /*! * int finPartie(jeu *p)
+	* 
 	* Retoune 1 si la partie est terminée
 	* retourne 0 sinon
 	*
@@ -226,6 +233,7 @@ int finPartie(jeu *p){
 }
 
 /*! * int mouvementLigne(jeu *p, int ligne, int direction)
+	* 
 	* Effectue les mouvements (à gauche et à droite) des cases d'une ligne.
 	* Renvoie 1 si l'on a déplacé au moins une case, 0 sinon
 	*
@@ -284,6 +292,7 @@ int mouvementLigne(jeu *p, int ligne, int direction){
  	* Effectue les mouvements (à gauche et à droite) des cases sur toutes les lignes
 	* Retoune 1 si l'on a déplacé au moins une case
 	* Retourne 0 sinon
+	*
 	* \param p : pointeur sur la partie en cours
 	* \param direction : 1 pour déplacement vers la gauche, -1 pour déplacement vers la droite
 	*/
@@ -300,35 +309,209 @@ int mouvementLignes(jeu *p, int direction){
 	return 0;
 }
 
+/*! * int mouvementColonne(jeu *p, int colonne, int direction)
+	* 
+	* Effectue les mouvements (vers le haut ou vers le bas) des cases d'une colonne.
+	* Renvoie 1 si l'on a déplacé au moins une case, 0 sinon
+	*
+ 	* \param p : pointeur sur la partie en cours
+	* \param colonne : indice de colonne
+	* \param direction : 1 pour déplacement vers le haut, -1 pour déplacement vers le bas
+ 	*/
+int mouvementColonne(jeu *p, int colonne, int direction){
+	int ligne; 
+	int flag;
+	int compteur = 0;
+
+	//Première boucle : tasser toutes les valeurs en haut ou en bas
+	do{ 
+		flag = 0;
+		for(ligne=0;ligne<p->n;ligne++){
+			if(getVal(p, ligne, colonne) == 0 && getVal(p, ligne+direction, colonne) > 0 ){
+				setVal(p, ligne, colonne, getVal(p, ligne+direction, colonne));
+				setVal(p, ligne+direction, colonne, 0);
+				flag = 1;
+				compteur++;
+			}
+		}
+	}while(flag==1); //sortie : Plus aucun mouvements à faire i.e. (flag==0)
+
+	//Deuxième boucle : "Fusionner" les valeurs en double + retasser si besoin
+	int depBoucle;
+	if(direction==1)
+		depBoucle = 0;
+	else
+		depBoucle = p->n-1;
+	
+	for(ligne=depBoucle; ligne<p->n && ligne>=0; ligne+=direction){
+		if(getVal(p, ligne, colonne) > 0 && getVal(p, ligne, colonne) == getVal(p, ligne+direction, colonne)){
+			setVal(p, ligne, colonne, 2*getVal(p, ligne, colonne));
+			setVal(p, ligne+direction, colonne, 0);
+			compteur++;
+			int i;
+			for(i=ligne; i<p->n && i>=0; i+=direction){
+				if(getVal(p, i, colonne) == 0 && getVal(p, i+direction, colonne) > 0 ){
+					setVal(p, i, colonne, getVal(p, i+direction, colonne));
+					setVal(p, i+direction, colonne, 0);
+				}
+			}
+		}
+	}
+
+	if(compteur > 0)
+		return 1;
+
+	return 0;
+}
+
+/*! * int mouvementColonnes(jeu *p, int direction)
+ 	*
+ 	* Effectue les mouvements (vers le haut ou vers le bas) des cases sur toutes les colonnes
+	* Retoune 1 si l'on a déplacé au moins une case
+	* Retourne 0 sinon
+	*
+	* \param p : pointeur sur la partie en cours
+	* \param direction : 1 pour déplacement vers le haut, -1 pour déplacement vers le bas
+	*/
+int mouvementColonnes(jeu *p, int direction){
+	int compteur = 0;
+	int colonne;
+	
+	for(colonne=0; colonne<p->n; colonne++)
+		compteur += mouvementColonne(p, colonne, direction);
+
+	if(compteur>0)
+		return 1;
+
+	return 0;
+}
+
+/*! * int mouvement(jeu *p, int direction)
+	*
+	* Effectue le mouvement correspondant à la direction
+	* Retourne 1 si on a déplacé au moins une case
+	* Retourne 0 sinon
+	* 
+	* \param p : pointeur la partie en cours
+	* \param direction : entier donnant la direction :
+	* 0 : vers le bas
+	* 1 : vers la droite
+	* 2 : vers le haut
+	* 3 : vers la gauche
+	*/
+int mouvement(jeu *p, int direction){
+	int compteur = 0;
+
+	switch(direction){
+		case 0 :
+			compteur+=mouvementColonnes(p, -1);
+			break;
+		case 1 :
+			compteur+=mouvementLignes(p, -1);
+			break;
+		case 2 :
+			compteur+=mouvementColonnes(p, 1);
+			break;
+		case 3 :
+			compteur+=mouvementLignes(p, 1);
+			break;		
+		default :
+			return 0;
+			break;
+	}
+
+	if(compteur>0)
+		return 1;
+
+	return 0;
+}
+
+/*! * int saisieD()
+	*
+	* Fonction permettant la saisie d'une direction ou de l'arrêt du jeu
+	* (saisie répétée pour les autres touches)
+	*
+	*Retourne :
+	* -1 : Si l'utilisateur arrête le jeu
+	* 0 : Si l'utilisateur souhaite déplacer vers le BAS
+	* 1 : Si l'utilisateur souhaite déplacer vers le DROITE
+	* 2 : Si l'utilisateur souhaite déplacer vers le HAUT
+	* 3 : Si l'utilisateur souhaite déplacer vers le GAUCHE 
+	*/
+int saisieD(){
+	//debutTerminalSansR();
+	//Key touche;//Définition d'une touche
+	int saisie;
+
+	/*touche = lectureFleche(); //On lit une flèche (ou la touche echap)
+
+	switch(touche){
+		case KEY_ESCAPE :
+			saisie = -1;
+			break;
+		case KEY_DOWN :
+			saisie = 0;
+			break;
+		case KEY_RIGHT :
+			saisie = 1;
+			break;
+		case KEY_UP :
+			saisie = 2;
+			break;		
+		case KEY_LEFT :
+			saisie = 3;
+			break;
+		default :
+			saisie = 2;
+			break;
+	}
+
+	finTerminalSansR();*/
+	printf("0 : BAS, 1 : DROITE, 2 : HAUT, 3 : GAUCHE \n");
+	scanf("%d", &saisie);
+
+	return saisie;
+}
+
+/*! * int jouer(jeu *p)
+	*
+	* Fonction permettant de jouer la partie en cours
+	* (On la suppose initialisée)
+	* Retourne 1 si la partie est terminée (gagnée ou perdu)
+	* Retourne 0 sinon (L'utilisateur a appuyé sur la touche echap ou la touche s)
+	*
+	* \param p : pointeur sur la partie en cours
+	*/
+int jouer(jeu *p){
+	int saisie = 0;
+
+	while(saisie != -1 && !finPartie(p)){
+		saisie = saisieD();
+		if(saisie>=0){
+			mouvement(p, saisie);
+			ajouteValAlea(p);
+			affichage(p);
+		}
+	}
+
+	if(saisie==-1)
+		return 0;
+	else
+		return 1;
+}
+
 int main(){
 
 	srand((unsigned int)time(NULL));
 	jeu p;
 
-	initialiseJeu(&p, 6, 2048 );
-	setVal(&p, 0, 0, 2);
-	setVal(&p, 0, 1, 2);
-	setVal(&p, 0, 2, 2);
-	setVal(&p, 0, 3, 2);
-	setVal(&p, 0, 4, 2);
-	setVal(&p, 0, 5, 2);
-	ajouteValAlea(&p);
-	ajouteValAlea(&p);
-	ajouteValAlea(&p);
-	ajouteValAlea(&p);
-	ajouteValAlea(&p);
-	ajouteValAlea(&p);
-	ajouteValAlea(&p);
-	ajouteValAlea(&p);
-	ajouteValAlea(&p);
-	ajouteValAlea(&p);
-	ajouteValAlea(&p);
+	initialiseJeu(&p, 4, 16);
 	ajouteValAlea(&p);
 	affichage(&p);
-	printf("%d\n", mouvementLignes(&p, 1));
-	affichage(&p);
+	jouer(&p);
 
 	libereMemoire(&p);
+
 
 	return 0;
 }

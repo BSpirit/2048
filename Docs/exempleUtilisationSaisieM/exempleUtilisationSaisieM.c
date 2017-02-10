@@ -1,15 +1,15 @@
 #include <stdio.h>
 #include "saisieM.h"
-#include "terminalCouleur.h"
+#include "couleurs_terminal.h"
 
 int main()
 {
 
-	//Saisie normale :
+/*/Saisie normale :
 	char c;
 	printf("Saisir une lettre : ");
 	scanf(" %c",&c);
-	printf("Vous avez saisi : %c\n",c);
+	printf("Vous avez saisi : %c\n",c);*/
 
 
 	//Début du mode saisie des flèches ou de la touche Echap sans appuyer sur entrée pour valider
@@ -37,6 +37,10 @@ int main()
 		touche = lectureFleche();//On lit une flèche (ou la touche echap)
 
 	}
+
+	if(touche==KEY_ESCAPE)
+		printf("Mauvaise touche ... \n");
+		
 	finTerminalSansR();
 
 	return 0;
