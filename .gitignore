@@ -1,2 +1,7 @@
 2048.exe
 2048.o
+.vscode/
+2048.log
+caseVide.c
+test_part1
+2048
