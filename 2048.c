@@ -234,11 +234,11 @@ int finPartie(jeu *p){
 	* \param direction : 1 pour déplacement vers la gauche, -1 pour déplacement vers la droite
  	*/
 int mouvementLigne(jeu *p, int ligne, int direction){
-	int colonne; // pour parcourir la ligne
+	int colonne; 
 	int flag;
 	int compteur = 0;
 
-	// première boucle : tasser toutes les valeurs à droite ou à gauche
+	//Première boucle : tasser toutes les valeurs à droite ou à gauche
 	do{ 
 		flag = 0;
 		for(colonne=0;colonne<p->n;colonne++){
@@ -249,20 +249,31 @@ int mouvementLigne(jeu *p, int ligne, int direction){
 				compteur++;
 			}
 		}
-	}while(flag==1); //sortie : Plus aucun de mouvements à faire
+	}while(flag==1); //sortie : Plus aucun mouvements à faire i.e. (flag==0)
 
-	//Deuxième boucle : "Fusionner" les valeurs en double + retasser à droite ou à gauche
-	int i;
-	for(colonne=0;colonne<p->n;colonne++){
+	//Deuxième boucle : "Fusionner" les valeurs en double + retasser si besoin
+	int depBoucle;
+	if(direction==1)
+		depBoucle = 0;
+	else
+		depBoucle = p->n-1;
+	
+	for(colonne=depBoucle; colonne<p->n && colonne>=0; colonne+=direction){
 		if(getVal(p, ligne, colonne) > 0 && getVal(p, ligne, colonne) == getVal(p, ligne, colonne+direction)){
 			setVal(p, ligne, colonne, 2*getVal(p, ligne, colonne));
-			for(i=colonne+direction;i<p->n-1 && i>0; i+=direction)
-				setVal(p, ligne, i, getVal(p, ligne, i+direction));
+			setVal(p, ligne, colonne+direction, 0);
 			compteur++;
+			int i;
+			for(i=colonne; i<p->n && i>=0; i+=direction){
+				if(getVal(p, ligne, i) == 0 && getVal(p, ligne, i+direction) > 0 ){
+					setVal(p, ligne, i, getVal(p, ligne, i+direction));
+					setVal(p, ligne, i+direction, 0);
+				}
+			}
 		}
 	}
 
-	if(compteur >0)
+	if(compteur > 0)
 		return 1;
 
 	return 0;
@@ -281,7 +292,7 @@ int mouvementLignes(jeu *p, int direction){
 	int ligne;
 	
 	for(ligne=0; ligne<p->n; ligne++)
-		compteur = mouvementLigne(p, ligne, direction);
+		compteur += mouvementLigne(p, ligne, direction);
 
 	if(compteur>0)
 		return 1;
@@ -295,12 +306,12 @@ int main(){
 	jeu p;
 
 	initialiseJeu(&p, 6, 2048 );
-	ajouteValAlea(&p);
-	ajouteValAlea(&p);
-	ajouteValAlea(&p);
-	ajouteValAlea(&p);
-	ajouteValAlea(&p);
-	ajouteValAlea(&p);
+	setVal(&p, 0, 0, 2);
+	setVal(&p, 0, 1, 2);
+	setVal(&p, 0, 2, 2);
+	setVal(&p, 0, 3, 2);
+	setVal(&p, 0, 4, 2);
+	setVal(&p, 0, 5, 2);
 	ajouteValAlea(&p);
 	ajouteValAlea(&p);
 	ajouteValAlea(&p);
