@@ -400,30 +400,20 @@ int mouvementColonnes(jeu *p, int direction){
 	* 3 : vers la gauche
 	*/
 int mouvement(jeu *p, int direction){
-	int compteur = 0;
+	int deplacement=0;
 
-	switch(direction){
-		case 0 :
-			compteur+=mouvementColonnes(p, -1);
-			break;
-		case 1 :
-			compteur+=mouvementLignes(p, -1);
-			break;
-		case 2 :
-			compteur+=mouvementColonnes(p, 1);
-			break;
-		case 3 :
-			compteur+=mouvementLignes(p, 1);
-			break;		
-		default :
-			return 0;
-			break;
-	}
+	if(direction==0)
+		deplacement = mouvementColonnes(p, -1);
+	else if(direction==1)
+		deplacement = mouvementLignes(p, -1);
+	else if(direction==2)
+		deplacement = mouvementColonnes(p, 1);
+	else if(direction==3)
+		deplacement = mouvementLignes(p, 1);
+	else
+		return 0;
 
-	if(compteur>0)
-		return 1;
-
-	return 0;
+	return deplacement;
 }
 
 /*! * int saisieD()
@@ -439,36 +429,27 @@ int mouvement(jeu *p, int direction){
 	* 3 : Si l'utilisateur souhaite déplacer vers le GAUCHE 
 	*/
 int saisieD(){
-	//debutTerminalSansR();
-	//Key touche;//Définition d'une touche
+	debutTerminalSansR();
+	Key touche;//Définition d'une touche
 	int saisie;
 
-	/*touche = lectureFleche(); //On lit une flèche (ou la touche echap)
+	do{
+	touche = lectureFleche(); //On lit une flèche (ou la touche echap)
+	}while(touche == NO_KEY);
 
-	switch(touche){
-		case KEY_ESCAPE :
-			saisie = -1;
-			break;
-		case KEY_DOWN :
-			saisie = 0;
-			break;
-		case KEY_RIGHT :
-			saisie = 1;
-			break;
-		case KEY_UP :
-			saisie = 2;
-			break;		
-		case KEY_LEFT :
-			saisie = 3;
-			break;
-		default :
-			saisie = 2;
-			break;
-	}
 
-	finTerminalSansR();*/
-	printf("0 : BAS, 1 : DROITE, 2 : HAUT, 3 : GAUCHE \n");
-	scanf("%d", &saisie);
+	if(touche==KEY_ESCAPE)
+		saisie = -1;
+	if(touche==KEY_DOWN)
+		saisie = 0;
+	if(touche==KEY_RIGHT)
+		saisie = 1;
+	if(touche==KEY_UP)
+		saisie = 2;
+	if(touche==KEY_LEFT)
+		saisie = 3;
+
+	finTerminalSansR();
 
 	return saisie;
 }
@@ -485,14 +466,14 @@ int saisieD(){
 int jouer(jeu *p){
 	int saisie = 0;
 
-	while(saisie != -1 && !finPartie(p)){
+	do{
 		saisie = saisieD();
 		if(saisie>=0){
 			mouvement(p, saisie);
 			ajouteValAlea(p);
 			affichage(p);
 		}
-	}
+	}while(saisie != -1 && !finPartie(p));
 
 	if(saisie==-1)
 		return 0;
