@@ -464,13 +464,15 @@ int saisieD(){
 	* \param p : pointeur sur la partie en cours
 	*/
 int jouer(jeu *p){
-	int saisie = 0;
+	int saisie;
+	int deplacement; // Test s'il y a eu un déplacement
 
 	do{
 		saisie = saisieD();
 		if(saisie>=0){
-			mouvement(p, saisie);
-			ajouteValAlea(p);
+			deplacement = mouvement(p, saisie);
+			if(deplacement)
+				ajouteValAlea(p);
 			affichage(p);
 		}
 	}while(saisie != -1 && !finPartie(p));
@@ -492,7 +494,6 @@ int main(){
 	jouer(&p);
 
 	libereMemoire(&p);
-
 
 	return 0;
 }
