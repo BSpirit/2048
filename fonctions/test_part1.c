@@ -1,19 +1,7 @@
 #include<stdio.h>
 #include<stdlib.h>
 #include<assert.h>
-
-#include "functions.h"
-
-// typedef struct{
-// 	int n;
-// 	int valMax;
-// 	int nbCasesLibres;
-// 	int *grille;
-// } jeu;
-
-/************************************************
-************ Fonctions de tests *****************
-*************************************************/
+#include "header/functions.h"
 
 int termine(const char *ch){
     printf("***********************\n");
@@ -159,14 +147,13 @@ int test_fonction_set_val(){
     
     if (tmp->grille[2] != 3)
         return termine("setVal ne modifie pas correctement la valeur !");
-    printf("%d\n", tmp->nbCasesLibres);
+
     res = setVal(tmp, 1,1,3);
     if (res != 1)
         return termine("setVal ne renvoie pas la bonne valeur !");
-    
-    printf("%d\n", tmp->nbCasesLibres);
-    if (tmp->nbCasesLibres != 33)
-        return termine("le nombre de case libre n'est pas correct ! 1");
+
+    if (tmp->nbCasesLibres != 34)
+        return termine("le nombre de case libre n'est pas correct !");
 
     if(tmp->grille[7] != 3)
         return termine("setVal ne modifie pas correctement le jeu !");
@@ -176,8 +163,8 @@ int test_fonction_set_val(){
         return termine("set valeur ne renvoie pas la bonne valeur !");
     
     
-    if (tmp->nbCasesLibres != 32)
-        return termine("le nombre de cases de libres n'est pas correct ! 2");
+    if (tmp->nbCasesLibres != 35)
+        return termine("le nombre de cases de libres n'est pas correct !");
 
     if (tmp->grille[7] != 0)
         return termine("setVal ne modifie pas correctement le jeu !");
@@ -196,14 +183,8 @@ void test_partie1(){
     if(somme != 4)
         termine("TOUS LES TESTS DE LA PARTIE 1 NE SONT PAS PASSES !");
     else{
-        printf("#########################");
-        printf("#   TESTS PARTIE 1 OK   #");
-        printf("#########################");
+        printf("#########################\n");
+        printf("#   TESTS PARTIE 1 OK   #\n");
+        printf("#########################\n");
     }
-}
-
-int main(){
-    test_partie1();
-
-    return 0;
 }
