@@ -2,14 +2,21 @@
 #include <stdlib.h>
 #include <time.h>
 #include "saisieM.h"
+#include "couleurs_terminal.h"
 
 //Définition de la structure jeu
 typedef struct{
 	int n; //taille de la grille = n*n 
-	int valMax; // valeur à atteindre pour gagner
+	int valMax; // valeurindre pour gagner
 	int nbCasesLibres; //nbre de cases libres sur la grille
 	int *grille;
 }jeu;
+
+//Définition d'une structure case contenant sa valeur et sa couleur
+typedef struct{
+	int val;
+	COULEUR_TERMINAL couleur;
+}cases;
 
 /*! * void initialiseJeu(jeu *p, int n, int valMax)
 	*
@@ -145,6 +152,47 @@ void ajouteValAlea(jeu *p){
 	p->nbCasesLibres--;
 }
 
+/*! * cases choixCouleur(int n)
+	* 	
+	* Assigne une couleur a une case en fonction de la valeur n
+	* Retourne la case avec sa valeur et sa couleur
+	*
+	* \param n : valeur de la case à initialiser
+	*/
+cases choixCouleur(int n){
+	cases c;
+	c.val = n;
+
+	switch(c.val){
+		case 0 : c.couleur = BLACK;
+			break;
+		case 2 : c.couleur = CYAN;
+			break;
+		case 4 : c.couleur = GREEN;
+			break;
+		case 8 : c.couleur = YELLOW;
+			break;
+		case 16 : c.couleur = BLUE;
+			break;
+		case 32 : c.couleur = RED;
+			break;
+		case 64 : c.couleur = CYAN;
+			break;
+		case 128 : c.couleur = GREEN;
+			break;
+		case 256 : c.couleur = YELLOW;
+			break;
+		case 512 : c.couleur = BLUE;
+			break;
+		case 1024 : c.couleur = RED;
+			break;
+		case 2048 : c.couleur = WHITE;
+			break;
+		default : c.couleur = CYAN;
+	}
+	return c;
+}
+
 /*! * void affichage(jeu * p)
 	* 
 	* Fonction de affichant la grille à l'écran.
@@ -153,13 +201,23 @@ void ajouteValAlea(jeu *p){
 	*
 	*/
 void affichage(jeu * p){
+	clear_terminal();
+	cases c;
+
 	int i;
 	for(i=0;i<p->n;i++){
 		printf("\n");
 		int j;
-		for(j=0; j<p->n; j++)
-			printf("%d ", getVal(p, i, j));
+		for(j=0; j<p->n; j++){
+			c.val = getVal(p, i, j);
+			c = choixCouleur(c.val);
+			if(c.val == 0)
+				color_printf(BLACK, BLACK, "       ");
+			else
+				color_printf(WHITE, c.couleur, " %5d ", c.val);
+		}
 	}
+	printf("\n");
 }
 
 /*! * int gagne(jeu *p)
@@ -467,13 +525,17 @@ int jouer(jeu *p){
 	int saisie;
 	int deplacement; // Test s'il y a eu un déplacement
 
+	ajouteValAlea(p);
+	affichage(p);
+	
 	do{
+
 		saisie = saisieD();
 		if(saisie>=0){
 			deplacement = mouvement(p, saisie);
 			if(deplacement)
 				ajouteValAlea(p);
-			affichage(p);
+		affichage(p);
 		}
 	}while(saisie != -1 && !finPartie(p));
 
@@ -488,10 +550,9 @@ int main(){
 	srand((unsigned int)time(NULL));
 	jeu p;
 
-	initialiseJeu(&p, 4, 16);
-	ajouteValAlea(&p);
-	affichage(&p);
+	initialiseJeu(&p, 3, 2048);
 	jouer(&p);
+	affichage(&p);
 
 	libereMemoire(&p);
 
