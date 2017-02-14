@@ -12,12 +12,6 @@ typedef struct{
 	int *grille;
 }jeu;
 
-//Définition d'une structure case contenant sa valeur et sa couleur
-typedef struct{
-	int val;
-	COULEUR_TERMINAL couleur;
-}cases;
-
 /*! * void initialiseJeu(jeu *p, int n, int valMax)
 	*
 	* Initialise les champs n et valmax avec les valeurs passées en paramètre, initialise nbCasesLibres
@@ -148,8 +142,6 @@ void ajouteValAlea(jeu *p){
 		setVal(p, ligne, colonne, 2);
 	else
 		setVal(p, ligne, colonne, 4);
-		
-	p->nbCasesLibres--;
 }
 
 /*! * cases choixCouleur(int n)
@@ -159,38 +151,37 @@ void ajouteValAlea(jeu *p){
 	*
 	* \param n : valeur de la case à initialiser
 	*/
-cases choixCouleur(int n){
-	cases c;
-	c.val = n;
+COULEUR_TERMINAL choixCouleur(int n){
+	COULEUR_TERMINAL couleur;
 
-	switch(c.val){
-		case 0 : c.couleur = BLACK;
+	switch(n){
+		case 0 : couleur = BLACK;
 			break;
-		case 2 : c.couleur = CYAN;
+		case 2 : couleur = CYAN;
 			break;
-		case 4 : c.couleur = GREEN;
+		case 4 : couleur = GREEN;
 			break;
-		case 8 : c.couleur = YELLOW;
+		case 8 : couleur = YELLOW;
 			break;
-		case 16 : c.couleur = BLUE;
+		case 16 : couleur = BLUE;
 			break;
-		case 32 : c.couleur = RED;
+		case 32 : couleur = RED;
 			break;
-		case 64 : c.couleur = CYAN;
+		case 64 : couleur = CYAN;
 			break;
-		case 128 : c.couleur = GREEN;
+		case 128 : couleur = GREEN;
 			break;
-		case 256 : c.couleur = YELLOW;
+		case 256 : couleur = YELLOW;
 			break;
-		case 512 : c.couleur = BLUE;
+		case 512 : couleur = BLUE;
 			break;
-		case 1024 : c.couleur = RED;
+		case 1024 : couleur = RED;
 			break;
-		case 2048 : c.couleur = WHITE;
+		case 2048 : couleur = WHITE;
 			break;
-		default : c.couleur = CYAN;
+		default : couleur = CYAN;
 	}
-	return c;
+	return couleur;
 }
 
 /*! * void affichage(jeu * p)
@@ -202,22 +193,22 @@ cases choixCouleur(int n){
 	*/
 void affichage(jeu * p){
 	clear_terminal();
-	cases c;
+	int val;
 
 	int i;
 	for(i=0;i<p->n;i++){
 		printf("\n");
 		int j;
 		for(j=0; j<p->n; j++){
-			c.val = getVal(p, i, j);
-			c = choixCouleur(c.val);
-			if(c.val == 0)
+			val = getVal(p, i, j);
+			if(val == 0)
 				color_printf(BLACK, BLACK, "       ");
 			else
-				color_printf(WHITE, c.couleur, " %5d ", c.val);
+				color_printf(WHITE, choixCouleur(val), " %5d ", val);
 		}
 	}
 	printf("\n");
+	printf("%d\n", p->nbCasesLibres);
 }
 
 /*! * int gagne(jeu *p)
@@ -328,6 +319,7 @@ int mouvementLigne(jeu *p, int ligne, int direction){
 		if(getVal(p, ligne, colonne) > 0 && getVal(p, ligne, colonne) == getVal(p, ligne, colonne+direction)){
 			setVal(p, ligne, colonne, 2*getVal(p, ligne, colonne));
 			setVal(p, ligne, colonne+direction, 0);
+			//p->nbCasesLibres++;
 			compteur++;
 			int i;
 			for(i=colonne; i<p->n && i>=0; i+=direction){
@@ -405,6 +397,7 @@ int mouvementColonne(jeu *p, int colonne, int direction){
 		if(getVal(p, ligne, colonne) > 0 && getVal(p, ligne, colonne) == getVal(p, ligne+direction, colonne)){
 			setVal(p, ligne, colonne, 2*getVal(p, ligne, colonne));
 			setVal(p, ligne+direction, colonne, 0);
+			//p->nbCasesLibres++;
 			compteur++;
 			int i;
 			for(i=ligne; i<p->n && i>=0; i+=direction){
@@ -550,7 +543,7 @@ int main(){
 	srand((unsigned int)time(NULL));
 	jeu p;
 
-	initialiseJeu(&p, 3, 2048);
+	initialiseJeu(&p, 4, 2048);
 	jouer(&p);
 	affichage(&p);
 
