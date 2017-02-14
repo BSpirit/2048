@@ -1,8 +1,10 @@
-#include<stdio.h>
-#include<stdlib.h>
 #include "couleurs_terminal.h"
 #include "grille.h"
-//#include "grille.h"
+#include <stdio.h>
+#include <stdlib.h>
+#include "partie.h"
+
+
 
 
 void initialiseJeu(jeu *p, int n, int valMax){
@@ -120,4 +122,9 @@ void affichage(jeu * p){
 	printf("\n");
 	printf("Valeur à atteindre : %d\n", p->valMax);
 	printf("Nombre de cases libres : %d\n", p->nbCasesLibres);
+
+	if(gagne(p))
+		printf("Vous avez gagné ! \n");
+	else if(perdu(p))
+		printf("Vous avez perdu ! \n");
 }

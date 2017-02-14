@@ -1,8 +1,7 @@
-compile:
-	gcc -o 2048 couleurs_terminal.c grille.c saisieM.c mouvement.c partie.c main.c
+all: 2048
 
-clear:
-	rm -rf 204
+fn:
+	gcc -Wall -o 2048 main.c fn.c
 
-
-# TODO : make test
+mrproper: clean
+	rm -rf 2048

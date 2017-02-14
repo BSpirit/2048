@@ -8,13 +8,8 @@ Informations  : Contient la définition des fonctions
                 - clear_terminal
 ********************************************************/
 
-#include <stdio.h>
-#include <stdlib.h>
-#include <string.h>
-#include <stdarg.h>
-#include "couleurs_terminal.h"
-#include <unistd.h>
 
+#include "couleurs_terminal.h"
 
 
 void clear_terminal()

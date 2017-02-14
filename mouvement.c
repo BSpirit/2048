@@ -3,6 +3,7 @@
 #include "mouvement.h"
 #include "saisieM.h"
 
+
 int mouvementLigne(jeu *p, int ligne, int direction){
 	int colonne; 
 	int flag;
