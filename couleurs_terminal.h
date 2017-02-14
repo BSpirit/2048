@@ -1,10 +1,5 @@
-#include <stdio.h>
-#include <stdlib.h>
-#include <string.h>
-#include <stdarg.h>
-
-#include <unistd.h>
-
+#ifndef COULEUR_H
+#define COULEUR_H
 
 // couleurs du terminal
   typedef enum
@@ -30,3 +25,5 @@ void clear_terminal();
  * Les parmètres suivants sont comme le printf "normal" : chaîne de format puis toutes les valeurs à afficher
  */
 int color_printf(COULEUR_TERMINAL fg, COULEUR_TERMINAL bg, const char * format, ...);
+
+#endif

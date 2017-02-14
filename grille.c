@@ -1,4 +1,8 @@
+#include<stdio.h>
+#include<stdlib.h>
+#include "couleurs_terminal.h"
 #include "grille.h"
+//#include "grille.h"
 
 
 void initialiseJeu(jeu *p, int n, int valMax){

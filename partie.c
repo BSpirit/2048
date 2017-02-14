@@ -1,5 +1,9 @@
+#include<stdio.h>
+#include <stdlib.h>
+#include "couleurs_terminal.h"
+#include "grille.h"
 #include "partie.h"
-
+#include "mouvement.h"
 
 void ajouteValAlea(jeu *p){
 	int ligne;

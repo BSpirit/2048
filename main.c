@@ -1,3 +1,4 @@
+#include "couleurs_terminal.h"
 #include "grille.h"
 #include "partie.h"
 #include <time.h>

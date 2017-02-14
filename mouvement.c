@@ -1,5 +1,7 @@
+#include "couleurs_terminal.h"
+#include "grille.h"
 #include "mouvement.h"
-
+#include "saisieM.h"
 
 int mouvementLigne(jeu *p, int ligne, int direction){
 	int colonne; 

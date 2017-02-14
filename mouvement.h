@@ -1,8 +1,6 @@
 #ifndef MOUVEMENT_H
 #define MOUVEMENT_H
 
-#include "grille.h"
-#include "saisieM.h"
 
 /*! * Effectue les mouvements (à gauche et à droite) des cases d'une ligne.
 	* Renvoie 1 si l'on a déplacé au moins une case, 0 sinon

@@ -1,10 +1,6 @@
 #ifndef GRILLE_H
 #define GRILLE_H
 
-#include "couleurs_terminal.h"
-#include <stdlib.h>
-#include <stdio.h>
-
 //Définition de la structure jeu
 typedef struct{
 	int n; //taille de la grille = n*n 

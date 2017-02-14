@@ -1,9 +1,7 @@
 #ifndef PARTIE_H
 #define PARTIE_H
 
-#include "grille.h"
-#include "mouvement.h"
-#include <stdlib.h>
+
 
 /*! * Ajoute une valeur (2 ou 4 choisi aléatoirement) sur une case vide
 	* (elle aussi choisie aléatoirement)
