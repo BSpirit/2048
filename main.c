@@ -11,12 +11,12 @@ int main(){
 	jeu p;
 	int choix;
 
-
-	if(chargement(&p)){
-		affichage(&p);
-		printf("Partie actuelle \n\n");
-		printf("Bienvenue dans le jeu du 2048 : \n");
-	}
+	initialiseJeu(&p, 3, 2048);
+	ajouteValAlea(&p);
+	chargement(&p);
+	affichage(&p);
+	printf("Partie actuelle \n\n");
+	printf("Bienvenue dans le jeu du 2048 : \n");
 	choix = menu();
 
 	do{
@@ -29,9 +29,9 @@ int main(){
 				affichage(&p);
 				choix = menu();
 			case 2 :
-				affichage(&p);
-				jouer(&p);
-				affichage(&p);
+					affichage(&p);
+					jouer(&p);
+					affichage(&p);
 				choix = menu();
 				break;
 			case 3 :
