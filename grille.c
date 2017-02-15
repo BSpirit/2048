@@ -120,8 +120,6 @@ void affichage(jeu * p){
 		}
 	}
 	printf("\n");
-	printf("Valeur à atteindre : %d\n", p->valMax);
-	printf("Nombre de cases libres : %d\n", p->nbCasesLibres);
 
 	if(gagne(p))
 		printf("Vous avez gagné ! \n\n");

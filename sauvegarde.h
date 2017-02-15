@@ -22,7 +22,8 @@ int chargement(jeu *p);
 
 
 /*! * Affiche le menu :
-    * 1 - Jouer
+    * 1 - Créer nouvelle partie
+    * 1 - Continuer
     * 2 - Sauvegarder
     * 3 - Charger
     * 4 - Quitter

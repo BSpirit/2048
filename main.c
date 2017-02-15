@@ -11,20 +11,30 @@ int main(){
 	jeu p;
 	int choix;
 
-	initialiseJeu(&p, 3, 2048);
-	ajouteValAlea(&p);
-	affichage(&p);
+
+	if(chargement(&p)){
+		affichage(&p);
+		printf("Partie actuelle \n\n");
+		printf("Bienvenue dans le jeu du 2048 : \n");
+	}
 	choix = menu();
 
 	do{
 		switch(choix){
 			case 1 :
+				printf("Taille de la grille ? [3 = 3*3, etc.] : \n");
+				scanf("%d", &p.n);
+				initialiseJeu(&p, p.n, 2048);
+				ajouteValAlea(&p);
+				affichage(&p);
+				choix = menu();
+			case 2 :
 				affichage(&p);
 				jouer(&p);
 				affichage(&p);
 				choix = menu();
 				break;
-			case 2 :
+			case 3 :
 				affichage(&p);
 				if(sauvegarde(&p))
 					printf("Sauvegarde OK\n\n");
@@ -32,20 +42,17 @@ int main(){
 					printf("Erreur de sauvegarde\n\n");
 				choix = menu();
 				break;
-			case 3 : 
-				if(chargement(&p))
-					printf("Chargement OK\n\n");
-				else
-					printf("Erreur de chargement\n\n");
+			case 4 : 
+				chargement(&p);
 				affichage(&p);
 				choix = menu();
 				break;
-			case 4 :
+			case 5 :
 				break;
 			default :
 				break;
 		}
-	}while(choix!=4);
+	}while(choix!=5);
 
 	libereMemoire(&p);
 
