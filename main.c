@@ -15,11 +15,10 @@ int main(){
 		ajouteValAlea(&p);
 	}
 	affichage(&p);
+	printf("\nBienvenue dans le jeu du 2048 : \n");
 
 	int choix;
 	do{
-
-		printf("\nBienvenue dans le jeu du 2048 : \n");
 		choix = menu();
 		switch(choix){
 			case 1 :
@@ -33,6 +32,7 @@ int main(){
 					initialiseJeu(&p, taille, 2048);
 					ajouteValAlea(&p);
 					affichage(&p);
+					printf("Grille créée, veuillez choisir une option\n");
 				}else
 					affichage(&p);
 				break;

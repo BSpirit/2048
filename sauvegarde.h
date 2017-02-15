@@ -41,7 +41,7 @@ int chargementScore();
 
 /*! * Affiche le menu :
     * 1 - Créer nouvelle partie
-    * 2 - Continuer
+    * 2 - Jouer
     * 3 - Sauvegarder
     * 4 - Charger
     * 5 _ Afficher scores

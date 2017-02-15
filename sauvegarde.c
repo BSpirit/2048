@@ -58,8 +58,11 @@ int sauvegardeScore(int score){
     if(f==NULL)
         return 0;
 
-    printf("Nom du joueur ? \n");
+    printf("Nom du joueur ? [0 pour annuler] \n");
     scanf("%s", nom);
+
+    if(nom[0]=='0')
+        return 0;
 
     fprintf(f, "%s : %d\n", nom, score);
 
@@ -96,7 +99,7 @@ int menu(){
 
     printf("\n");
     printf("1 - Créer nouvelle partie \n");
-    printf("2 - Continuer \n");
+    printf("2 - Jouer \n");
     printf("3 - Sauvegarder \n");
     printf("4 - Charger \n");
     printf("5 - Afficher scores \n");

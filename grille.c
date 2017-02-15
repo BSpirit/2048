@@ -118,7 +118,7 @@ void affichage(jeu * p){
 		}
 	}
 	printf("\n");
-	printf("Score : %d\n", p->score);
+	printf("Score : %d\n\n", p->score);
 
 	if(gagne(p))
 		printf("Vous avez gagné ! \n\n");
