@@ -14,6 +14,7 @@ int sauvegarde(jeu *p){
     fprintf(f, "%d ", p->n);
     fprintf(f, "%d ", p->valMax);
     fprintf(f, "%d ", p->nbCasesLibres);
+    fprintf(f, "%d ", p->score);
 
     int i;
     for(i=0; i<p->n*p->n; i++)
@@ -36,8 +37,9 @@ int chargement(jeu *p){
     fscanf(f, "%d ", &p->n);
     fscanf(f, "%d ", &p->valMax);
     fscanf(f, "%d ", &p->nbCasesLibres);
+    fscanf(f, "%d ", &p->score);
 
-    initialiseJeu(p, p->n, p->valMax);
+    p->grille = (int*)malloc((p->n*p->n)*sizeof(int));
 
     int i;
     for(i=0; i<p->n*p->n; i++)

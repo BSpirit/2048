@@ -31,9 +31,9 @@ int mouvementLigne(jeu *p, int ligne, int direction){
 	
 	for(colonne=depBoucle; colonne<p->n && colonne>=0; colonne+=direction){
 		if(getVal(p, ligne, colonne) > 0 && getVal(p, ligne, colonne) == getVal(p, ligne, colonne+direction)){
+			p->score+=getVal(p, ligne, colonne);
 			setVal(p, ligne, colonne, 2*getVal(p, ligne, colonne));
 			setVal(p, ligne, colonne+direction, 0);
-			//p->nbCasesLibres++;
 			compteur++;
 			int i;
 			for(i=colonne; i<p->n && i>=0; i+=direction){
@@ -93,9 +93,9 @@ int mouvementColonne(jeu *p, int colonne, int direction){
 	
 	for(ligne=depBoucle; ligne<p->n && ligne>=0; ligne+=direction){
 		if(getVal(p, ligne, colonne) > 0 && getVal(p, ligne, colonne) == getVal(p, ligne+direction, colonne)){
+			p->score+=getVal(p, ligne, colonne);
 			setVal(p, ligne, colonne, 2*getVal(p, ligne, colonne));
 			setVal(p, ligne+direction, colonne, 0);
-			//p->nbCasesLibres++;
 			compteur++;
 			int i;
 			for(i=ligne; i<p->n && i>=0; i+=direction){

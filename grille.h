@@ -6,11 +6,12 @@ typedef struct{
 	int n; //taille de la grille = n*n 
 	int valMax; // valeur à atteindre pour gagner
 	int nbCasesLibres; //nbre de cases libres sur la grille
+	int score; //score de la partie en cours
 	int *grille;
 }jeu;
 
 
-/*! * Initialise les champs n et valmax avec les valeurs passées en paramètre, initialise nbCasesLibres
+/*! * Initialise les champs n et valmax avec les valeurs passées en paramètre, initialise nbCasesLibres et score
 	* Alloue la grille de la variable jeu passée par adresse
 	* Initialise les cases de la grille avec des cases vides  (valeurs nulles)
 	*

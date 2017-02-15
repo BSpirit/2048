@@ -78,6 +78,9 @@ int jouer(jeu *p){
 	int saisie;
 	int deplacement; // Test s'il y a eu un déplacement
 
+	affichage(p);
+	printf("ECHAP : Accéder au menu \n");
+
 	do{
 
 		saisie = saisieD();
@@ -86,6 +89,7 @@ int jouer(jeu *p){
 			if(deplacement)
 				ajouteValAlea(p);
 		affichage(p);
+		printf("ECHAP : Accéder au menu \n");
 		}
 	}while(saisie != -1 && !finPartie(p));
 

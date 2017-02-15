@@ -4,14 +4,12 @@
 #include <stdlib.h>
 #include "partie.h"
 
-
-
-
 void initialiseJeu(jeu *p, int n, int valMax){
 	//Initialisation des variables
 	p->n = n;
 	p->nbCasesLibres = n*n; 
 	p->valMax = valMax;
+	p->score = 0;
 
 	//allocation dynamique de la taille de la grille
 	p->grille = (int*) malloc(p->nbCasesLibres*sizeof(int));
@@ -120,6 +118,7 @@ void affichage(jeu * p){
 		}
 	}
 	printf("\n");
+	printf("Score : %d\n", p->score);
 
 	if(gagne(p))
 		printf("Vous avez gagné ! \n\n");
