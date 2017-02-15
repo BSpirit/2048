@@ -1,8 +1,6 @@
 #ifndef SAISIE_M_H
 #define SAISIE_M_H
 
-
-
 /*
  * Touches du clavier correspondant aux flèches (haut, bas, gauche, droite) + touche echap + autre touche
  */ 
