@@ -4,7 +4,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-int sauvegarde(jeu *p){
+int sauvegardeJeu(jeu *p){
     FILE *f;
     f = fopen("test.txt", "wt");
 
@@ -26,7 +26,7 @@ int sauvegarde(jeu *p){
 }
 
 
-int chargement(jeu *p){
+int chargementJeu(jeu *p){
     FILE *f;
 
     f = fopen("test.txt", "rt");
@@ -50,6 +50,46 @@ int chargement(jeu *p){
     return 1;
 }
 
+int sauvegardeScore(int score){
+    FILE *f;
+    char nom[20];
+    f = fopen("score.txt", "at");
+
+    if(f==NULL)
+        return 0;
+
+    printf("Nom du joueur ? \n");
+    scanf("%s", nom);
+
+    fprintf(f, "%s : %d\n", nom, score);
+
+    fclose(f);
+
+    return 1;
+}
+
+int chargementScore(){
+    FILE *f;
+    char nom[20];
+    int score;
+    f = fopen("score.txt", "rt");
+
+    if(f==NULL)
+        return 0;
+
+    printf("Scores : \n");
+    while(!feof(f)){
+        fscanf(f, "%s : %d\n", nom, &score);
+        printf("%s : %d\n", nom, score);    
+    }
+
+    printf("\n");
+
+    fclose(f);
+
+    return 1;
+}
+
 
 int menu(){
     int choix;
@@ -59,12 +99,13 @@ int menu(){
     printf("2 - Continuer \n");
     printf("3 - Sauvegarder \n");
     printf("4 - Charger \n");
-    printf("5 - Quitter \n");
+    printf("5 - Afficher scores \n");
+    printf("6 - Quitter \n");
     printf("\n");
 
     do{
         scanf("%d", &choix);
-    }while(choix!=1 && choix!=2 && choix!=3 && choix!=4 && choix!=5);
+    }while(choix!=1 && choix!=2 && choix!=3 && choix!=4 && choix!=5 && choix!=6);
 
     return choix;
 }

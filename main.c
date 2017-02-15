@@ -10,38 +10,64 @@ int main(){
 	srand((unsigned int)time(NULL));
 	jeu p;
 	int choix;
+	int fin;
 
-	if(!chargement(&p)){
+	if(!chargementJeu(&p)){
 		initialiseJeu(&p, 3, 2048);
 		ajouteValAlea(&p);
 	}
+	affichage(&p);
 
 	do{
-		affichage(&p);
-		printf("Partie actuelle\n\n");
-		printf("Bienvenue dans le jeu du 2048 : \n");
+		printf("\nBienvenue dans le jeu du 2048 : \n");
 		choix = menu();
 		switch(choix){
 			case 1 :
-				printf("Taille de la grille ? [3 = 3*3, etc.] : \n");
-				scanf("%d", &p.n);
-				initialiseJeu(&p, p.n, 2048);
-				ajouteValAlea(&p);
+				clear_terminal();
+				do{
+					printf("Taille de la grille ? [3 = 3*3, etc.] [-1 pour annuler] : \n");
+					scanf("%d", &p.n);
+				}while(p.n<-1);
+				if(p.n>0){
+					initialiseJeu(&p, p.n, 2048);
+					ajouteValAlea(&p);
+					affichage(&p);
+				}else
+					affichage(&p);
+				break;
 			case 2 :
-				jouer(&p);
+				fin = jouer(&p);
+				if(fin)
+					sauvegardeScore(p.score);
+				affichage(&p);
 				break;
 			case 3 :
-				sauvegarde(&p);
+				affichage(&p);
+				if(sauvegardeJeu(&p))
+					printf("Sauvegarde OK\n");
+				else
+					printf("Erreur sauvegarde\n");
 				break;
 			case 4 : 
-				chargement(&p);
+				if(chargementJeu(&p)){
+					affichage(&p);
+					printf("Chargement OK\n");
+				}else{
+					affichage(&p);
+					printf("Pas de partie à charger \n");
+				}
 				break;
 			case 5 :
+				affichage(&p);
+				if(!chargementScore())
+					printf("Aucun score enregistré \n\n");
+				break;
+			case 6 :
 				break;
 			default :
 				break;
 		}
-	}while(choix!=5);
+	}while(choix!=6);
 
 	libereMemoire(&p);
 

@@ -79,6 +79,7 @@ int jouer(jeu *p){
 	int deplacement; // Test s'il y a eu un déplacement
 
 	affichage(p);
+	printf("Utilisez les flèches pour jouer \n");
 	printf("ECHAP : Accéder au menu \n");
 
 	do{
@@ -89,6 +90,7 @@ int jouer(jeu *p){
 			if(deplacement)
 				ajouteValAlea(p);
 		affichage(p);
+		printf("Utilisez les flèches pour jouer \n");
 		printf("ECHAP : Accéder au menu \n");
 		}
 	}while(saisie != -1 && !finPartie(p));

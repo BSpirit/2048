@@ -9,7 +9,7 @@
     *
     * \param p : pointeur sur la partie en cours
     */
-int sauvegarde(jeu *p);
+int sauvegardeJeu(jeu *p);
 
 
 /*! * Fonction chargeant la dernière partie sauvegardée
@@ -18,15 +18,34 @@ int sauvegarde(jeu *p);
     *
     * \param p : pointeur sur la partie en cours
     */
-int chargement(jeu *p);
+int chargementJeu(jeu *p);
+
+
+/*! * Fonction sauvegardant un score
+    * Retourne 0 en cas de problème
+    * Retourne 1 sinon
+    *
+    * \param score : score à enregistrer
+    */
+int sauvegardeScore(int score);
+
+/*! * Fonction chargeant la liste des scores
+    * Retourne 0 en cas de problème
+    * Retourne 1 sinon
+    *
+    * \param score : score à enregistrer
+    */
+int chargementScore();
+
 
 
 /*! * Affiche le menu :
     * 1 - Créer nouvelle partie
-    * 1 - Continuer
-    * 2 - Sauvegarder
-    * 3 - Charger
-    * 4 - Quitter
+    * 2 - Continuer
+    * 3 - Sauvegarder
+    * 4 - Charger
+    * 5 _ Afficher scores
+    * 6 - Quitter
     * Retourne la valeur saisie par l'utilisateur
     */
 int menu();
