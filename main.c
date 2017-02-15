@@ -13,10 +13,10 @@ int main(){
 
 	initialiseJeu(&p, 3, 2048);
 	ajouteValAlea(&p);
+	affichage(&p);
+	choix = menu();
 
 	do{
-		affichage(&p);
-		choix = menu();
 		switch(choix){
 			case 1 :
 				affichage(&p);
@@ -25,14 +25,18 @@ int main(){
 				choix = menu();
 				break;
 			case 2 :
+				affichage(&p);
 				if(sauvegarde(&p))
 					printf("Sauvegarde OK\n\n");
 				else
 					printf("Erreur de sauvegarde\n\n");
+				choix = menu();
 				break;
 			case 3 : 
-				printf("%d", chargement(&p));
-				jouer(&p);
+				if(chargement(&p))
+					printf("Chargement OK\n\n");
+				else
+					printf("Erreur de chargement\n\n");
 				affichage(&p);
 				choix = menu();
 				break;

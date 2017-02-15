@@ -46,9 +46,7 @@ int chargement(jeu *p){
         fscanf(f, "%d ", &p->grille[i]);
         
     fclose(f);
-
-    affichage(p);
-
+    
     return 1;
 }
 
