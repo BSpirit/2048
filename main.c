@@ -9,8 +9,6 @@ int main(){
 
 	srand((unsigned int)time(NULL));
 	jeu p;
-	int choix;
-	int fin;
 
 	if(!chargementJeu(&p)){
 		initialiseJeu(&p, 3, 2048);
@@ -18,26 +16,28 @@ int main(){
 	}
 	affichage(&p);
 
+	int choix;
 	do{
+
 		printf("\nBienvenue dans le jeu du 2048 : \n");
 		choix = menu();
 		switch(choix){
 			case 1 :
 				clear_terminal();
+				int taille;
 				do{
-					printf("Taille de la grille ? [3 = 3*3, etc.] [-1 pour annuler] : \n");
-					scanf("%d", &p.n);
-				}while(p.n<-1);
-				if(p.n>0){
-					initialiseJeu(&p, p.n, 2048);
+					printf("Taille de la grille ? [3 = 3*3, etc.] [0 pour annuler] : \n");
+					scanf("%d", &taille);
+				}while(taille<0);
+				if(taille>0){
+					initialiseJeu(&p, taille, 2048);
 					ajouteValAlea(&p);
 					affichage(&p);
 				}else
 					affichage(&p);
 				break;
 			case 2 :
-				fin = jouer(&p);
-				if(fin)
+				if(jouer(&p))
 					sauvegardeScore(p.score);
 				affichage(&p);
 				break;
