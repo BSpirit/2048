@@ -6,15 +6,21 @@
 
 int sauvegarde(jeu *p){
     FILE *f;
-
-    f = fopen("test.dat", "wb");
+    f = fopen("test.txt", "wt");
 
     if(f==NULL){
         printf("Erreur de fopen \n");
         return 0;
     }
 
-    fwrite(p->grille, sizeof(int), p->n, f);
+    fprintf(f, "%d ", p->n);
+    fprintf(f, "%d ", p->valMax);
+    fprintf(f, "%d ", p->nbCasesLibres);
+
+    int i;
+    for(i=0; i<p->n*p->n; i++)
+        fprintf(f, "%d ", p->grille[i]);
+
     fclose(f);
 
     return 1;
@@ -24,15 +30,24 @@ int sauvegarde(jeu *p){
 int chargement(jeu *p){
     FILE *f;
 
-    f = fopen("test.dat", "rb");
+    f = fopen("test.txt", "rt");
 
     if(f==NULL){
         printf("Erreur de fopen \n");
         return 0;
     }
 
-    fread(p->grille, sizeof(int), p->n, f);
+    fscanf(f, "%d ", &p->n);
+    fscanf(f, "%d ", &p->valMax);
+    fscanf(f, "%d ", &p->nbCasesLibres);
+
+    int i;
+    for(i=0; i<p->n*p->n; i++)
+        fscanf(f, "%d ", &p->grille[i]);
+        
     fclose(f);
+
+    affichage(p);
 
     return 1;
 }

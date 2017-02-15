@@ -78,9 +78,6 @@ int jouer(jeu *p){
 	int saisie;
 	int deplacement; // Test s'il y a eu un déplacement
 
-	ajouteValAlea(p);
-	affichage(p);
-	
 	do{
 
 		saisie = saisieD();

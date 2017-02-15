@@ -11,23 +11,30 @@ int main(){
 	jeu p;
 	int choix;
 
+	initialiseJeu(&p, 3, 2048);
+	ajouteValAlea(&p);
+
 	do{
+		affichage(&p);
 		choix = menu();
 		switch(choix){
 			case 1 :
-				initialiseJeu(&p, 3, 2048);
+				affichage(&p);
 				jouer(&p);
 				affichage(&p);
 				choix = menu();
 				break;
 			case 2 :
-				printf("%d", sauvegarde(&p));
+				if(sauvegarde(&p))
+					printf("Sauvegarde OK\n\n");
+				else
+					printf("Erreur de sauvegarde\n\n");
 				break;
 			case 3 : 
-				initialiseJeu(&p, 3, 2048);
 				printf("%d", chargement(&p));
 				jouer(&p);
 				affichage(&p);
+				choix = menu();
 				break;
 			case 4 :
 				break;

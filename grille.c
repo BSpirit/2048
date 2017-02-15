@@ -124,7 +124,7 @@ void affichage(jeu * p){
 	printf("Nombre de cases libres : %d\n", p->nbCasesLibres);
 
 	if(gagne(p))
-		printf("Vous avez gagné ! \n");
+		printf("Vous avez gagné ! \n\n");
 	else if(perdu(p))
-		printf("Vous avez perdu ! \n");
+		printf("Vous avez perdu ! \n\n");
 }
