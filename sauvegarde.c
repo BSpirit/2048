@@ -16,14 +16,11 @@ int sauvegardeJeu(jeu *p){
 		scanf("%c", &saisie);
 	}while(saisie!= 'a' && saisie!='b' && saisie!='c' && saisie!='A' && saisie!='B' && saisie!='C');
 
-	if(saisie<='A' && saisie>='Z')
-		saisie = saisie -'A' + 'a';
-
-	if(saisie=='a')
+	if(saisie=='a' || saisie=='A')
 			strcpy(nomF, "./Saves/SaveA.txt");
-	if(saisie=='b')
+	if(saisie=='b'|| saisie=='B')
 			strcpy(nomF, "./Saves/SaveB.txt");
-	if(saisie=='c')
+	if(saisie=='c' || saisie=='C')
 			strcpy(nomF, "./Saves/SaveC.txt");
 
     f = fopen(nomF, "rt");
@@ -61,7 +58,7 @@ int sauvegardeJeu(jeu *p){
 
 int chargementJeu(jeu *p){
     FILE *f;
-	char nomF[10];
+	char nomF[20];
 	char saisie;
 
 
@@ -70,14 +67,11 @@ int chargementJeu(jeu *p){
 		scanf("%c", &saisie);
 	}while(saisie!= 'a' && saisie!='b' && saisie!='c' && saisie!='A' && saisie!='B' && saisie!='C');
 
-	if(saisie<='A' && saisie>='Z')
-		saisie = saisie -'A' + 'a';
-
-	if(saisie=='a')
+	if(saisie=='a' || saisie=='A')
 			strcpy(nomF, "./Saves/SaveA.txt");
-	if(saisie=='b')
+	if(saisie=='b'|| saisie=='B')
 			strcpy(nomF, "./Saves/SaveB.txt");
-	if(saisie=='c')
+	if(saisie=='c' || saisie=='C')
 			strcpy(nomF, "./Saves/SaveC.txt");
 
 
@@ -93,7 +87,7 @@ int chargementJeu(jeu *p){
     fscanf(f, "%d ", &p->nbCasesLibres);
 
     p->grille = (int*)malloc((p->n*p->n)*sizeof(int));
-    
+
     int i;
     for(i=0; i<p->n*p->n; i++)
         fscanf(f, "%d ", &p->grille[i]);
