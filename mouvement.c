@@ -48,7 +48,7 @@ int mouvementLigne(jeu *p, int ligne, int direction){
 		}
 	}
 
-	//Si on a fait un mouvement on retourne 1
+	//Retourne 1 si mouvement
 	if(compteur > 0)
 		return 1;
 
@@ -64,7 +64,7 @@ int mouvementLignes(jeu *p, int direction){
 	for(ligne=0; ligne<p->n; ligne++)
 		compteur += mouvementLigne(p, ligne, direction);
 
-	//Si on a fait un mouvement on retourne 1
+	//Retourne 1 si mouvement
 	if(compteur>0)
 		return 1;
 
@@ -81,7 +81,6 @@ int mouvementColonne(jeu *p, int colonne, int direction){
 	do{ 
 		flag = 0;
 		for(ligne=0;ligne<p->n;ligne++){
-		for(colonne=0;colonne<p->n;colonne++){
 			//Si la case actuelle est vide et la case adjacente (sur la colonne) a une valeur positive, on "tasse"
 			if(getVal(p, ligne, colonne) == 0 && getVal(p, ligne+direction, colonne) > 0 ){
 				setVal(p, ligne, colonne, getVal(p, ligne+direction, colonne));
@@ -106,9 +105,9 @@ int mouvementColonne(jeu *p, int colonne, int direction){
 			setVal(p, ligne, colonne, 2*getVal(p, ligne, colonne));
 			setVal(p, ligne+direction, colonne, 0);
 			compteur++;
-			//Boucle interne permettant de retasser si "fusion" de cases
 			int i;
 			for(i=ligne; i<p->n && i>=0; i+=direction){
+			//Boucle interne permettant de retasser si "fusion" de cases
 				if(getVal(p, i, colonne) == 0 && getVal(p, i+direction, colonne) > 0 ){
 					setVal(p, i, colonne, getVal(p, i+direction, colonne));
 					setVal(p, i+direction, colonne, 0);
@@ -117,7 +116,7 @@ int mouvementColonne(jeu *p, int colonne, int direction){
 		}
 	}
 
-	//Si on a fait un mouvement on retourne 1
+	//Retourne 1 si mouvement
 	if(compteur > 0)
 		return 1;
 
@@ -133,7 +132,7 @@ int mouvementColonnes(jeu *p, int direction){
 	for(colonne=0; colonne<p->n; colonne++)
 		compteur += mouvementColonne(p, colonne, direction);
 
-	//Si on a fait un mouvement on retourne 1
+	//Retourne 1 si mouvement
 	if(compteur>0)
 		return 1;
 

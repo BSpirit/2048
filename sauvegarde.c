@@ -12,18 +12,21 @@ int sauvegardeJeu(jeu *p){
 	char saisie;
 
     //On demande à l'utilisateur de choisir un slot de sauvegarde
-	printf("Veuillez choisir un slot de sauvegarde [a/b/c] \n");
+	printf("Veuillez choisir un slot de sauvegarde [1/2/3] [0 pour annuler] \n");
 	do{
 		scanf("%c", &saisie);
-	}while(saisie!= 'a' && saisie!='b' && saisie!='c' && saisie!='A' && saisie!='B' && saisie!='C');
+	}while(saisie!= '1' && saisie!='2' && saisie!='3' && saisie!='0');
+
+    if(saisie=='0')
+        return 0;
 
     //Assigne un fichier à nomF en fonction du slot choisi
-	if(saisie=='a' || saisie=='A')
-			strcpy(nomF, "./Saves/SaveA.txt");
-	if(saisie=='b'|| saisie=='B')
-			strcpy(nomF, "./Saves/SaveB.txt");
-	if(saisie=='c' || saisie=='C')
-			strcpy(nomF, "./Saves/SaveC.txt");
+	if(saisie=='1')
+			strcpy(nomF, "./Saves/Save1.txt");
+	if(saisie=='2')
+			strcpy(nomF, "./Saves/Save2.txt");
+	if(saisie=='3')
+			strcpy(nomF, "./Saves/Save3.txt");
 
     //On test l'existance du fichier, s'il existe on demande à l'utilisateur s'il souhaite l'écraser
     f = fopen(nomF, "rt");
@@ -50,6 +53,7 @@ int sauvegardeJeu(jeu *p){
     fprintf(f, "%d ", p->n);
     fprintf(f, "%d ", p->valMax);
     fprintf(f, "%d ", p->nbCasesLibres);
+    fprintf(f, "%d ", p->score);
 
     int i;
     for(i=0; i<p->n*p->n; i++)
@@ -68,18 +72,21 @@ int chargementJeu(jeu *p){
 	char saisie;
 
     //On demande à l'utilisateur quelle sauvegarde il souhaite charger
-	printf("Veuillez choisir un slot de sauvegarde à charger [a/b/c] \n");
+	printf("Veuillez choisir un slot de sauvegarde à charger [1/2/3] [0 pour annuler] \n");
 	do{
 		scanf("%c", &saisie);
-	}while(saisie!= 'a' && saisie!='b' && saisie!='c' && saisie!='A' && saisie!='B' && saisie!='C');
+	}while(saisie!= '1' && saisie!='2' && saisie!='3' && saisie!='0');
+
+    if(saisie=='0')
+        return 0;
 
     //Assigne un fichier à nomF en fonction du slot choisi
-	if(saisie=='a' || saisie=='A')
-			strcpy(nomF, "./Saves/SaveA.txt");
-	if(saisie=='b'|| saisie=='B')
-			strcpy(nomF, "./Saves/SaveB.txt");
-	if(saisie=='c' || saisie=='C')
-			strcpy(nomF, "./Saves/SaveC.txt");
+	if(saisie=='1')
+			strcpy(nomF, "./Saves/Save1.txt");
+	if(saisie=='2')
+			strcpy(nomF, "./Saves/Save2.txt");
+	if(saisie=='3')
+			strcpy(nomF, "./Saves/Save3.txt");
 
     //On test l'existance du fichier, s'il n'existe pas on retourne 0
 	f = fopen(nomF, "rt");
@@ -90,6 +97,7 @@ int chargementJeu(jeu *p){
     fscanf(f, "%d ", &p->n);
     fscanf(f, "%d ", &p->valMax);
     fscanf(f, "%d ", &p->nbCasesLibres);
+    fscanf(f, "%d ", &p->score);
 
     //On refait une allocation de la grille, dont la taille peut avoir changée
     p->grille = (int*)malloc((p->n*p->n)*sizeof(int));
