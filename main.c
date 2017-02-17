@@ -42,10 +42,13 @@ int main(){
 				break;
 			case 3 :
 				affichage(&p);
-				if(sauvegardeJeu(&p))
+				if(sauvegardeJeu(&p)){
+					affichage(&p);
 					printf("Sauvegarde OK\n");
-				else
-					printf("Erreur sauvegarde\n");
+				}else{
+					affichage(&p);
+					printf("Sauvegarde annulée\n");
+				}
 				break;
 			case 4 : 
 				clear_terminal();

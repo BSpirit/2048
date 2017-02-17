@@ -119,9 +119,9 @@ void affichage(jeu * p){
 	}
 	printf("\n");
 	printf("Score : %d\n\n", p->score);
-	printf("ValMax : %d\n\n", p->valMax);
+	/*printf("ValMax : %d\n\n", p->valMax);
 	printf("N : %d\n\n", p->n);
-	printf("nbCasesLibres : %d\n\n", p->nbCasesLibres);
+	printf("nbCasesLibres : %d\n\n", p->nbCasesLibres);*/
 
 	if(gagne(p))
 		printf("Vous avez gagné ! \n\n");
