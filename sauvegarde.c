@@ -3,18 +3,51 @@
 #include "sauvegarde.h"
 #include <stdio.h>
 #include <stdlib.h>
+#include <string.h>
+
 
 int sauvegardeJeu(jeu *p){
     FILE *f;
-    f = fopen("test.txt", "wt");
+	char nomF[20];
+	char saisie;
 
-    if(f==NULL)
+		printf("Veuillez choisir un slot de sauvegarde [a/b/c] \n");
+	do{
+		scanf("%c", &saisie);
+	}while(saisie!= 'a' && saisie!='b' && saisie!='c' && saisie!='A' && saisie!='B' && saisie!='C');
+
+	if(saisie<='A' && saisie>='Z')
+		saisie = saisie -'A' + 'a';
+
+	if(saisie=='a')
+			strcpy(nomF, "./Saves/SaveA.txt");
+	if(saisie=='b')
+			strcpy(nomF, "./Saves/SaveB.txt");
+	if(saisie=='c')
+			strcpy(nomF, "./Saves/SaveC.txt");
+
+    f = fopen(nomF, "rt");
+	if(!(f==NULL)){
+		printf("Une sauvegarde existe déjà, voulez vous l'écraser ?[o/n]\n");
+		do{
+			scanf("%c", &saisie);
+		}while(saisie!='o' && saisie!='n' && saisie!='O' && saisie!='N');
+		if(saisie=='n' || saisie=='N'){
+			fclose(f);
+			return 0;
+		}
+	}
+
+	f = fopen(nomF, "wt");
+
+    if(f==NULL){
+        printf("Erreur de fopen \n");
         return 0;
+    }
 
     fprintf(f, "%d ", p->n);
     fprintf(f, "%d ", p->valMax);
     fprintf(f, "%d ", p->nbCasesLibres);
-    fprintf(f, "%d ", p->score);
 
     int i;
     for(i=0; i<p->n*p->n; i++)
@@ -28,25 +61,45 @@ int sauvegardeJeu(jeu *p){
 
 int chargementJeu(jeu *p){
     FILE *f;
+	char nomF[10];
+	char saisie;
 
-    f = fopen("test.txt", "rt");
 
-    if(f==NULL)
+		printf("Veuillez choisir un slot de sauvegarde à charger [a/b/c] \n");
+	do{
+		scanf("%c", &saisie);
+	}while(saisie!= 'a' && saisie!='b' && saisie!='c' && saisie!='A' && saisie!='B' && saisie!='C');
+
+	if(saisie<='A' && saisie>='Z')
+		saisie = saisie -'A' + 'a';
+
+	if(saisie=='a')
+			strcpy(nomF, "./Saves/SaveA.txt");
+	if(saisie=='b')
+			strcpy(nomF, "./Saves/SaveB.txt");
+	if(saisie=='c')
+			strcpy(nomF, "./Saves/SaveC.txt");
+
+
+	f = fopen(nomF, "rt");
+
+    if(f==NULL){
+        printf("La sauvegarde n'existe pas \n");
         return 0;
+    }
 
     fscanf(f, "%d ", &p->n);
     fscanf(f, "%d ", &p->valMax);
     fscanf(f, "%d ", &p->nbCasesLibres);
-    fscanf(f, "%d ", &p->score);
 
     p->grille = (int*)malloc((p->n*p->n)*sizeof(int));
-
+    
     int i;
     for(i=0; i<p->n*p->n; i++)
         fscanf(f, "%d ", &p->grille[i]);
-        
+
     fclose(f);
-    
+
     return 1;
 }
 

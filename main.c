@@ -10,12 +10,11 @@ int main(){
 	srand((unsigned int)time(NULL));
 	jeu p;
 
-	if(!chargementJeu(&p)){
-		initialiseJeu(&p, 3, 2048);
-		ajouteValAlea(&p);
-	}
+	initialiseJeu(&p, 3, 2048);
+	ajouteValAlea(&p);
 	affichage(&p);
-	printf("\nBienvenue dans le jeu du 2048 : \n");
+	printf("Partie actuelle \n");
+	printf("Bienvenue dans le jeu du 2048 : \n");
 
 	int choix;
 	do{
@@ -49,6 +48,7 @@ int main(){
 					printf("Erreur sauvegarde\n");
 				break;
 			case 4 : 
+				clear_terminal();
 				if(chargementJeu(&p)){
 					affichage(&p);
 					printf("Chargement OK\n");
