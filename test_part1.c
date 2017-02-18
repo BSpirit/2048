@@ -1,7 +1,10 @@
 #include<stdio.h>
 #include<stdlib.h>
 #include<assert.h>
-#include "header/functions.h"
+
+#include "couleurs_terminal.h"
+#include "grille.h"
+#include "test_part.h"
 
 int termine(const char *ch){
     printf("***********************\n");
@@ -117,7 +120,7 @@ int test_fonction_set_val(){
     jeu * tmp = &jeu_test;
 
     initialiseJeu(tmp,n,vMax);
-    printf("nbCase :  %d, n : %d, valMax %d \n", tmp->nbCasesLibres, tmp->n, tmp->valMax);
+
     int res = setVal(tmp, 1,1,5);
     
     if(res != 1)

@@ -2,9 +2,8 @@
 #define SAUVEGARDE_H
 
 
-
 /*! * Fonction sauvegardant la partie en cours
-    * Retourne 0 en cas de problème
+    * Retourne 0 en cas de problème ou si l'utilisateur annule
     * Retourne 1 sinon
     *
     * \param p : pointeur sur la partie en cours
@@ -13,7 +12,7 @@ int sauvegardeJeu(jeu *p);
 
 
 /*! * Fonction chargeant la dernière partie sauvegardée
-    * Retourne 0 en cas de problème
+    * Retourne 0 en cas de problème et si la sauvegarde n'existe pas
     * Retourne 1 sinon
     *
     * \param p : pointeur sur la partie en cours

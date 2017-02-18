@@ -38,7 +38,7 @@ int finPartie(jeu *p);
 /*! * Fonction permettant de jouer la partie en cours
 	* (On la suppose initialisée)
 	* Retourne 1 si la partie est terminée (gagnée ou perdu)
-	* Retourne 0 sinon (L'utilisateur a appuyé sur la touche echap ou la touche s)
+	* Retourne 0 sinon (L'utilisateur a appuyé sur la touche echap)
 	*
 	* \param p : pointeur sur la partie en cours
 	*/
