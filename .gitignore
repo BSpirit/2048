@@ -5,3 +5,6 @@
 caseVide.c
 test_part1
 2048
+.makefile.swp
+score.txt
+fonctions/
