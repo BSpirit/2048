@@ -252,8 +252,8 @@ void test_partie2(){
     if(somme != 5)
         termine("TOUS LES TESTS DE LA PARTIE 2 NE SONT PAS PASSES !");
     else{
-        printf("#########################\n");
+        printf("\033[32;01m#########################\n");
         printf("#   TESTS PARTIE 2 OK   #\n");
-        printf("#########################\n");
+        printf("#########################\033[00m\n");
     }
 }

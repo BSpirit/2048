@@ -7,10 +7,10 @@
 #include "test_part.h"
 
 int termine(const char *ch){
-    printf("***********************\n");
+    printf("\033[31;01m***********************\n");
     printf("******* Erreur ********\n");
     printf("***********************\n");
-    printf("* %s *\n", ch);
+    printf("* %s *\033[00m\n", ch);
     return 0;    
 }
 
@@ -186,8 +186,8 @@ void test_partie1(){
     if(somme != 4)
         termine("TOUS LES TESTS DE LA PARTIE 1 NE SONT PAS PASSES !");
     else{
-        printf("#########################\n");
+        printf("\033[32;01m#########################\n");
         printf("#   TESTS PARTIE 1 OK   #\n");
-        printf("#########################\n");
+        printf("#########################\033[00m\n");
     }
 }
