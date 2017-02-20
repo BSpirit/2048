@@ -53,7 +53,7 @@ int sauvegardeJeu(jeu *p){
 	fwrite( &p->n , sizeof(int) , 1 , f);
 	fwrite( &p->valMax , sizeof(int) , 1 , f);
 	fwrite( &p->nbCasesLibres , sizeof(int) , 1 , f);
-    fwrite(&p->score, sizeof(int), 1, f);
+    fwrite( &p->score, sizeof(int), 1, f);
 	fwrite( p->grille, sizeof(int), p->n*p->n, f);
 
     fclose(f);
@@ -111,7 +111,7 @@ int sauvegardeScore(int score){
     FILE *f;
     char nom[20];//Pour stocker le nom du jouer
 
-    f = fopen("score.txt", "at");
+    f = fopen("./Saves/score.bin", "ab");
     if(f==NULL)
         return 0;
 
@@ -122,7 +122,8 @@ int sauvegardeScore(int score){
         return 0;
 
     //Sauvegarde de son score
-    fprintf(f, "%s : %d\n", nom, score);
+    fwrite(nom, sizeof(nom), 1, f);
+    fwrite( &score, sizeof(int), 1, f);
 
     fclose(f);
 
@@ -135,16 +136,15 @@ int chargementScore(){
     char nom[20];//Pour afficher le nom
     int score;//Pour afficher le score
 
-    f = fopen("score.txt", "rt");
+    f = fopen("./Saves/score.bin", "rb");
     if(f==NULL)
         return 0;
 
     //On parcourt le fichier et affiche les noms et scores des joueurs
     printf("Scores : \n");
-    while(!feof(f)){
-        fscanf(f, "%s : %d\n", nom, &score);
+    while(fread( nom, sizeof(nom), 1, f)==1 && fread( &score, sizeof(int), 1, f)==1)
         printf("%s : %d\n", nom, score);    
-    }
+    
 
     printf("\n");
 
