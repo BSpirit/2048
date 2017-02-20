@@ -22,14 +22,14 @@ int sauvegardeJeu(jeu *p){
 
     //Assigne un fichier à nomF en fonction du slot choisi
 	if(saisie=='1')
-			strcpy(nomF, "./Saves/Save1.txt");
+			strcpy(nomF, "./Saves/Save1.bin");
 	if(saisie=='2')
-			strcpy(nomF, "./Saves/Save2.txt");
+			strcpy(nomF, "./Saves/Save2.bin");
 	if(saisie=='3')
-			strcpy(nomF, "./Saves/Save3.txt");
+			strcpy(nomF, "./Saves/Save3.bin");
 
     //On test l'existance du fichier, s'il existe on demande à l'utilisateur s'il souhaite l'écraser
-    f = fopen(nomF, "rt");
+    f = fopen(nomF, "r");
 	if(!(f==NULL)){
 		printf("Une sauvegarde existe déjà, voulez vous l'écraser ?[o/n]\n");
 		do{
@@ -43,21 +43,18 @@ int sauvegardeJeu(jeu *p){
 	}
 
     //Sinon on sauvegarde
-	f = fopen(nomF, "wt");
+	f = fopen(nomF, "wb");
 
     if(f==NULL){
         printf("Erreur de fopen \n");
         return 0;
     }
 
-    fprintf(f, "%d ", p->n);
-    fprintf(f, "%d ", p->valMax);
-    fprintf(f, "%d ", p->nbCasesLibres);
-    fprintf(f, "%d ", p->score);
-
-    int i;
-    for(i=0; i<p->n*p->n; i++)
-        fprintf(f, "%d ", p->grille[i]);
+	fwrite( &p->n , sizeof(int) , 1 , f);
+	fwrite( &p->valMax , sizeof(int) , 1 , f);
+	fwrite( &p->nbCasesLibres , sizeof(int) , 1 , f);
+    fwrite(&p->score, sizeof(int), 1, f);
+	fwrite( p->grille, sizeof(int), p->n*p->n, f);
 
     fclose(f);
 
@@ -82,29 +79,27 @@ int chargementJeu(jeu *p){
 
     //Assigne un fichier à nomF en fonction du slot choisi
 	if(saisie=='1')
-			strcpy(nomF, "./Saves/Save1.txt");
+			strcpy(nomF, "./Saves/Save1.bin");
 	if(saisie=='2')
-			strcpy(nomF, "./Saves/Save2.txt");
+			strcpy(nomF, "./Saves/Save2.bin");
 	if(saisie=='3')
-			strcpy(nomF, "./Saves/Save3.txt");
+			strcpy(nomF, "./Saves/Save3.bin");
 
     //On test l'existance du fichier, s'il n'existe pas on retourne 0
-	f = fopen(nomF, "rt");
+	f = fopen(nomF, "rb");
     if(f==NULL)
         return 0;
 
     //Sinon on charge la sauvegarde
-    fscanf(f, "%d ", &p->n);
-    fscanf(f, "%d ", &p->valMax);
-    fscanf(f, "%d ", &p->nbCasesLibres);
-    fscanf(f, "%d ", &p->score);
+	fread( &p->n , sizeof(int) , 1 , f);
+	fread( &p->valMax , sizeof(int) , 1 , f);
+	fread( &p->nbCasesLibres , sizeof(int) , 1 , f);
+    fread( &p->score, sizeof(int), 1, f);
 
     //On refait une allocation de la grille, dont la taille peut avoir changée
     p->grille = (int*)malloc((p->n*p->n)*sizeof(int));
 
-    int i;
-    for(i=0; i<p->n*p->n; i++)
-        fscanf(f, "%d ", &p->grille[i]);
+	fread(p->grille, sizeof(int), p->n*p->n, f);
 
     fclose(f);
 
