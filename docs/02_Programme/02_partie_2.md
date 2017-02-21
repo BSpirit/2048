@@ -20,6 +20,8 @@
 
 ## 9 - Fonction **ajoutValAlea**
 
+<br>
+
 ```c
     /*!
      *  Ajoute une valeur (2 ou 4 choisi aléatoirement) sur une case vide 
