@@ -61,6 +61,7 @@ int test_case_vide(){
     if (somme != 16)
         return termine("Une case ou plusieurs case sont rempli");
 
+    libereMemoire(tmp);
     return 1;
 }
 
@@ -158,7 +159,7 @@ int test_ajouter_val_aleatoire(){
 
     if(compteur != 0)
         return termine("Un valeur a été rajouter aleatoirement alors que la grille est rempli");
-    
+    libereMemoire(tmp);
     return 1;
 }
 
@@ -180,6 +181,7 @@ int test_gagne(){
     res = gagne(tmp);
     if(res != 0)
         return termine("La valeur 2048 a été modifier par 1024, donc il est impossible de gagner.");
+    libereMemoire(tmp);
     return 1;    
 }
 
@@ -214,7 +216,7 @@ int test_perdu(){
     res = perdu(tmp);
     if(res != 0)
         return termine("2 - La partie devait continuer");
-    
+    libereMemoire(tmp);
     return 1;
 }
 
@@ -237,7 +239,7 @@ int test_finPartie(){
     res = finPartie(tmp);
     if (res != 0)
         return termine("La partie est encore jouable.");
-
+    libereMemoire(tmp);
     return 1;
 }
 

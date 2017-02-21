@@ -135,11 +135,11 @@ int test_fonction_set_val(){
     
     res = setVal(tmp, 18,2,5);
     if(res != 0)
-        return termine("setVAl ne renvoie pas ka bonne valeur ! L'indice de ligne n'est pas bon !");
+        return termine("setVAl ne renvoie pas la bonne valeur ! L'indice de ligne n'est pas bon !");
 
     res = setVal(tmp, -1,2,7);
     if(res != 0)
-        return termine("setVAl ne renvoie pas ka bonne valeur ! L'indice de ligne n'est pas bon !");
+        return termine("setVAl ne renvoie pas la bonne valeur ! L'indice de ligne n'est pas bon !");
     
     res = setVal(tmp, 0, 2, 3);
     if(res != 1)
