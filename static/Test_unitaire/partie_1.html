@@ -50,7 +50,7 @@
 
             <div class="Links">
                                     <hr/>
-                                            <a href="https://github.com/BSpirit/2048" target="_blank">GitHub Repo</a>
+                                            <a href="https://github.com/BSpirit/2048" target="_blank"><img style='width:64px;' src='./github.png'/>GitHub Repo</a>
                         <br />
                                     
                 
@@ -68,7 +68,253 @@
 
 
     <div class="s-content">
-            </div>
+        <h2 id="page_1+-+Fonction++termine">1 - Fonction <strong>termine</strong></h2>
+<p>Permet d'afficher les messages d'erreurs lors des tests unitaire et retourne 0 pour signaler l'erreur.
+<br></p>
+<pre><code class="language-c">    int termine(const char *ch){
+        printf(&quot;\033[31;01m***********************\n&quot;);
+        printf(&quot;******* Erreur ********\n&quot;);
+        printf(&quot;***********************\n&quot;);
+        printf(&quot;* %s *\033[00m\n&quot;, ch);
+        return 0;    
+    }
+</code></pre>
+<h2 id="page_2+-+Fonction++int+test+_+creer+_+initialiseJeu">2 - Fonction <strong>int test_creer_initialiseJeu</strong></h2>
+<p>Cas de test :</p>
+<ol>
+<li>Test de la valeur max :</li>
+</ol>
+<blockquote>
+<p class="font">On vérifie si la valeur max n'est pas différente de celle donnée dans la norme.<p>
+</blockquote>
+<ol start="2">
+<li>Test du nombre de case libre :</li>
+</ol>
+<blockquote>
+<p class="font">Après initialisation de la partie on vérifie si nbCaseLibre est égale à n * n.<br> On réalise une seconde vérification, en fesant la somme des valeurs composant la grille pour déterminer si elle vaut 0<p>
+</blockquote>
+<br>
+<pre><code class="language-c">    int test_creer_initialiseJeu(){
+        int i;
+        int n = 4;
+        int vMax = 2048;
+        
+        jeu jeu_test;
+
+        jeu * tmp = &amp;jeu_test;
+
+        initialiseJeu(tmp, n, vMax);
+        if(tmp-&gt;valMax != vMax)
+            return termine(&quot;La valeur maximun à atteindre n'est pas correcte ! &quot;);
+
+        if(tmp-&gt;nbCasesLibres != n*n)
+            return termine(&quot;Le nombre de case libre n'est pas correct !&quot;);
+        
+        int somme = 0;
+
+        for(i=0; i&lt;n*n; i++)
+            somme+=tmp-&gt;grille[i];
+
+        if(somme != 0)
+            return termine(&quot;La grille ne contient pas que des cases libres !&quot;);
+        
+        libereMemoire(tmp);
+
+        return 1;
+
+    }
+</code></pre>
+<h2 id="page_3+-+Fonction++test+_+indice+_+valide">3 - Fonction <strong>test_indice_valide</strong></h2>
+<p>Cas de test :</p>
+<ul>
+<li>Test indice case :</li>
+</ul>
+<blockquote>
+<p class="font">On cumule chaque indice valide de notre grille et on vérifie si elle vaut n * n.<br> Puis nous réalisons des tests si l'indice est hors des limites de la grille<p>
+</blockquote>
+<br>
+<pre><code class="language-c">    int test_indice_valide(){
+        int n=4;
+        int vMax = 2048;
+        
+        jeu jeu_test;
+
+        jeu * tmp = &amp;jeu_test;
+
+        initialiseJeu(tmp ,n,vMax);
+        
+        int i,j;
+
+        int somme = 0;
+
+        for(i = 0 ; i &lt; n ; i++)
+            for(j = 0 ; j &lt;n ; j++)
+                somme += indiceValide(tmp,i,j);
+
+        if (somme != n*n)
+            return termine(&quot;indice =Valide ne retourne pas 1 correctement&quot;);
+        
+        if(indiceValide(tmp,-1,2) || indiceValide(tmp,n,2))
+            return termine(&quot;indiceValide ne retourne pas 0 correctement !&quot;);
+
+        if(indiceValide(tmp,3,-1) || indiceValide(tmp,3,n))
+            return termine(&quot;indiceValide ne retourne pas 0 correctement !&quot;);
+
+        libereMemoire(tmp);
+        return 1;        
+    }
+</code></pre>
+<h2 id="page_4+-+Fonction++test+_+fonction+_+get+_+val">4 - Fonction <strong>test_fonction_get_val</strong></h2>
+<p>Cas de tests :</p>
+<ul>
+<li>Test valeur case :</li>
+</ul>
+<blockquote>
+<p class="font">On rempli une grille de jeu avec des valeurs puis on vérifie la somme des valeurs de la grille<p> 
+</blockquote>
+<br>
+<pre><code class="language-c">    int test_fonction_get_val(){
+        int n=6;
+        int vMax = 2048;
+        
+        jeu jeu_test;
+
+        jeu * tmp = &amp;jeu_test;
+        
+        initialiseJeu(tmp,n,vMax);
+        
+        int i,j;
+
+        int somme = 0;
+
+        for(i = -1 ; i &lt;= n ; i++)
+            for(j = -1 ; j &lt;= n ; j++)
+                somme += getVal(tmp,i,j);
+        
+        if (somme != -28)
+            return termine(&quot;La case n'est pas vide ou getVal ne retourne pas -1 quand on n'est pas sur la case&quot;);
+        
+        for(i = 7 ; i &lt;= 10 ; i++)
+            tmp-&gt;grille[i] = i -6;
+        
+        somme=0;
+        for(i=0; i&lt;=5;i++)
+            for(j=0; j&lt;=5; j++)
+                somme += getVal(tmp, i, j);
+
+        if (somme != 10)
+            return termine(&quot;getVal ne retourne pas la bonne valeur !&quot;);
+        
+        libereMemoire(tmp);
+        return 1;
+    }
+</code></pre>
+<h2 id="page_5+-+Fonction++test+_+fonction+_+set+_+val">5 - Fonction <strong>test_fonction_set_val</strong></h2>
+<p>Cas de test :</p>
+<ol>
+<li>Test set valeur :</li>
+</ol>
+<blockquote>
+<p class="font">On set les valeurs de plusieurs case et on test si la fonction "setVal" renvoie 1.</p>
+</blockquote>
+<ol start="2">
+<li>Test nbCasesLibres :</li>
+</ol>
+<blockquote>
+<p class="font">On vérifie si le nombre de case libre s'incrémente ou décrémente en fonction de la valeur à mise dans la case.<br> 0 - incrémente <br> sup. 0 - décrémente</p>
+</blockquote>
+<br>
+<pre><code class="language-c">    int test_fonction_set_val(){
+        int n=6;
+        int vMax = 2048;
+        
+        jeu jeu_test;
+
+        jeu * tmp = &amp;jeu_test;
+
+        initialiseJeu(tmp,n,vMax);
+
+        int res = setVal(tmp, 1,1,5);
+        
+        if(res != 1)
+            return termine(&quot;set valeur ne retourne pas la bonne valeur !&quot;);
+        
+        
+        if(tmp-&gt;nbCasesLibres != 35)
+            return termine(&quot;Le nombre de case libre n'est pas correct ! test&quot;);
+
+        if(tmp-&gt;grille[7] != 5)
+            return termine(&quot;setVal ne modifie pas correctement la case !&quot;);
+        
+        res = setVal(tmp, 18,2,5);
+        if(res != 0)
+            return termine(&quot;setVAl ne renvoie pas la bonne valeur ! L'indice de ligne n'est pas bon !&quot;);
+
+        res = setVal(tmp, -1,2,7);
+        if(res != 0)
+            return termine(&quot;setVAl ne renvoie pas la bonne valeur ! L'indice de ligne n'est pas bon !&quot;);
+        
+        res = setVal(tmp, 0, 2, 3);
+        if(res != 1)
+            return termine(&quot;setVal ne renvoie pas la bonne valeur !&quot;);
+        
+        if(tmp-&gt;nbCasesLibres != 34)
+            return termine(&quot;Le nombre de case libre n'est pas correcte ! On modifie la bordure !&quot;);
+        
+        if (tmp-&gt;grille[2] != 3)
+            return termine(&quot;setVal ne modifie pas correctement la valeur !&quot;);
+
+        res = setVal(tmp, 1,1,3);
+        if (res != 1)
+            return termine(&quot;setVal ne renvoie pas la bonne valeur !&quot;);
+
+        if (tmp-&gt;nbCasesLibres != 34)
+            return termine(&quot;le nombre de case libre n'est pas correct !&quot;);
+
+        if(tmp-&gt;grille[7] != 3)
+            return termine(&quot;setVal ne modifie pas correctement le jeu !&quot;);
+
+        res = setVal(tmp, 1,1,0);
+        if (res != 1)
+            return termine(&quot;set valeur ne renvoie pas la bonne valeur !&quot;);
+        
+        
+        if (tmp-&gt;nbCasesLibres != 35)
+            return termine(&quot;le nombre de cases de libres n'est pas correct !&quot;);
+
+        if (tmp-&gt;grille[7] != 0)
+            return termine(&quot;setVal ne modifie pas correctement le jeu !&quot;);
+        
+        libereMemoire(tmp);
+        return 1;
+    }
+</code></pre>
+<h2 id="page_6+-+Fonction++test+_+partie1">6 - Fonction <strong>test_partie1</strong></h2>
+<p>Permet de caculer le score des tests réalisé lors de cette partie, afin de valider les fonctions utilisé.</p>
+<pre><code class="language-c">    void test_partie1(){
+        int somme = 0;
+        somme += test_creer_initialiseJeu();
+        somme += test_indice_valide();
+        somme += test_fonction_get_val();
+        somme += test_fonction_set_val();
+
+        if(somme != 4)
+            termine(&quot;TOUS LES TESTS DE LA PARTIE 1 NE SONT PAS PASSES !&quot;);
+        else{
+            printf(&quot;\033[32;01m#########################\n&quot;);
+            printf(&quot;#   TESTS PARTIE 1 OK   #\n&quot;);
+            printf(&quot;#########################\033[00m\n&quot;);
+        }
+    }
+</code></pre>
+<h2 id="page_Source">Source</h2>
+<p>Document de test de la partie 1 du jeu 2048 fournis par monsieur B. KHAFIF.</p>
+<style>
+    .font{
+        font-size: 14px !important;
+    }
+</style>
+    </div>
 
         <nav>
         <ul class="Pager">

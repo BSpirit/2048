@@ -50,7 +50,7 @@
 
             <div class="Links">
                                     <hr/>
-                                            <a href="https://github.com/BSpirit/2048" target="_blank">GitHub Repo</a>
+                                            <a href="https://github.com/BSpirit/2048" target="_blank"><img style='width:64px;' src='./github.png'/>GitHub Repo</a>
                         <br />
                                     
                 
@@ -70,17 +70,155 @@
     <div class="s-content">
         <h2 id="page_1+-+Structure+de+donn%C3%A9es++Jeu">1 - Structure de données <strong>Jeu</strong></h2>
 <br>
-```c
-typedef struct{
+<pre><code class="language-c">typedef struct{
 	int n; //taille de la grille = n*n 
 	int valMax; // valeur à atteindre pour gagner
 	int nbCasesLibres; //nbre de cases libres sur la grille
 	int score; //score de la partie en cours
 	int *grille;
 }jeu;
-```
+</code></pre>
+<h2 id="page_2+-+Fonction++initialiseJeu">2 - Fonction <strong>initialiseJeu</strong></h2>
 <br>
-###
+<pre><code class="language-c">    /*!
+     *  Alloue la grille de la variable jeu passée par adresse.
+     *  Initialise les cases de la grille avec des cases vides (valeur nulles)
+     *  Initialise les champs n et valMax avec les valeurs passées en paramètre 
+     *
+     *  \param p        : Pointeur sur une partie de 2048
+     *  \param n        : Taille de la grille
+     *  \param valMax   : Valeur à atteindre pour gagner
+     *
+     */
+    void initialiseJeu(jeu *p, int n, int valMax){
+        //Initialisation des variables
+        p-&gt;n = n;
+        p-&gt;nbCasesLibres = n*n; 
+        p-&gt;valMax = valMax;
+        p-&gt;score = 0;
+
+        //allocation dynamique de la taille de la grille
+        p-&gt;grille = (int*) malloc(p-&gt;nbCasesLibres*sizeof(int));
+        if(p-&gt;grille==NULL){
+            printf(&quot;Erreur allocation ! \n&quot;);
+            exit(-1);
+        }
+
+        //Initialisation des cases de la grille à 0
+        int i;
+        for(i=0;i&lt;p-&gt;nbCasesLibres;i++)
+            p-&gt;grille[i] = 0;
+    }
+</code></pre>
+<h2 id="page_3+-+Fonction++LibereMemoire">3 - Fonction <strong>LibereMemoire</strong></h2>
+<br>
+<pre><code class="language-c">    /*!
+     *  Libère la mémoire allouer pour la grille du jeu passé par adresse.
+     *  
+     *  \param p    : pointeur sur la partie de 2048
+     */
+    void libereMemoire(jeu *p){
+	    free(p-&gt;grille);
+    }
+</code></pre>
+<h2 id="page_4+-+Fonction++indiceValide">4 - Fonction <strong>indiceValide</strong></h2>
+<br>
+<pre><code class="language-c">    /*!
+     *  Fonction retournant 1 si la case (i, j) existe, 0 sinon.
+     *
+     *  \param p : Pointeur sur la partie de 2048
+     *  \param i : Ligne de la case ciblé
+     *  \param j : colonne de la case ciblé
+     */
+    int indiceValide(jeu *p, int i, int j){
+	    //les indices i et j doivent être compris entre 0 (inclus) et p-&gt;n (exclus)
+	    return (i&gt;=0 &amp;&amp; i &lt; p-&gt;n &amp;&amp; j&gt;=0 &amp;&amp; j &lt; p-&gt;n);
+    }
+</code></pre>
+<h2 id="page_5+-+Fonction++getVal">5 - Fonction <strong>getVal</strong></h2>
+<br>
+<pre><code class="language-c">    /*!
+     *  Fonction retournant la valeur de la case (ligne, colonne) de la partie p
+     *  ou -1 si la case n'existe pas.
+     *
+     *  \param p        : pointeur sur la partie en cours
+     *  \param ligne    : entier correspondant au numero de ligne
+     *  \param colonne  : entier correspondant au numéro de colonne
+     */
+    int getVal(jeu *p, int ligne, int colonne){
+        if(indiceValide(p, ligne, colonne))
+            return p-&gt;grille[p-&gt;n*ligne+colonne];
+        
+        return -1;
+    }
+</code></pre>
+<h2 id="page_6+-+Fonction++setVal">6 - Fonction <strong>setVal</strong></h2>
+<pre><code class="language-c">    /*!
+     *  Fonction modifiant la valeur de la case (ligne, colonne) de la partie p,
+     *  avec la valeur val
+     *
+     *  \param p        : pointeur sur la partie en cours
+     *  \param ligne    : entier correspondant au numero de ligne
+     *  \param colonne  : entier correspondant au numéro de colonne
+     *  \param val      : entier à mettre dans la case (i,j) (si elle existe) 
+     */
+    int setVal(jeu *p, int ligne, int colonne, int val){
+        // On verifie que l'indice est valide
+        if(indiceValide(p, ligne, colonne)){
+            // si la valeur de la case est identique à val, on ne fait rien
+            if(getVal(p, ligne, colonne) == val)
+                return 0;
+            //si une ajoute une valeur à une case vide, on décrémente le nombre de cases vides
+            if(caseVide(p, ligne, colonne) &amp;&amp; val &gt; 0)
+                p-&gt;nbCasesLibres--;
+            //si on vide une case, on incrémente le nombre de cases vides
+            if(!caseVide(p, ligne, colonne) &amp;&amp; val == 0 )
+                p-&gt;nbCasesLibres++;
+            //modification de la valeur de la case
+            p-&gt;grille[p-&gt;n*ligne+colonne] = val;
+            return 1;
+        }
+
+        return 0;
+    }
+</code></pre>
+<h2 id="page_7+-+Fonction++affichage">7 - Fonction <strong>affichage</strong></h2>
+<br>
+<pre><code class="language-c">    /*!
+     *  Fonction affichant la grille à l'écran
+     *  
+     *  \param p : pointeur sur la partie en cours.
+     */
+    void affichage(jeu * p){
+        clear_terminal();
+        int val;
+
+        //boucles imbriquées pour parcourir la grille
+        int i;
+        for(i=0;i&lt;p-&gt;n;i++){
+            //Retour chariot à la fin d'une ligne
+            printf(&quot;\n&quot;);
+            int j;
+            for(j=0; j&lt;p-&gt;n; j++){
+                val = getVal(p, i, j);
+                //Si la case est vide on l'affiche intégralement en noir
+                if(val == 0)
+                    color_printf(BLACK, BLACK, &quot;       &quot;);
+                //sinon on appelle la fonction choixCouleur pour lui assigner une couleur
+                else
+                    color_printf(WHITE, choixCouleur(val), &quot; %5d &quot;, val);
+            }
+        }
+        
+        printf(&quot;\n&quot;);
+        printf(&quot;Score : %d\n\n&quot;, p-&gt;score);
+        
+        if(gagne(p))
+            printf(&quot;Vous avez gagné ! \n\n&quot;);
+        else if(perdu(p))
+            printf(&quot;Vous avez perdu ! \n\n&quot;);
+    }
+</code></pre>
     </div>
 
         <nav>

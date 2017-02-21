@@ -50,7 +50,7 @@
 
             <div class="Links">
                                     <hr/>
-                                            <a href="https://github.com/BSpirit/2048" target="_blank">GitHub Repo</a>
+                                            <a href="https://github.com/BSpirit/2048" target="_blank"><img style='width:64px;' src='./github.png'/>GitHub Repo</a>
                         <br />
                                     
                 
@@ -68,7 +68,215 @@
 
 
     <div class="s-content">
-            </div>
+        <h4 id="page_Autheur+%3A++Jerent+Steeve">Autheur : <em>Jerent Steeve</em></h4>
+<h2 id="page_1+-+Fonction++test+_+case+_+vide">1 - Fonction <strong>test_case_vide</strong></h2>
+<p>Cas de test :</p>
+<ol>
+<li>Test case :</li>
+</ol>
+<blockquote>
+<p class="font">On test une case rempli dans la grille puis une vide.</p>
+</blockquote>
+<ol start="2">
+<li>Test case hors grille :</li>
+</ol>
+<blockquote>
+<p class="font">On test une case hors de la grille. la fonction caseVide doit retourner 0.</p>
+</blockquote>
+<ol start="3">
+<li>Test case grille rempli totalement :</li>
+</ol>
+<blockquote>
+<p class="font">On a fait la somme des case remplis dans le tableau le comparer à n*n</p>
+</blockquote>
+<ol start="3">
+<li>Test case grille vide :</li>
+</ol>
+<blockquote>
+<p class="font">On a fait la somme des case vides dans le tableau le comparer à n*n</p>
+</blockquote>
+<br>
+<pre><code class="language-c">    int test_case_vide(){
+        int i, j;
+        int n = 4;
+        int vMax = 2048;
+        
+        jeu jeu_test;
+
+        jeu * tmp = &amp;jeu_test;
+
+        initialiseJeu(tmp, n, vMax);
+
+        setVal(tmp, 1, 3, 5);
+        
+        int res = caseVide(tmp, 1, 3);
+        
+        if(res != 0)
+            return termine(&quot;La case est vide.&quot;);
+        
+        setVal(tmp, 1, 3, 0);
+        res = caseVide(tmp, 1, 3);
+            
+        if(res != 1)
+            return termine(&quot;La case n'est pas vide.&quot;);
+        
+        res = caseVide(tmp, 9, 9);  
+        if(res != 0)
+            return termine(&quot;La case n'existe pas.&quot;);
+        
+        for(i=0; i&lt;=n;i++)
+            for(j=0; j&lt;=n; j++)
+                setVal(tmp, i, j, 1);
+        
+        int somme = 0;
+        for(i=0; i&lt;n;i++)
+            for(j=0; j&lt;n; j++)
+                somme += caseVide(tmp, i, j);
+        
+        if(somme != 0)
+            return termine(&quot;Un case ou plusieurs cases du tableau ne sont pas vide&quot;);
+
+        for(i=0; i&lt;=n;i++)
+            for(j=0; j&lt;=n; j++)
+                setVal(tmp, i, j, 0);
+        
+        somme = 0;
+        for(i=0; i&lt;n;i++)
+            for(j=0; j&lt;n; j++)
+                somme += caseVide(tmp, i, j);
+        
+        if (somme != 16)
+            return termine(&quot;Une case ou plusieurs case sont rempli&quot;);
+
+        libereMemoire(tmp);
+        return 1;
+    }
+</code></pre>
+<h2 id="page_2+-+Fonction++test+_+ajouter+_+val+_+aleatoire">2 - Fonction <strong>test_ajouter_val_aleatoire</strong></h2>
+<p>Cas de test :</p>
+<ol>
+<li>Test case :</li>
+</ol>
+<blockquote>
+<p class="font"></p>
+</blockquote>
+<ol>
+<li>Test case :</li>
+</ol>
+<blockquote>
+<p class="font"></p>
+</blockquote>
+<br>
+<pre><code class="language-c">    int test_ajouter_val_aleatoire(){
+        int i, j;
+        int n = 4;
+        int vMax = 2048;
+        
+        jeu jeu_test;
+
+        jeu * tmp = &amp;jeu_test;
+
+        initialiseJeu(tmp, n, vMax);
+
+        ajouteValAlea(tmp);
+        
+        int compteur = 0;
+        for(i=0; i&lt;n;i++){
+            for(j=0; j&lt;n; j++){
+                if(getVal(tmp, i, j) == 2 || getVal(tmp, i, j) == 4){
+                    compteur++;
+                    setVal(tmp, i, j, 0);
+                }
+            }
+        }
+        
+        if(compteur == 0)
+            return termine(&quot;Aucun valeur aleatoire n'as été rajouter.&quot;);
+
+        if(compteur &gt; 1)
+            return termine(&quot;Plusieurs valeurs aleatoires ont été toruver.&quot;);
+        
+        int l = 0;
+        int nb_2 = 0;
+        int nb_4 = 0;
+        while(l&lt;1000 &amp;&amp; (nb_2 == 0 || nb_4 == 0)){
+            ajouteValAlea(tmp);
+            for(i=0; i&lt;n;i++){
+                for(j=0; j&lt;n; j++){
+                    if(getVal(tmp, i, j) == 2){
+                        nb_2++;
+                        setVal(tmp, i, j, 0);
+                    }else if(getVal(tmp, i, j) == 4){
+                        nb_4++;
+                        setVal(tmp, i, j, 0);
+                    }
+                }
+            }
+            l++;
+        }
+
+        if(nb_2 == 0 || nb_4 == 0)
+            return termine(&quot;L'une des 2 valeurs aleatoires est manquante.&quot;);
+
+        int case_alea = 0;
+        int pos_ligne = -1, pos_colonne=-1;
+        l=0;
+        while(l&lt;10){
+            ajouteValAlea(tmp);
+            for(i=0; i&lt;n;i++){
+                for(j=0; j&lt;n; j++){
+                    if(getVal(tmp, i, j) == 2 || getVal(tmp, i, j) == 4){
+                        if(i != pos_ligne &amp;&amp; j != pos_colonne){
+                            pos_ligne = i;
+                            pos_colonne = j;
+                            setVal(tmp, i, j, 0);
+                            case_alea--;
+                        }else{
+                            case_alea++;
+                            setVal(tmp, i, j, 0);
+                        }
+                    }
+                }
+            }
+            l++;
+        }
+    
+        if(case_alea == 10)
+            return termine(&quot;Les valeur 2 et 4 n'apparaissent pas aléatoirement.'&quot;);
+
+        for(i=0; i&lt;=n;i++)
+            for(j=0; j&lt;=n; j++)
+                setVal(tmp, i, j, 1);
+        
+        ajouteValAlea(tmp);
+        compteur=0;
+        for(i=0; i&lt;n;i++){
+            for(j=0; j&lt;n; j++){
+                if(getVal(tmp, i, j) == 2 || getVal(tmp, i, j) == 4){
+                    compteur++;
+                    setVal(tmp, i, j, 0);
+                }
+            }
+        }
+
+        if(compteur != 0)
+            return termine(&quot;Un valeur a été rajouter aleatoirement alors que la grille est rempli&quot;);
+        libereMemoire(tmp);
+        return 1;
+    }
+</code></pre>
+<pre><code class="language-c"></code></pre>
+<pre><code class="language-c"></code></pre>
+<pre><code class="language-c"></code></pre>
+<pre><code class="language-c"></code></pre>
+<pre><code class="language-c"></code></pre>
+<pre><code class="language-c"></code></pre>
+<style>
+    .font{
+        font-size: 14px !important;
+    }
+</style>
+    </div>
 
         <nav>
         <ul class="Pager">

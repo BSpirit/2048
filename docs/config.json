@@ -9,7 +9,7 @@
         "toggle_code": false,
         "date_modified": false,
         "links":{
-            "GitHub Repo": "https://github.com/BSpirit/2048"
+            "<img style='width:32px;padding-rigth:100px;' src='./github.png'/>GitHub Repo": "https://github.com/BSpirit/2048"
         }
     }
 }
