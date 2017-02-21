@@ -239,6 +239,15 @@ int test_finPartie(){
     res = finPartie(tmp);
     if (res != 0)
         return termine("La partie est encore jouable.");
+    
+    setVal(tmp, 0, 0, 1025);
+    setVal(tmp, 1, 0, 1022);
+    setVal(tmp, 0, 1, 1023);
+    res = finPartie(tmp);
+
+    if (res != 0)
+        return termine("La partie n'est plus jouable.");
+
     libereMemoire(tmp);
     return 1;
 }

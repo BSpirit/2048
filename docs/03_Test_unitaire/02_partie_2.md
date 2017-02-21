@@ -1,5 +1,5 @@
-#### Autheur : *Jerent Steeve*
 
+#### Autheur : *Jerent Steeve*
 
 ## 1 - Fonction **test_case_vide**
 
@@ -11,7 +11,7 @@ Cas de test :
 > <p class="font">On test une case hors de la grille. la fonction caseVide doit retourner 0.</p>
 3. Test case grille rempli totalement :
 > <p class="font">On a fait la somme des case remplis dans le tableau le comparer à n*n</p>
-3. Test case grille vide :
+4. Test case grille vide :
 > <p class="font">On a fait la somme des case vides dans le tableau le comparer à n*n</p>
 
 <br>
@@ -76,11 +76,14 @@ Cas de test :
 
 ## 2 - Fonction **test_ajouter_val_aleatoire**
 Cas de test :
-1. Test case :
-> <p class="font"></p>
-1. Test case :
-> <p class="font"></p>
-
+1. Test ajout valeur aléatoire :
+> <p class="font">On utilise la fonction ajouteValAlea puis on vérifie dans la grille, <br> si elle a bien été créée et on détermine si elle n'a pas créé plusieurs valeurs aleatoires dans la grille.</p>
+2. Test ajout de 2 ou 4 :
+> <p class="font">On test si la fonction retourne la valeur 2 ou 4, <br> si le nombre d'essaie dépasse 1000 ou si il ne trouve qu'une des deux valeur on envoie une erreur</p>
+3. Test apparition aléatoire:
+> <p class"font">On vérifie que les valeurs aléatoires n'apparaissent pas sur la même cases.</p>
+3. Test grille rempli:
+> <p class"font">On vérifie qu'aucune valeur n'est rentrer dans une grille rempli.</p>
 <br>
 
 ```c
@@ -182,10 +185,80 @@ Cas de test :
         return 1;
     }
 ```
+
+## 3 - Fonction **test_gagne**
+Cas de test :
+- On vérifie la fonction gagne retourne soit 1 quand la valeur vMax est atteinte, sinon 0.
+
+<br>
+
 ```c
+    int test_gagne(){
+        int n = 4;
+        int vMax = 2048;
+        
+        jeu jeu_test;
+
+        jeu * tmp = &jeu_test;
+
+        initialiseJeu(tmp, n, vMax);
+        setVal(tmp, 1,1, 2048);
+        int res = gagne(tmp);
+        if(res != 1)
+            return termine("La valeurs set devait permettre de gagner.");
+        
+        setVal(tmp, 1,1, 1024);
+        res = gagne(tmp);
+        if(res != 0)
+            return termine("La valeur 2048 a été modifier par 1024, donc il est impossible de gagner.");
+        libereMemoire(tmp);
+        return 1;    
+    }
 ```
+
+## 4 - Fonction **test_perdu**
+Cas de test :
+- On vérifie la fonction gagne retourne soit 1 quand la valeur vMax est atteinte, sinon 0 permettant de continuer la partie.
+
 ```c
+    int test_perdu(){
+        int n = 2;
+        int vMax = 2048;
+        
+        jeu jeu_test;
+
+        jeu * tmp = &jeu_test;
+
+        initialiseJeu(tmp, n, vMax);
+        setVal(tmp, 0, 0, 1);
+        setVal(tmp, 0, 1, 2);
+        setVal(tmp, 1, 0, 3);
+        setVal(tmp, 1, 1, 4);
+
+        int res = perdu(tmp);
+
+        if(res != 1)
+            return termine("La partie devrait être perdu");
+        
+        setVal(tmp, 1, 1, 2);
+
+        res = perdu(tmp);
+        if(res != 0)
+            return termine("1 - La partie devait continuer");
+        
+        setVal(tmp, 0, 0, 2);
+        setVal(tmp, 0, 1, 4);
+        setVal(tmp, 1, 1, 4);
+        res = perdu(tmp);
+        if(res != 0)
+            return termine("2 - La partie devait continuer");
+        libereMemoire(tmp);
+        return 1;
+    }
 ```
+
+## Fonction **test_finPartie**
+Cas de test
 ```c
 ```
 ```c
