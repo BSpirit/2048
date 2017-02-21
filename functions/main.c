@@ -26,10 +26,11 @@ int main(){
 			case 1 :
 				clear_terminal();
 				int taille;
+					printf("Veuillez saisir la taille de la grille ? [3 = 3*3, etc.] [0 pour annuler] : \n");
+					printf("La taille de la grille doit être comprise entre 3*3 et 8*8 \n");
 				do{
-					printf("Taille de la grille ? [3 = 3*3, etc.] [0 pour annuler] : \n");
 					scanf("%d", &taille);
-				}while(taille<0); //sortie : taille >= 0
+				}while(taille!=0 && (taille<3 || taille>8)); //sortie : taille == 0 ou (taille>=3 et taille <= 8)
 
 				if(taille>0){ 
 					//Création d'une nouvelle partie
