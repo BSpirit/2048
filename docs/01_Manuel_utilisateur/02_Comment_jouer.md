@@ -15,7 +15,7 @@ La partie est gagnée lorsqu'une tuile portant la valeur « 2048 » apparaît su
 ## 2 - Lancement du jeu :
 </br>
 <p> Lors du lancement du jeu, le menu s'ouvre est une nouvelle partie est automatiquement initialisée. 
-La partie en cours est affichée dans le terminal en permanence pour aider l'utilisateur à se repérer lors des différents enregistrements/chargements de parties</p>
+La partie en cours est affichée en permanence dans les terminal pour aider l'utilisateur à se repérer lors des différents enregistrements/chargements de parties</p>
 </br>
 
 ![Lancement](./img/2048_lancement.png "Lancement")
@@ -47,7 +47,7 @@ Une fois la partie perdue ou gagnée, il est possible d'enregistrer son score.</
 ### 3.3. - Sauvegarder
 </br>
 <p> Dans le menu, appuyez sur la touche 3 pour sauvegarder la partie en cours.
-Il y a 3 slots de sauvegarde disponibles. Si un slot est déjà utilisé, le jeu demande l'autorisation à l'utilisateur pour écraser la sauvegarde précédente</p>
+Il y a 3 slots de sauvegarde disponibles. Si un slot est déjà utilisé, le jeu demande l'autorisation à l'utilisateur d'écraser la sauvegarde précédente</p>
 </br>
 
 ![Sauvegarder partie](./img/2048_sauvegarder.png "Sauvegarder partie")
