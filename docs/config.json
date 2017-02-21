@@ -1,0 +1,15 @@
+{
+    "title": "Projet DUT AS - 2048",
+    "tagline": "Conception d'un jeux 2048",
+    "image": "app.png",
+    "html": {
+        "theme": "daux-blue",
+        "float": false,
+        "search": true,
+        "toggle_code": false,
+        "date_modified": false,
+        "links":{
+            "GitHub Repo": "https://github.com/BSpirit/2048"
+        }
+    }
+}
