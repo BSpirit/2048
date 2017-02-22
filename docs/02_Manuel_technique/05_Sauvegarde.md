@@ -114,6 +114,10 @@ int chargementJeu(jeu *p){
 
     //On refait une allocation de la grille, dont la taille peut avoir changée
     p->grille = (int*)malloc((p->n*p->n)*sizeof(int));
+    if(p->grille==NULL){
+        printf("Erreur allocation ! \n");
+        exit(-1);
+    }
 
 	fread(p->grille, sizeof(int), p->n*p->n, f);
 
