@@ -1,3 +1,16 @@
+/*******************************************************
+Nom           : partie.c
+Auteur        : Tony Clonier
+Version       : V1
+Date          : 15/02/2017
+Informations  : Contient la définition des fonctions
+                - ajouteValAlea
+				- gagne
+				- perdu
+				- finPartie
+				- jouer
+********************************************************/
+
 #include <stdio.h>
 #include <stdlib.h>
 #include "./headers/couleurs_terminal.h"

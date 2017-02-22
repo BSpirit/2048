@@ -1,3 +1,17 @@
+/*******************************************************
+Nom           : mouvement.c
+Auteur        : Tony Clonier
+Version       : V1
+Date          : 15/02/2017
+Informations  : Contient la définition des fonctions
+                - mouvementLigne
+				- mouvementLignes
+				- mouvementColonne
+				- mouvementColonnes
+				- mouvement
+				- saisieD
+********************************************************/
+
 #include "./headers/couleurs_terminal.h"
 #include "./headers/grille.h"
 #include "./headers/mouvement.h"

@@ -1,3 +1,16 @@
+/*******************************************************
+Nom           : sauvegarde.c
+Auteur        : Tony Clonier
+Version       : V1
+Date          : 15/02/2017
+Informations  : Contient la définition des fonctions
+                - sauvegardeJeu
+                - chargementJeu
+                - sauvegardeScore
+                - chargementScore
+                - menu
+********************************************************/
+
 #include "./headers/couleurs_terminal.h"
 #include "./headers/grille.h"
 #include "./headers/sauvegarde.h"

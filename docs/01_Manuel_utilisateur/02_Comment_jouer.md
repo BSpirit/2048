@@ -1,3 +1,5 @@
+#### Auteur : *Tony Clonier*
+
 ## 1 - Règles du jeu :
 </br>
 <p>Le gameplay du jeu repose sur l'utilisation des touches fléchées du clavier d’ordinateur pour déplacer les tuiles vers la gauche, la droite, le haut ou le bas. 

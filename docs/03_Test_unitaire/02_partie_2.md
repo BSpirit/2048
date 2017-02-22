@@ -1,5 +1,5 @@
 
-#### Autheur : *Jerent Steeve*
+#### Auteur : *Steeve Jerent*
 
 ## 1 - Fonction **test_case_vide**
 
