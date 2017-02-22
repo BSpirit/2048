@@ -1,22 +1,4 @@
-## 8 - Fonction **caseVide**
-
-<br>
-
-```c
-    /*!
-     *  Retourne 1 si la case est vide, 0 sinon.
-     *  
-     *  \param p        : pointeur sur la partie en cours
-     *  \param ligne    : entier correspondant au numero de ligne
-     *  \param colonne  : entier correspondant au numéro de colonne
-     */
-    int caseVide(jeu *p, int i, int j){
-        if(getVal(p, i, j)==0)
-            return 1;
-
-        return 0;
-    }
-```
+#### Auteurs : *Steeve Jerent - Tony Clonier*
 
 ## 9 - Fonction **ajoutValAlea**
 
@@ -135,4 +117,47 @@
      int finPartie(jeu *p){
         return (perdu(p) || gagne(p));
     }
+```
+
+## 13 - Fonction **jouer**
+
+<br>
+
+```c
+/*! * Fonction permettant de jouer la partie en cours
+	* (On la suppose initialisée)
+	* Retourne 1 si la partie est terminée (gagnée ou perdu)
+	* Retourne 0 sinon (L'utilisateur a appuyé sur la touche echap)
+	*
+	* \param p : pointeur sur la partie en cours
+	*/
+int jouer(jeu *p){
+	int saisie;
+	int deplacement; // Test s'il y a eu un déplacement
+
+	affichage(p);
+	printf("Utilisez les flèches pour jouer \n");
+	printf("ECHAP : Accéder au menu \n");
+
+	do{
+		//saisieD retourne -1, 1, 2, 3 ou 4
+		saisie = saisieD();
+		if(saisie>=0){
+			deplacement = mouvement(p, saisie);
+			if(deplacement)
+				ajouteValAlea(p);
+		affichage(p);
+		printf("Utilisez les flèches pour jouer \n");
+		printf("ECHAP : Accéder au menu \n");
+		}
+	}while(saisie != -1 && !finPartie(p));
+	//On sort de la boucle si l'utilisateur appuie sur ECHAP ou si la partie est terminée
+
+	//Retourne -1 si l'utilisateur a appuyé sur ECHAP
+	if(saisie==-1)
+		return 0;
+	//Retourne 1 si la partie est terminée (perdu ou gagné)
+	else
+		return 1;
+}
 ```

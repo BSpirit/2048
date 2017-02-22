@@ -16,8 +16,8 @@ La partie est gagnée lorsqu'une tuile portant la valeur « 2048 » apparaît su
 
 ## 2 - Lancement du jeu :
 </br>
-<p> Lors du lancement du jeu, le menu s'ouvre est une nouvelle partie est automatiquement initialisée. 
-La partie en cours est affichée en permanence dans les terminal pour aider l'utilisateur à se repérer lors des différents enregistrements/chargements de parties</p>
+<p> Lors du lancement du jeu, le menu s'ouvre et une nouvelle partie est automatiquement initialisée. 
+La partie en cours est affichée en permanence dans le terminal pour aider l'utilisateur à se repérer lors des différents enregistrements/chargements de parties.</p>
 </br>
 
 ![Lancement](./img/2048_lancement.png "Lancement")
@@ -26,7 +26,7 @@ La partie en cours est affichée en permanence dans les terminal pour aider l'ut
 ### 3.1. - Créer une nouvelle partie
 </br>
 <p> Dans le menu, appuyez sur la touche 1 pour créer une nouvelle partie.
-Lors de la création d'une nouvelle partie, l'utilisateur peut choisir la tailler de la grille sur laquelle il souhaite jouer.
+Lors de la création d'une nouvelle partie, l'utilisateur peut choisir la taille de la grille sur laquelle il souhaite jouer.
 La taille de la grille doit être comprise entre 3*3 et 8*8.</p>
 </br>
 
@@ -37,7 +37,7 @@ La taille de la grille doit être comprise entre 3*3 et 8*8.</p>
 
 ### 3.2. - Jouer
 </br>
-<p> Dans le menu, appuyez sur la touche 2 pour jouer à une partie (créer ou chargée).
+<p> Dans le menu, appuyez sur la touche 2 pour jouer à une partie (créée ou chargée).
 Les tuiles doivent être déplacées à partir des flèches multidirectionnelles du clavier.
 Il est possible d'appuyer sur la touche ECHAP pour retourner dans le menu.
 Une fois la partie perdue ou gagnée, il est possible d'enregistrer son score.</p>

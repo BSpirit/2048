@@ -1,4 +1,6 @@
-## 13 - Fonction **mouvementLigne**
+#### Auteur : *Tony Clonier*
+
+## 14 - Fonction **mouvementLigne**
 
 <br>
 
@@ -62,7 +64,7 @@ int mouvementLigne(jeu *p, int ligne, int direction){
 }
 ```
 
-## 14 - Fonction **mouvementLignes**
+## 15 - Fonction **mouvementLignes**
 
 <br>
 
@@ -90,7 +92,7 @@ int mouvementLignes(jeu *p, int direction){
 }
 ```
 
-## 15 - Fonction **mouvementColonne**
+## 16 - Fonction **mouvementColonne**
 
 <br>
 
@@ -154,7 +156,7 @@ int mouvementColonne(jeu *p, int colonne, int direction){
 }
 ```
 
-## 16 - Fonction **mouvementColonnes**
+## 17 - Fonction **mouvementColonnes**
 
 <br>
 
@@ -182,7 +184,7 @@ int mouvementColonnes(jeu *p, int direction){
 }
 ```
 
-## 17 - Fonction **mouvement**
+## 18 - Fonction **mouvement**
 
 <br>
 
@@ -220,7 +222,7 @@ int mouvement(jeu *p, int direction){
 }
 ```
 
-## 18 - Fonction **saisieD**
+## 19 - Fonction **saisieD**
 
 <br>
 
@@ -260,48 +262,5 @@ int saisieD(){
 	finTerminalSansR();
 
 	return saisie;
-}
-```
-
-## 19 - Fonction **jouer**
-
-<br>
-
-```c
-/*! * Fonction permettant de jouer la partie en cours
-	* (On la suppose initialisée)
-	* Retourne 1 si la partie est terminée (gagnée ou perdu)
-	* Retourne 0 sinon (L'utilisateur a appuyé sur la touche echap)
-	*
-	* \param p : pointeur sur la partie en cours
-	*/
-int jouer(jeu *p){
-	int saisie;
-	int deplacement; // Test s'il y a eu un déplacement
-
-	affichage(p);
-	printf("Utilisez les flèches pour jouer \n");
-	printf("ECHAP : Accéder au menu \n");
-
-	do{
-		//saisieD retourne -1, 1, 2, 3 ou 4
-		saisie = saisieD();
-		if(saisie>=0){
-			deplacement = mouvement(p, saisie);
-			if(deplacement)
-				ajouteValAlea(p);
-		affichage(p);
-		printf("Utilisez les flèches pour jouer \n");
-		printf("ECHAP : Accéder au menu \n");
-		}
-	}while(saisie != -1 && !finPartie(p));
-	//On sort de la boucle si l'utilisateur appuie sur ECHAP ou si la partie est terminée
-
-	//Retourne -1 si l'utilisateur a appuyé sur ECHAP
-	if(saisie==-1)
-		return 0;
-	//Retourne 1 si la partie est terminée (perdu ou gagné)
-	else
-		return 1;
 }
 ```
