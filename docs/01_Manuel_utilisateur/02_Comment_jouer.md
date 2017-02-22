@@ -3,7 +3,7 @@
 ## 1 - Règles du jeu :
 </br>
 <p>Le gameplay du jeu repose sur l'utilisation des touches fléchées du clavier d’ordinateur pour déplacer les tuiles vers la gauche, la droite, le haut ou le bas. 
-Lors d'un mouvement, l'ensemble des tuiles du plateau sont déplacés dans la même direction jusqu'à rencontrer les bords du plateau ou une autre tuile sur leur chemin. 
+Lors d'un mouvement, l'ensemble des tuiles du plateau sont déplacées dans la même direction jusqu'à rencontrer les bords du plateau ou une autre tuile sur leur chemin. 
 Si deux tuiles, ayant le même nombre, entrent en collision durant le mouvement, elles fusionnent en une nouvelle tuile de valeur double (par ex. : deux tuiles de valeur « 2 » donnent une tuile de valeur « 4 »). 
 À chaque mouvement, une tuile portant un 2 ou un 4 apparaît dans une case vide de manière aléatoire.</p>
 
@@ -49,7 +49,7 @@ Une fois la partie perdue ou gagnée, il est possible d'enregistrer son score.</
 ### 3.3. - Sauvegarder
 </br>
 <p> Dans le menu, appuyez sur la touche 3 pour sauvegarder la partie en cours.
-Il y a 3 slots de sauvegarde disponibles. Si un slot est déjà utilisé, le jeu demande l'autorisation à l'utilisateur d'écraser la sauvegarde précédente</p>
+Il y a 3 slots de sauvegarde disponibles. Si un slot est déjà utilisé, le jeu demande l'autorisation à l'utilisateur d'écraser la sauvegarde précédente.</p>
 </br>
 
 ![Sauvegarder partie](./img/2048_sauvegarder.png "Sauvegarder partie")
@@ -58,7 +58,7 @@ Il y a 3 slots de sauvegarde disponibles. Si un slot est déjà utilisé, le jeu
 ### 3.4. - Charger
 </br>
 <p> Dans le menu, appuyez sur la touche 4 pour charger une partie.
-Si le slot à charger est vide, l'utilisateur en est averti.</p>
+Si le slot à charger est vide, l'utilisateur est averti.</p>
 </br>
 
 ![Charger partie 1](./img/2048_chargement_1.png "Charger partie 1")
@@ -76,7 +76,7 @@ Si le slot à charger est vide, l'utilisateur en est averti.</p>
 
 ### 3.6. - Quitter
 </br>
-<p> Appuyer sur la touche 6 pour quitter le jeu.</p>
+<p> Dans le menu, appuyez sur la touche 6 pour quitter le jeu.</p>
 </br>
 
 
