@@ -9,25 +9,30 @@
 #include "./headers/test_part.h"
 
 int test_mouvementLigne(){
+    // initialisation d'une partie
     int n = 4;
     int vMax = 2048;
     jeu jeu_test;
     jeu * tmp = &jeu_test;
     initialiseJeu(tmp, n, vMax);
 
+    // On test un mouvement vers la droite impossible car on sortirait de la grille
     setVal(tmp, 0, 3, 2);
     int res = mouvementLigne(tmp, 0, -1);
-
     if (res != 0)
         return termine("ml - Le mouvement vers la droite à été executer");
     
+    // On test si le mouvement vers la gauche peu être réaiser et si la valeur de la
+    // case précédente est reinitialisé.
     res = mouvementLigne(tmp, 0, 1);
+    
     if(getVal(tmp, 0, 0) == 0)
         return termine("ml - Le mouvement sur la ligne est incorrect.");
     
     if (res != 1)
         return termine ("ml - Le mouvement n'as pas été executer.");
     
+    // On rempli le tableau de manière a que le les valeur ne puissent pas être bougé
     setVal(tmp, 0, 1, 32);
     setVal(tmp, 0, 2, 4);
     setVal(tmp, 0, 3, 2);
@@ -39,6 +44,10 @@ int test_mouvementLigne(){
     if(res != 0)
         return termine("ml - Le mouvement vers la gauche à été effectuer.");
 
+    // on set la case [0,3] à 4 pour afin de fusionner cette élèment avec la case [0,4]
+    // qui contient 4 lors du mouvement de la ligne 0, on testera la case précédente afin
+    // de vérifier si elle est réinitialisé et que la nouvelle case vaut 8, on testera aussi
+    // que le mouvement est effectuer
     setVal(tmp, 0, 3, 4);
     res = mouvementLigne(tmp, 0, -1);
 
@@ -51,6 +60,8 @@ int test_mouvementLigne(){
     if(res != 1)
         return termine("ml - Le mouvement vers la droite n'a pas été effectuer.");
     
+    // on modifie la valeur de la case [0,0] à 2, et on effectue un mouvement vers la gauche
+    // on vérifie la valeur de la case [0,0] si elle vaut 4  et si la case [0,3]
     setVal(tmp, 0, 0, 2);    
     res = mouvementLigne(tmp, 0, 1);
     
@@ -60,6 +71,7 @@ int test_mouvementLigne(){
     if(getVal(tmp, 0, 3) != 0)
         return termine("ml - La valeur de la case [0,3] n'est pas réinitialisé.");
     
+    // On modifie des valeurs sur la ligne 0
     setVal(tmp, 0, 2, 32);
     setVal(tmp, 0, 3, 64);
     res = mouvementLigne(tmp, 0, -1);

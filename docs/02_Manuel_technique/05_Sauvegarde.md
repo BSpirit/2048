@@ -1,3 +1,5 @@
+#### Auteur : *Tony Clonier*
+
 ## 20 - Fonction **sauvegardeJeu**
 
 <br>
@@ -122,7 +124,78 @@ int chargementJeu(jeu *p){
 }
 ```
 
-## 22 - Fonction **menu**
+## 22 - Fonction supplémentaire **sauvegardeScore**
+
+<br>
+
+```c
+/*! * Fonction sauvegardant un score
+    * Retourne 0 en cas de problème
+    * Retourne 1 sinon
+    *
+    * \param score : score à enregistrer
+    */
+int sauvegardeScore(int score){
+    FILE *f;
+    char nom[20];//Pour stocker le nom du jouer
+
+    f = fopen("./Saves/score.bin", "ab");
+    if(f==NULL)
+        return 0;
+
+    //L'utilisateur peut saisir son nom ou annuler l'enregistrement de son score 
+    printf("Nom du joueur ? [0 pour annuler] \n");
+    scanf("%s", nom);
+    if(nom[0]=='0')
+        return 0;
+
+    //Sauvegarde de son score
+    fwrite(nom, sizeof(nom), 1, f);
+    fwrite( &score, sizeof(int), 1, f);
+
+    fclose(f);
+
+    //Retourne 1 si sauvegarde effectuée
+    return 1;
+}
+```
+
+## 23 - Fonction supplémentaire **chargementScore**
+
+<br>
+
+```c
+/*! * Fonction chargeant la liste des scores
+    * Retourne 0 en cas de problème
+    * Retourne 1 sinon
+    *
+    * \param score : score à enregistrer
+    */
+int chargementScore(){
+    FILE *f;
+    char nom[20];//Pour afficher le nom
+    int score;//Pour afficher le score
+
+    f = fopen("./Saves/score.bin", "rb");
+    if(f==NULL)
+        return 0;
+
+    //On parcourt le fichier et affiche les noms et scores des joueurs
+    printf("Scores : \n");
+    while(fread( nom, sizeof(nom), 1, f)==1 && fread( &score, sizeof(int), 1, f)==1)
+        printf("%s : %d\n", nom, score);    
+    
+
+    printf("\n");
+
+    fclose(f);
+
+    //Retourne 1 si score chargé
+    return 1;
+}
+```
+
+## 24 - Fonction **menu**
 
 <br>
 

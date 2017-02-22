@@ -1,3 +1,5 @@
+#### Auteurs : *Steeve Jerent - Tony Clonier*
+
 ## 1 - Structure de données **Jeu**
 <br>
 
@@ -101,7 +103,28 @@ typedef struct{
     }
 ```
 
-## 6 - Fonction **setVal**
+## 6 - Fonction **caseVide**
+
+<br>
+
+```c
+    /*!
+     *  Retourne 1 si la case est vide, 0 sinon.
+     *  
+     *  \param p        : pointeur sur la partie en cours
+     *  \param ligne    : entier correspondant au numero de ligne
+     *  \param colonne  : entier correspondant au numéro de colonne
+     */
+    int caseVide(jeu *p, int i, int j){
+        if(getVal(p, i, j)==0)
+            return 1;
+
+        return 0;
+    }
+```
+
+
+## 7 - Fonction **setVal**
 
 ```c
     /*!
@@ -134,7 +157,50 @@ typedef struct{
     }
 ```
 
-## 7 - Fonction **affichage**
+## 8 - Fonction supplémentaire **choixCouleur**
+<br>
+
+```c
+/*! * Assigne une couleur a une case en fonction de la valeur n
+	* Retourne la couleur correspondante
+	*
+	* \param n : valeur de la case à colorer
+	*/
+COULEUR_TERMINAL choixCouleur(int n){
+	COULEUR_TERMINAL couleur;
+
+	switch(n){
+		case 0 : couleur = BLACK;
+			break;
+		case 2 : couleur = CYAN;
+			break;
+		case 4 : couleur = GREEN;
+			break;
+		case 8 : couleur = YELLOW;
+			break;
+		case 16 : couleur = BLUE;
+			break;
+		case 32 : couleur = RED;
+			break;
+		case 64 : couleur = CYAN;
+			break;
+		case 128 : couleur = GREEN;
+			break;
+		case 256 : couleur = YELLOW;
+			break;
+		case 512 : couleur = BLUE;
+			break;
+		case 1024 : couleur = RED;
+			break;
+		case 2048 : couleur = WHITE;
+			break;
+		default : couleur = CYAN;
+	}
+	return couleur;
+}
+```
+
+## 9 - Fonction **affichage**
 <br>
 
 ```c

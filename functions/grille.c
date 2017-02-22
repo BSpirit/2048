@@ -1,3 +1,19 @@
+/*******************************************************
+Nom           : grille.c
+Auteur        : Tony Clonier
+Version       : V1
+Date          : 15/02/2017
+Informations  : Contient la définition des fonctions
+                - initialiseJeu
+				- libereMemoire
+				- indiceValide
+				- getVal
+				- caseVide
+				- setVal
+				- choixCouleur
+				- affichage
+********************************************************/
+
 #include "./headers/couleurs_terminal.h"
 #include "./headers/grille.h"
 #include <stdio.h>

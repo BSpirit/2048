@@ -1,3 +1,5 @@
+#### Auteur : *Steeve Jerent*
+
 ## Prérequis :
 - make
 - gcc
@@ -29,7 +31,7 @@ Exécuter le programme de test:
 
 ```bash
     $ ./test
-    # Ou faire la commande suivante pour supprimer l'ancienne exécutable
+    # Ou faire la commande suivante pour supprimer l'ancien exécutable
     # créer un nouvel exécutable et l'exécuter.
     $ make test
 ```

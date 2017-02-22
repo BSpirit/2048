@@ -202,15 +202,25 @@ Cas de test :
         jeu * tmp = &jeu_test;
 
         initialiseJeu(tmp, n, vMax);
+
+        // Si la valeur est égale à vMax
         setVal(tmp, 1,1, 2048);
         int res = gagne(tmp);
         if(res != 1)
             return termine("La valeurs set devait permettre de gagner.");
         
+        // si la valeur est inférieur à vMax
         setVal(tmp, 1,1, 1024);
         res = gagne(tmp);
         if(res != 0)
             return termine("La valeur 2048 a été modifier par 1024, donc il est impossible de gagner.");
+        
+        // Si la valeur est strictement supérieur à vMax
+        setVal(tmp, 1, 1, 2049);
+        res = gagne(tmp);
+        if(res != 1)
+            return termine("La valeurs set devait permettre de gagner.");
+                
         libereMemoire(tmp);
         return 1;    
     }
@@ -257,16 +267,70 @@ Cas de test :
     }
 ```
 
-## Fonction **test_finPartie**
+## 5 - Fonction **test_finPartie**
 Cas de test
+- On set la valeur max dans la grille
+- On remplace la valeur max ajouter par une valeur inférieur à vMax
+- On fini de rempli la grille afin que l'utilisateur ne puisse pas effectuer de mouvement
+
+<br>
+
 ```c
+    int test_finPartie(){
+        int n = 2;
+        int vMax = 2048;
+        
+        jeu jeu_test;
+
+        jeu * tmp = &jeu_test;
+
+        initialiseJeu(tmp, n, vMax);
+        setVal(tmp, 1, 1, 2048);
+        int res = finPartie(tmp);
+
+        if(res != 1)
+            return termine("La partie devrait être fini.");
+        
+        setVal(tmp, 1, 1, 1024);
+        res = finPartie(tmp);
+        if (res != 0)
+            return termine("La partie est encore jouable.");
+        
+        setVal(tmp, 0, 0, 1025);
+        setVal(tmp, 1, 0, 1022);
+        setVal(tmp, 0, 1, 1023);
+        res = finPartie(tmp);
+
+        if (res != 1)
+            return termine("La partie n'est plus jouable.");
+
+        libereMemoire(tmp);
+        return 1;
+    }
 ```
+
+## 6 - Fonction **test_partie2**
+On calcule la somme des test de la partie 2.
+
 ```c
+    void test_partie2(){
+        int somme = 0;
+        somme += test_case_vide();
+        somme += test_ajouter_val_aleatoire();
+        somme += test_gagne();
+        somme += test_perdu();
+        somme += test_finPartie();
+
+        if(somme != 5)
+            termine("TOUS LES TESTS DE LA PARTIE 2 NE SONT PAS PASSES !");
+        else{
+            printf("\033[32;01m#########################\n");
+            printf("#   TESTS PARTIE 2 OK   #\n");
+            printf("#########################\033[00m\n");
+        }
+    }
 ```
-```c
-```
-```c
-```
+
 <style>
     .font{
         font-size: 14px !important;

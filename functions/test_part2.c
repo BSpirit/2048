@@ -181,6 +181,12 @@ int test_gagne(){
     res = gagne(tmp);
     if(res != 0)
         return termine("La valeur 2048 a été modifier par 1024, donc il est impossible de gagner.");
+    
+    setVal(tmp, 1, 1, 2049);
+    res = gagne(tmp);
+    if(res != 1)
+        return termine("La valeurs set devait permettre de gagner.");
+    
     libereMemoire(tmp);
     return 1;    
 }
@@ -245,7 +251,7 @@ int test_finPartie(){
     setVal(tmp, 0, 1, 1023);
     res = finPartie(tmp);
 
-    if (res != 0)
+    if (res != 1)
         return termine("La partie n'est plus jouable.");
 
     libereMemoire(tmp);

@@ -1,3 +1,11 @@
+/*******************************************************
+Nom           : main.c
+Auteur        : Tony Clonier
+Version       : V1
+Date          : 15/02/2017
+Informations  : Programme principal du jeu 2048
+********************************************************/
+
 #include "./headers/couleurs_terminal.h"
 #include "./headers/grille.h"
 #include "./headers/partie.h"

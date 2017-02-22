@@ -1,3 +1,16 @@
+/*******************************************************
+Nom           : partie.c
+Auteur        : Tony Clonier
+Version       : V1
+Date          : 15/02/2017
+Informations  : Contient la définition des fonctions
+                - ajouteValAlea
+				- gagne
+				- perdu
+				- finPartie
+				- jouer
+********************************************************/
+
 #include <stdio.h>
 #include <stdlib.h>
 #include "./headers/couleurs_terminal.h"
@@ -35,7 +48,7 @@ int gagne(jeu *p){
 	while(i<p->n && flag==0){
 		j = 0;
 		while(j<p->n && flag==0){
-			if(getVal(p, i, j)==p->valMax)
+			if(getVal(p, i, j)>=p->valMax)
 				flag = 1;
 			j++;
 		}
