@@ -2,7 +2,7 @@
 
 ## 1 - Fonction **termine**
 
-Permet d'afficher les messages d'erreurs lors des tests unitaire et retourne 0 pour signaler l'erreur.
+Permet d'afficher les messages d'erreurs lors des tests unitaires et retourne 0 pour signaler l'erreur.
 <br>
 
 ```c
@@ -19,9 +19,9 @@ Permet d'afficher les messages d'erreurs lors des tests unitaire et retourne 0 p
 
 Cas de test :
 1. Test de la valeur max :
-> <p class="font">On vérifie si la valeur max n'est pas différente de celle donnée dans la norme.<p>
-2. Test du nombre de case libre :
-> <p class="font">Après initialisation de la partie on vérifie si nbCaseLibre est égale à n * n.<br> On réalise une seconde vérification, en fesant la somme des valeurs composant la grille pour déterminer si elle vaut 0<p>
+> <p class="font">On vérifie si la valeur max est égale à donnée dans la norme.<p>
+2. Test du nombre de cases libres :
+> <p class="font">Après initialisation de la partie on vérifie si nbCaseLibre est égale à n*n.<br> On réalise une seconde vérification, en faisant la somme des valeurs composant la grille pour déterminer si elle vaut 0<p>
 <br>
 
 ```c
@@ -59,7 +59,7 @@ Cas de test :
 ## 3 - Fonction **test_indice_valide**
 Cas de test :
 - Test indice case :
-> <p class="font">On cumule chaque indice valide de notre grille et on vérifie si elle vaut n * n.<br> Puis nous réalisons des tests si l'indice est hors des limites de la grille<p>
+> <p class="font">On cumule chaque indice valide de notre grille et on vérifie si sa taille est égale à n*n.<br> Puis nous réalisons des tests si l'indice est hors des limites de la grille<p>
 <br>
 
 ```c
@@ -99,7 +99,7 @@ Cas de test :
 
 Cas de tests :
 - Test valeur case :
-> <p class="font">On rempli une grille de jeu avec des valeurs puis on vérifie la somme des valeurs de la grille<p> 
+> <p class="font">On remplit une grille de jeu avec des valeurs puis on vérifie la somme des valeurs de la grille<p> 
 
 <br>
 
@@ -144,9 +144,9 @@ Cas de tests :
 ## 5 - Fonction **test_fonction_set_val**
 Cas de test : 
 1. Test set valeur :
-> <p class="font">On set les valeurs de plusieurs case et on test si la fonction "setVal" renvoie 1.</p>
+> <p class="font">On set les valeurs de plusieurs cases et on test si la fonction "setVal" renvoie 1.</p>
 2. Test nbCasesLibres :
-> <p class="font">On vérifie si le nombre de case libre s'incrémente ou décrémente en fonction de la valeur à mise dans la case.<br> 0 - incrémente <br> sup. 0 - décrémente</p>
+> <p class="font">On vérifie si le nombre de cases libres s'incrémente ou décrémente en fonction de la valeur à mettre dans la case.<br> 0 - incrémente <br> sup. 0 - décrémente</p>
 
 <br>
 
@@ -219,7 +219,7 @@ Cas de test :
 
 ## 6 - Fonction **test_partie1**
 
-Permet de caculer le score des tests réalisé lors de cette partie, afin de valider les fonctions utilisé.
+Permet de caculer le score des tests réalisés lors de cette partie, afin de valider les fonctions utilisées.
 
 ```c
     void test_partie1(){
@@ -241,7 +241,7 @@ Permet de caculer le score des tests réalisé lors de cette partie, afin de val
 
 ## Source
 
-Document de test de la grille du jeu 2048 fournis par monsieur B. KHAFIF.
+Document de test de la grille du jeu 2048 fourni par monsieur B. KHAFIF.
 
 <style>
     .font{

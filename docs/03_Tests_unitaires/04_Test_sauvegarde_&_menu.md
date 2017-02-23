@@ -23,10 +23,10 @@
         res = sauvegardeJeu(tmp);
         remove("./Saves/test_Iam_a_teampot.bin");
         if(res != 1)
-            return termine("La sauvegarde n'a pas été créée. Ou vous avez couper le dernier test de manière brutale.");
+            return termine("La sauvegarde n'a pas été créée. Ou vous avez coupé le dernier test de manière brutale.");
         res = sauvegardeJeu(tmp);
         int essaie = 1;
-        // on vérifie le cas ou le choix [n|N] ne fonctionnerais pas
+        // on vérifie le cas où le choix [n|N] ne fonctionnerait pas
         do{
             printf("\033[33;01mSaisir 'n' ou 'N' pour valider la suppression\n\033[31;01mEssaie : (%d/3)\033[00m\n", essaie);
             res = sauvegardeJeu(tmp);
@@ -52,18 +52,18 @@
         jeu * tmp = &jeu_test;
         initialiseJeu(tmp, n, vMax);
 
-        // on charge le fichier de sauvegarde pour les test ./Saves/test_Iam_a_teampot.bin
+        // on charge le fichier de sauvegarde pour les tests ./Saves/test_Iam_a_teampot.bin
         res = chargementJeu(tmp);
 
         if(res != 1)
-            return termine("Le chargement n'as pas pu être effectuer");
+            return termine("Le chargement n'a pas pu être effectué");
         
         // Supression du fichier de sauvegarde pour les tests
         remove("./Saves/test_Iam_a_teampot.bin");
         res = chargementJeu(tmp);
 
         if(res != 0)
-            return termine("Le chargement ne devait pas être réaliser après supression du fichier de sauvegarde");
+            return termine("Le chargement ne devait pas être réalisé après supression du fichier de sauvegarde");
 
         return 1;
     }
@@ -74,41 +74,41 @@
 ```c
     int test_menu(){
         // Test special : on fait le testeur rentrer
-        // chaque valeur pour voir si elle coresponde
+        // chaque valeur pour voir si elles correspondent
         int i=1, choix;
 
         do{
-            printf("\033[33;01mEntrer le chiffre 1 et valider avec Entrer\n\033[31;01mEssaie : (%d/3)\033[00m\n", i);
+            printf("\033[33;01mEntrez le chiffre 1 et validez avec Entrée\n\033[31;01mEssaie : (%d/3)\033[00m\n", i);
             choix = menu();
             i++;
         }while(i<=3 && choix != 1);
         
         if(i>3)
-            return termine("Saisie échouer");
+            return termine("Saisie échouée");
         
         i=1;
         do{
-            printf("\033[33;01mEntrer le chiffre 2 et valider avec Entrer\n\033[31;01mEssaie : (%d/3)\033[00m\n", i);
+            printf("\033[33;01mEntrez le chiffre 2 et validez avec Entrée\n\033[31;01mEssaie : (%d/3)\033[00m\n", i);
             choix = menu();
             i++;
         }while(i<=3 && choix != 2);
         
         if(i>3)
-            return termine("Saisie échouer");
+            return termine("Saisie échouée");
         
         i=1, choix;
         do{
-            printf("\033[33;01mEntrer le chiffre 3 et valider avec Entrer\n\033[31;01mEssaie : (%d/3)\033[00m\n", i);
+            printf("\033[33;01mEntrez le chiffre 3 et validez avec Entrée\n\033[31;01mEssaie : (%d/3)\033[00m\n", i);
             choix = menu();
             i++;
         }while(i<=3 && choix != 3);
         
         if(i>3)
-            return termine("Saisie échouer");
+            return termine("Saisie échouée");
         
         i=1, choix;
         do{
-            printf("\033[33;01mEntrer le chiffre 4 et valider avec Entrer\n\033[31;01mEssaie : (%d/3)\033[00m\n", i);
+            printf("\033[33;01mEntrez le chiffre 4 et validez avec Entrée\n\033[31;01mEssaie : (%d/3)\033[00m\n", i);
             choix = menu();
             i++;
         }while(i<=3 && choix != 4);
@@ -118,23 +118,23 @@
         
         i=1, choix;
         do{
-            printf("\033[33;01mEntrer le chiffre 5 et valider avec Entrer\n\033[31;01mEssaie : (%d/3)\033[00m\n", i);
+            printf("\033[33;01mEntrez le chiffre 5 et validez avec Entrée\n\033[31;01mEssaie : (%d/3)\033[00m\n", i);
             choix = menu();
             i++;
         }while(i<=3 && choix != 5);
         
         if(i>3)
-            return termine("Saisie échouer");
+            return termine("Saisie échouée");
         
         i=1, choix;
         do{
-            printf("\033[33;01mEntrer le chiffre 6 et valider avec Entrer\n\033[31;01mEssaie : (%d/3)\033[00m\n", i);
+            printf("\033[33;01mEntrez le chiffre 6 et validez avec Entrée\n\033[31;01mEssaie : (%d/3)\033[00m\n", i);
             choix = menu();
             i++;
         }while(i<=3 && choix != 6);
         
         if(i>3)
-            return termine("Saisie échouer");
+            return termine("Saisie échouée");
         
         return 1;
     }

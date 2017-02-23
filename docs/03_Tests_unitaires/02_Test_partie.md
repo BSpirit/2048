@@ -6,13 +6,13 @@
 Cas de test :
 
 1. Test case :
-> <p class="font">On test une case rempli dans la grille puis une vide.</p>
+> <p class="font">On test une case remplie dans la grille puis une vide.</p>
 2. Test case hors grille :
 > <p class="font">On test une case hors de la grille. la fonction caseVide doit retourner 0.</p>
-3. Test case grille rempli totalement :
-> <p class="font">On a fait la somme des case remplis dans le tableau le comparer à n*n</p>
+3. Test case grille remplie totalement :
+> <p class="font">On fait la somme des cases remplies dans le tableau et on compare à n*n (taille de la grille)</p>
 4. Test case grille vide :
-> <p class="font">On a fait la somme des case vides dans le tableau le comparer à n*n</p>
+> <p class="font">On fait la somme des cases vides dans le tableau et on compare à n*n (taille de la grille)</p>
 
 <br>
 
@@ -55,7 +55,7 @@ Cas de test :
                 somme += caseVide(tmp, i, j);
         
         if(somme != 0)
-            return termine("Un case ou plusieurs cases du tableau ne sont pas vide");
+            return termine("Une case ou plusieurs cases du tableau ne sont pas vides");
 
         for(i=0; i<=n;i++)
             for(j=0; j<=n; j++)
@@ -67,7 +67,7 @@ Cas de test :
                 somme += caseVide(tmp, i, j);
         
         if (somme != 16)
-            return termine("Une case ou plusieurs case sont rempli");
+            return termine("Une case ou plusieurs cases sont remplies");
 
         libereMemoire(tmp);
         return 1;
@@ -77,13 +77,15 @@ Cas de test :
 ## 2 - Fonction **test_ajouter_val_aleatoire**
 Cas de test :
 1. Test ajout valeur aléatoire :
-> <p class="font">On utilise la fonction ajouteValAlea puis on vérifie dans la grille, <br> si elle a bien été créée et on détermine si elle n'a pas créé plusieurs valeurs aleatoires dans la grille.</p>
+> <p class="font">On utilise la fonction ajoutValAlea puis on vérifie dans la grille si elle a bien été créée.
+ On vérifie ensuite si elle a créé plusieurs valeurs aleatoires dans la grille.</p>
 2. Test ajout de 2 ou 4 :
-> <p class="font">On test si la fonction retourne la valeur 2 ou 4, <br> si le nombre d'essaie dépasse 1000 ou si il ne trouve qu'une des deux valeur on envoie une erreur</p>
+> <p class="font">On test si la fonction affectent les bonnes valeurs (2 ou 4).
+Si le nombre d'essai dépasse 1000 ou s'l ne trouve qu'une des deux valeurs, on envoie une erreur</p>
 3. Test apparition aléatoire:
-> <p class"font">On vérifie que les valeurs aléatoires n'apparaissent pas sur la même cases.</p>
-3. Test grille rempli:
-> <p class"font">On vérifie qu'aucune valeur n'est rentrer dans une grille rempli.</p>
+> <p class"font">On vérifie que les valeurs aléatoires n'apparaissent pas sur la même case.</p>
+3. Test grille remplie:
+> <p class"font">On vérifie qu'aucune valeur n'est entrée dans une grille remplie.</p>
 <br>
 
 ```c
@@ -111,10 +113,10 @@ Cas de test :
         }
         
         if(compteur == 0)
-            return termine("Aucun valeur aleatoire n'as été rajouter.");
+            return termine("Aucune valeur aleatoire n'as été rajoutée.");
 
         if(compteur > 1)
-            return termine("Plusieurs valeurs aleatoires ont été toruver.");
+            return termine("Plusieurs valeurs aleatoires ont été trouvées.");
         
         int l = 0;
         int nb_2 = 0;
@@ -180,7 +182,7 @@ Cas de test :
         }
 
         if(compteur != 0)
-            return termine("Un valeur a été rajouter aleatoirement alors que la grille est rempli");
+            return termine("Un valeur a été rajoutée aleatoirement alors que la grille est remplie");
         libereMemoire(tmp);
         return 1;
     }
@@ -188,7 +190,7 @@ Cas de test :
 
 ## 3 - Fonction **test_gagne**
 Cas de test :
-- On vérifie la fonction gagne retourne soit 1 quand la valeur vMax est atteinte, sinon 0.
+- On vérifie que la fonction gagne retourne 1 quand la valeur vMax est atteinte, sinon 0.
 
 <br>
 
@@ -207,19 +209,19 @@ Cas de test :
         setVal(tmp, 1,1, 2048);
         int res = gagne(tmp);
         if(res != 1)
-            return termine("La valeurs set devait permettre de gagner.");
+            return termine("La valeurs set devaient permettre de gagner.");
         
-        // si la valeur est inférieur à vMax
+        // si la valeur est inférieure à vMax
         setVal(tmp, 1,1, 1024);
         res = gagne(tmp);
         if(res != 0)
-            return termine("La valeur 2048 a été modifier par 1024, donc il est impossible de gagner.");
+            return termine("La valeur 2048 a été modifiée par 1024, donc il est impossible de gagner.");
         
-        // Si la valeur est strictement supérieur à vMax
+        // Si la valeur est strictement supérieure à vMax
         setVal(tmp, 1, 1, 2049);
         res = gagne(tmp);
         if(res != 1)
-            return termine("La valeurs set devait permettre de gagner.");
+            return termine("La valeurs set devaient permettre de gagner.");
                 
         libereMemoire(tmp);
         return 1;    
@@ -228,7 +230,7 @@ Cas de test :
 
 ## 4 - Fonction **test_perdu**
 Cas de test :
-- On vérifie la fonction gagne retourne soit 1 quand la valeur vMax est atteinte, sinon 0 permettant de continuer la partie.
+- On vérifie que la fonction perdu retourne 1 quand aucun mouvement n'est possible, sinon 0.
 
 ```c
     int test_perdu(){
@@ -248,20 +250,20 @@ Cas de test :
         int res = perdu(tmp);
 
         if(res != 1)
-            return termine("La partie devrait être perdu");
+            return termine("La partie devrait être perdue");
         
         setVal(tmp, 1, 1, 2);
 
         res = perdu(tmp);
         if(res != 0)
-            return termine("1 - La partie devait continuer");
+            return termine("1 - La partie devrait continuer");
         
         setVal(tmp, 0, 0, 2);
         setVal(tmp, 0, 1, 4);
         setVal(tmp, 1, 1, 4);
         res = perdu(tmp);
         if(res != 0)
-            return termine("2 - La partie devait continuer");
+            return termine("2 - La partie devrait continuer");
         libereMemoire(tmp);
         return 1;
     }
@@ -270,8 +272,8 @@ Cas de test :
 ## 5 - Fonction **test_finPartie**
 Cas de test
 - On set la valeur max dans la grille
-- On remplace la valeur max ajouter par une valeur inférieur à vMax
-- On fini de rempli la grille afin que l'utilisateur ne puisse pas effectuer de mouvement
+- On remplace la valeur max ajoutée par une valeur inférieure à vMax
+- On fini de remplir la grille afin que l'utilisateur ne puisse pas effectuer de mouvement
 
 <br>
 
@@ -310,7 +312,7 @@ Cas de test
 ```
 
 ## 6 - Fonction **test_partie2**
-On calcule la somme des test de la partie 2.
+On calcule la somme des tests de la partie 2.
 
 ```c
     void test_partie2(){
