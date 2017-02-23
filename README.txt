@@ -1,1 +1,3 @@
-3 2048 7 4 8 2 0 0 0 0 0 0 0 
+Projet scolaire : jeu du 2048
+Groupe : Tony Clonier, Steeve Jerent
+Documentation créée grâce à http://daux.io
