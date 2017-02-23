@@ -401,10 +401,10 @@ int test_jouer(){
     if(essaie > 3 && res != 0)
         return termine("La partie ne renvoie pas 0 ou vous n'appuyez pas sur 'ECHAP'");
 
-    setVal(tmp, 0, 0, 2045);
-    setVal(tmp, 0, 1, 2046);
-    setVal(tmp, 1, 0, 2047);
-    setVal(tmp, 1, 1, 2049);
+    setVal(tmp, 0, 0, 1045);
+    setVal(tmp, 0, 1, 1046);
+    setVal(tmp, 1, 0, 1047);
+    setVal(tmp, 1, 1, 1049);
     essaie = 1;
     do{
         printf("\033[34;01mUne partie va être lancer Appuyer sur flèche directionnelle. (%d/3)\033[00m\n", essaie);

@@ -11,61 +11,64 @@
     *
     * \param p : pointeur sur la partie en cours
     */
-int sauvegardeJeu(jeu *p){
-    FILE *f;
-	char nomF[20];//Stock le nom du fichier à sauvegarder
-	char saisie;
+    int sauvegardeJeu(jeu *p){
+        FILE *f;
+        char nomF[80]; //Stock le nom du fichier à sauvegarder
+        char saisie;
+        // 418 est la valeur max dédiée pour lancer les tests
+        if(p->valMax != 418){
+            //On demande à l'utilisateur de choisir un slot de sauvegarde
+            printf("Veuillez choisir un slot de sauvegarde [1/2/3] [0 pour annuler] \n");
+            do{
+                scanf("%c", &saisie);
+            }while(saisie!= '1' && saisie!='2' && saisie!='3' && saisie!='0');
 
-    //On demande à l'utilisateur de choisir un slot de sauvegarde
-	printf("Veuillez choisir un slot de sauvegarde [1/2/3] [0 pour annuler] \n");
-	do{
-		scanf("%c", &saisie);
-	}while(saisie!= '1' && saisie!='2' && saisie!='3' && saisie!='0');
+            if(saisie=='0')
+                return 0;
 
-    if(saisie=='0')
-        return 0;
+            //Assigne un fichier à nomF en fonction du slot choisi
+            if(saisie=='1')
+                    strcpy(nomF, "./Saves/Save1.bin");
+            if(saisie=='2')
+                    strcpy(nomF, "./Saves/Save2.bin");
+            if(saisie=='3')
+                    strcpy(nomF, "./Saves/Save3.bin");
+        }else{
+            strcpy(nomF ,"./Saves/test_Iam_a_teampot.bin");
+        }
+        //On test l'existance du fichier, s'il existe on demande à l'utilisateur s'il souhaite l'écraser
+        f = fopen(nomF, "r");
+        if(!(f==NULL)){
+            printf("Une sauvegarde existe déjà, voulez vous l'écraser ?[o/n]\n");
+            do{
+                scanf("%c", &saisie);
+            }while(saisie!='o' && saisie!='n' && saisie!='O' && saisie!='N');
+            //S'il ne souhaite pas l'écraser, on ferme le fichier et retourne 0
+            if(saisie=='n' || saisie=='N'){
+                fclose(f);
+                return 0;
+            }
+        }
 
-    //Assigne un fichier à nomF en fonction du slot choisi
-	if(saisie=='1')
-			strcpy(nomF, "./Saves/Save1.bin");
-	if(saisie=='2')
-			strcpy(nomF, "./Saves/Save2.bin");
-	if(saisie=='3')
-			strcpy(nomF, "./Saves/Save3.bin");
+        //Sinon on sauvegarde
+        f = fopen(nomF, "wb");
 
-    //On test l'existance du fichier, s'il existe on demande à l'utilisateur s'il souhaite l'écraser
-    f = fopen(nomF, "r");
-	if(!(f==NULL)){
-		printf("Une sauvegarde existe déjà, voulez vous l'écraser ?[o/n]\n");
-		do{
-			scanf("%c", &saisie);
-		}while(saisie!='o' && saisie!='n' && saisie!='O' && saisie!='N');
-        //S'il ne souhaite pas l'écraser, on ferme le fichier et retourne 0
-		if(saisie=='n' || saisie=='N'){
-			fclose(f);
-			return 0;
-		}
-	}
+        if(f==NULL){
+            printf("Erreur de fopen \n");
+            return 0;
+        }
 
-    //Sinon on sauvegarde
-	f = fopen(nomF, "wb");
+        fwrite( &p->n , sizeof(int) , 1 , f);
+        fwrite( &p->valMax , sizeof(int) , 1 , f);
+        fwrite( &p->nbCasesLibres , sizeof(int) , 1 , f);
+        fwrite( &p->score, sizeof(int), 1, f);
+        fwrite( p->grille, sizeof(int), p->n*p->n, f);
 
-    if(f==NULL){
-        printf("Erreur de fopen \n");
-        return 0;
+        fclose(f);
+
+        //Retourne 1 si sauvegarde effectuée
+        return 1;
     }
-
-	fwrite( &p->n , sizeof(int) , 1 , f);
-	fwrite( &p->valMax , sizeof(int) , 1 , f);
-	fwrite( &p->nbCasesLibres , sizeof(int) , 1 , f);
-    fwrite( &p->score, sizeof(int), 1, f);
-	fwrite( p->grille, sizeof(int), p->n*p->n, f);
-
-    fclose(f);
-
-    //Retourne 1 si sauvegarde effectuée
-    return 1;
-}
 ```
 
 ## 21 - Fonction **chargementJeu**
@@ -79,53 +82,55 @@ int sauvegardeJeu(jeu *p){
     *
     * \param p : pointeur sur la partie en cours
     */
-int chargementJeu(jeu *p){
-    FILE *f;
-	char nomF[20];
-	char saisie;
+    int chargementJeu(jeu *p){
+        FILE *f;
+        char nomF[80];
+        char saisie;
+        if(p->valMax != 418){
+        //On demande à l'utilisateur quelle sauvegarde il souhaite charger
+        printf("Veuillez choisir un slot de sauvegarde à charger [1/2/3] [0 pour annuler] \n");
+        do{
+            scanf("%c", &saisie);
+        }while(saisie!= '1' && saisie!='2' && saisie!='3' && saisie!='0');
 
-    //On demande à l'utilisateur quelle sauvegarde il souhaite charger
-	printf("Veuillez choisir un slot de sauvegarde à charger [1/2/3] [0 pour annuler] \n");
-	do{
-		scanf("%c", &saisie);
-	}while(saisie!= '1' && saisie!='2' && saisie!='3' && saisie!='0');
+        if(saisie=='0')
+            return 0;
 
-    if(saisie=='0')
-        return 0;
+        //Assigne un fichier à nomF en fonction du slot choisi
+        if(saisie=='1')
+                strcpy(nomF, "./Saves/Save1.bin");
+        if(saisie=='2')
+                strcpy(nomF, "./Saves/Save2.bin");
+        if(saisie=='3')
+                strcpy(nomF, "./Saves/Save3.bin");
+        }else{
+            strcpy(nomF, "./Saves/test_Iam_a_teampot.bin");
+        }
+        //On test l'existance du fichier, s'il n'existe pas on retourne 0
+        f = fopen(nomF, "rb");
+        if(f==NULL)
+            return 0;
 
-    //Assigne un fichier à nomF en fonction du slot choisi
-	if(saisie=='1')
-			strcpy(nomF, "./Saves/Save1.bin");
-	if(saisie=='2')
-			strcpy(nomF, "./Saves/Save2.bin");
-	if(saisie=='3')
-			strcpy(nomF, "./Saves/Save3.bin");
+        //Sinon on charge la sauvegarde
+        fread( &p->n , sizeof(int) , 1 , f);
+        fread( &p->valMax , sizeof(int) , 1 , f);
+        fread( &p->nbCasesLibres , sizeof(int) , 1 , f);
+        fread( &p->score, sizeof(int), 1, f);
 
-    //On test l'existance du fichier, s'il n'existe pas on retourne 0
-	f = fopen(nomF, "rb");
-    if(f==NULL)
-        return 0;
+        //On refait une allocation de la grille, dont la taille peut avoir changée
+        p->grille = (int*)malloc((p->n*p->n)*sizeof(int));
+        if(p->grille==NULL){
+            printf("Erreur allocation ! \n");
+            exit(-1);
+        }
 
-    //Sinon on charge la sauvegarde
-	fread( &p->n , sizeof(int) , 1 , f);
-	fread( &p->valMax , sizeof(int) , 1 , f);
-	fread( &p->nbCasesLibres , sizeof(int) , 1 , f);
-    fread( &p->score, sizeof(int), 1, f);
+        fread(p->grille, sizeof(int), p->n*p->n, f);
 
-    //On refait une allocation de la grille, dont la taille peut avoir changée
-    p->grille = (int*)malloc((p->n*p->n)*sizeof(int));
-    if(p->grille==NULL){
-        printf("Erreur allocation ! \n");
-        exit(-1);
+        fclose(f);
+
+        //Retourne 1 si chargement effectué
+        return 1;
     }
-
-	fread(p->grille, sizeof(int), p->n*p->n, f);
-
-    fclose(f);
-
-    //Retourne 1 si chargement effectué
-    return 1;
-}
 ```
 
 ## 22 - Fonction supplémentaire **sauvegardeScore**

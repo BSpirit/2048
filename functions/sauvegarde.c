@@ -21,8 +21,9 @@ Informations  : Contient la définition des fonctions
 
 int sauvegardeJeu(jeu *p){
     FILE *f;
-	char nomF[80];//Stock le nom du fichier à sauvegarder
+	char nomF[80]; //Stock le nom du fichier à sauvegarder
 	char saisie;
+    // 418 est la valeur max dédiée pour lancer les tests
     if(p->valMax != 418){
         //On demande à l'utilisateur de choisir un slot de sauvegarde
         printf("Veuillez choisir un slot de sauvegarde [1/2/3] [0 pour annuler] \n");

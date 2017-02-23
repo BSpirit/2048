@@ -1,4 +1,4 @@
-all: run test
+all: run
 
 run: clearGame compile
 	./2048
