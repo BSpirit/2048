@@ -9,4 +9,6 @@ void test_partie2();
 
 void test_partie3();
 
+void test_partie4();
+
 #endif

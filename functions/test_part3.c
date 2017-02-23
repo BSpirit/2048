@@ -71,7 +71,7 @@ int test_mouvementLigne(){
     if(getVal(tmp, 0, 3) != 0)
         return termine("ml - La valeur de la case [0,3] n'est pas réinitialisé.");
     
-    // On modifie des valeurs sur la ligne 0
+    // On modifie des valeurs sur la ligne 0. pour tester encore la fusion des cases si similaire
     setVal(tmp, 0, 2, 32);
     setVal(tmp, 0, 3, 64);
     res = mouvementLigne(tmp, 0, -1);
@@ -95,16 +95,20 @@ int test_mouvementLignes(){
     setVal(tmp, 0, 1, 2);
     setVal(tmp, 1, 1, 2);
     
+    // Test mouvement vers la Droite de toute les lignes
     int res = mouvementLignes(tmp, -1);
 
     if(res != 0)
         return termine("mls - Le mouvement sur les lignes est effectué.");
     
+    // Test mouvement vers la Gauche de toute les lignes
     res = mouvementLignes(tmp, 1);
     
     if(res != 1)
         return termine("mls - 1 - Le mouvement sur les ligne n'est pas effectué.");
 
+    // Test on set les mêmes valeurs dans toutes les cases et on réalise un
+    // vers la droite, en verifiant si on a les bonnes valeurs sont assignés dans la grille. 
     setVal(tmp, 0, 1, 2);
     setVal(tmp, 1, 1, 2);
     res = mouvementLignes(tmp, -1);
@@ -115,6 +119,10 @@ int test_mouvementLignes(){
     if(getVal(tmp, 0, 1) != 4 || getVal(tmp, 1, 1) != 4)
         return termine("mls - Le mouvement n'as pas donnée 4 sur les case [0,1] ou [1,1]");
     
+    if(getVal(tmp, 1, 0) != 0 || getVal(tmp, 0, 0) != 0)
+        return termine("mls - Le mouvement n'as pas donnée 4 sur les case [0,1] ou [1,1]");
+    
+    // On refait un mouvement vers la droit après avoir réalisé le test précedent et avoir modifié la ligne du bas.
     setVal(tmp, 1, 1, 0);
     setVal(tmp, 1, 0, 2);
 
@@ -136,15 +144,20 @@ int test_mouvementColonne(){
     setVal(tmp, 0, 0, 2);
     setVal(tmp, 1, 1, 2);
 
+    // On effectue un mouvement vers le bas pour la colonne 1 (impossible)
     int res = mouvementColonne(tmp, 1, -1);
 
     if(res != 0)
-        return termine("mc - 1 -Aucune case ne devrait bougé.");
+        return termine("mc - 1 - Aucune case ne devrait bougé.");
     
+    // On effectue un mouvement vers le haut pour la colonne 0 (impossible)
     res = mouvementColonne(tmp, 0, 1);
     if(res != 0)
         return termine("mc - 2 - Aucune case ne devrait bougé.");
     
+    // On rempli la grille et on fait un mouvement vers le haut pour la colonne 1,
+    // puis on vérifie les valeurs puis on refait la même expérience avec la colonne 0 que l'on
+    // fait descendre.
     setVal(tmp, 0, 1, 2);
     setVal(tmp, 1, 0, 2);
     res = mouvementColonne(tmp, 1, 1);
@@ -168,6 +181,7 @@ int test_mouvementColonne(){
     
     if(getVal(tmp, 0, 0) != 0)
         return termine("mc - La valeur de la case [0,0] n'as pas été reinitialisé.");
+    // On test si 2 valeurs differentes von fusionner lors d'un mouvement et on vérifie les valeurs des cases
     setVal(tmp, 0,0, 32);
     res = mouvementColonne(tmp, 0, 1);
 
@@ -186,6 +200,9 @@ int test_mouvementColonnes(){
     jeu jeu_test;
     jeu * tmp = &jeu_test;
     initialiseJeu(tmp, n, vMax);
+
+    // On ajoute des valeurs sur la ligne du bas de la grille
+    // on réalise un mouvement vers le haut puis le bas.
     setVal(tmp, 0, 1, 2);
     setVal(tmp, 1, 0, 2);
     int res = mouvementColonnes(tmp, 1);
@@ -196,7 +213,9 @@ int test_mouvementColonnes(){
     res = mouvementColonnes(tmp, -1);
     if(res != 1)
         return termine("mcs - 2 - Aucune case n'as bougé.");
-
+    
+    // on test si le on peut sortir de la grille avec les mouvement vers le HAUT
+    // et BAS
     res = mouvementColonnes(tmp, -1);
 
     if(res != 0)
@@ -208,6 +227,7 @@ int test_mouvementColonnes(){
     if(res != 0)
         return termine("mcs - 2 - Aucune case ne devait bouger.");
     
+    // On modifie les valeur de la grille pour empëcher les mouvements
     setVal(tmp, 1, 0, 2);
     setVal(tmp, 1, 1, 4);
 
@@ -228,15 +248,17 @@ int test_mouvement(){
     jeu jeu_test;
     jeu * tmp = &jeu_test;
     initialiseJeu(tmp, n, vMax);
+    
+    // On réalise un tours de la grille et on vérifie les valeurs des cases de la grille
+    // BAS - GAUCHE - HAUT - DROITE
     setVal(tmp, 0, 1, 2);
-
     int res = mouvement(tmp, 0);
-
     if(res != 1)
-        return termine("m - Le mouvement vers le bas a echoué");
+        return termine("m - Le mouvement vers le bas à echoué");
+    
     if(getVal(tmp, 0, 1) != 0)
         return termine("La valeur de la case [0,1] n'est pas réinitialisé.");
-
+    
     res = mouvement(tmp, 3);
 
     if(res != 1)
@@ -259,15 +281,18 @@ int test_mouvement(){
     if(getVal(tmp, 0, 0) != 0)
         return termine("La valeur de la case [0,0] n'est pas réinitialisé.");
     
+    // On modifie les valeurs de la grille
     setVal(tmp, 0, 0, 32);
     setVal(tmp, 1, 0, 64);
     setVal(tmp, 1, 1, 2);
 
+    // On réalise un mouvement vers la Gauche (impossible)
     res = mouvement(tmp, 3);
 
     if(res != 0)
-        return termine("les cases ne devrait pas bouger vers la gauche");
+        return termine("les cases ne devraient pas bouger vers la gauche");
     
+    // On réalise un mouvement vers bas (possible) et on verifie la valeur dans la grille
     res = mouvement(tmp, 0);
     if(res != 1)
         return termine("la case [0,1] devait bouger sur la case [1,1]");
@@ -275,6 +300,7 @@ int test_mouvement(){
     if(getVal(tmp, 1,1) != 4)
         return termine("La valeur de la case [1,1] n'est pas égale à 4.");
     
+    // On test de sortir de la grille avec cette fonction
     res = mouvement(tmp, 0);
     if(res != 0)
         return termine("m - 1 - Mouvement interdit");
@@ -288,7 +314,11 @@ int test_mouvement(){
 }
 
 int test_saisieD(){
-
+    /**
+     *  Fonction Spéciale interaction avec l'utilisateur :
+     *  L'utilisateur doit tester si les touches qu'on lui demande son
+     *  correct. (3 essaies possible par touche)
+     */
     printf("\033[33;01mTest interactif - Clavier \033[00m\n");
     printf("Il n'y a que 5 touches fonctionnelles lors de ce jeux \n - ECHAP \n - Flèche 'HAUT' \
     \n - Flèche 'BAS' \n - Flèche 'DROITE' \n - Flèche 'GAUCHE' \
@@ -348,6 +378,11 @@ int test_saisieD(){
 }
 
 int test_jouer(){
+    /**
+     *  Fonction Spécial : Propose 3 situations de jeux 
+     *  demandant une interaction de l'utilisateur
+     *
+     */
     int n = 2;
     int vMax = 2048;
     jeu jeu_test;

@@ -1,3 +1,5 @@
+### Auteur : Jerent Steeve
+
 ## 1 - Fonction **termine**
 
 Permet d'afficher les messages d'erreurs lors des tests unitaire et retourne 0 pour signaler l'erreur.
@@ -239,7 +241,7 @@ Permet de caculer le score des tests réalisé lors de cette partie, afin de val
 
 ## Source
 
-Document de test de la partie 1 du jeu 2048 fournis par monsieur B. KHAFIF.
+Document de test de la grille du jeu 2048 fournis par monsieur B. KHAFIF.
 
 <style>
     .font{

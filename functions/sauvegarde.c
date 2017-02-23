@@ -21,26 +21,28 @@ Informations  : Contient la définition des fonctions
 
 int sauvegardeJeu(jeu *p){
     FILE *f;
-	char nomF[20];//Stock le nom du fichier à sauvegarder
+	char nomF[80];//Stock le nom du fichier à sauvegarder
 	char saisie;
+    if(p->valMax != 418){
+        //On demande à l'utilisateur de choisir un slot de sauvegarde
+        printf("Veuillez choisir un slot de sauvegarde [1/2/3] [0 pour annuler] \n");
+        do{
+            scanf("%c", &saisie);
+        }while(saisie!= '1' && saisie!='2' && saisie!='3' && saisie!='0');
 
-    //On demande à l'utilisateur de choisir un slot de sauvegarde
-	printf("Veuillez choisir un slot de sauvegarde [1/2/3] [0 pour annuler] \n");
-	do{
-		scanf("%c", &saisie);
-	}while(saisie!= '1' && saisie!='2' && saisie!='3' && saisie!='0');
+        if(saisie=='0')
+            return 0;
 
-    if(saisie=='0')
-        return 0;
-
-    //Assigne un fichier à nomF en fonction du slot choisi
-	if(saisie=='1')
-			strcpy(nomF, "./Saves/Save1.bin");
-	if(saisie=='2')
-			strcpy(nomF, "./Saves/Save2.bin");
-	if(saisie=='3')
-			strcpy(nomF, "./Saves/Save3.bin");
-
+        //Assigne un fichier à nomF en fonction du slot choisi
+        if(saisie=='1')
+                strcpy(nomF, "./Saves/Save1.bin");
+        if(saisie=='2')
+                strcpy(nomF, "./Saves/Save2.bin");
+        if(saisie=='3')
+                strcpy(nomF, "./Saves/Save3.bin");
+    }else{
+        strcpy(nomF ,"./Saves/test_Iam_a_teampot.bin");
+    }
     //On test l'existance du fichier, s'il existe on demande à l'utilisateur s'il souhaite l'écraser
     f = fopen(nomF, "r");
 	if(!(f==NULL)){
@@ -78,9 +80,9 @@ int sauvegardeJeu(jeu *p){
 
 int chargementJeu(jeu *p){
     FILE *f;
-	char nomF[20];
+	char nomF[80];
 	char saisie;
-
+    if(p->valMax != 418){
     //On demande à l'utilisateur quelle sauvegarde il souhaite charger
 	printf("Veuillez choisir un slot de sauvegarde à charger [1/2/3] [0 pour annuler] \n");
 	do{
@@ -97,7 +99,9 @@ int chargementJeu(jeu *p){
 			strcpy(nomF, "./Saves/Save2.bin");
 	if(saisie=='3')
 			strcpy(nomF, "./Saves/Save3.bin");
-
+    }else{
+        strcpy(nomF, "./Saves/test_Iam_a_teampot.bin");
+    }
     //On test l'existance du fichier, s'il n'existe pas on retourne 0
 	f = fopen(nomF, "rb");
     if(f==NULL)
