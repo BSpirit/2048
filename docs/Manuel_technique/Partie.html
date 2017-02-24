@@ -1,0 +1,276 @@
+<!DOCTYPE html>
+<!--[if lt IE 7]>       <html class="no-js ie6 oldie" lang="en"> <![endif]-->
+<!--[if IE 7]>          <html class="no-js ie7 oldie" lang="en"> <![endif]-->
+<!--[if IE 8]>          <html class="no-js ie8 oldie" lang="en"> <![endif]-->
+<!--[if gt IE 8]><!-->  <html class="no-js" lang="en"> <!--<![endif]-->
+<head>
+    <title>Partie - Projet DUT AS - 2048</title>
+    <meta name="description" content="Conception d'un jeux 2048" />
+    <meta name="author" content="I, Me & Myself">
+    <meta charset="UTF-8">
+    <link rel="icon" href="../themes/daux/img/favicon-blue.png" type="image/x-icon">
+    <!-- Mobile -->
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <!-- Font -->
+    <link href='https://fonts.googleapis.com/css?family=Roboto+Slab:400,100,300,700&subset=latin,cyrillic-ext,cyrillic' rel='stylesheet' type='text/css'>
+    <!-- CSS -->
+    <link href='../themes/daux/css/theme-blue.min.css' rel='stylesheet' type='text/css'>
+            <!-- Tipue Search -->
+        <link href="../tipuesearch/tipuesearch.css" rel="stylesheet">
+    
+    <!--[if lt IE 9]>
+    <script src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+</head>
+<body class="">
+    
+<header class="Navbar hidden-print">
+    <a class="Navbar__brand" href="../index.html">Projet DUT AS - 2048</a>
+
+    <div class="Search">
+        <svg class="Search__icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 451 451"><path d="M447.05 428l-109.6-109.6c29.4-33.8 47.2-77.9 47.2-126.1C384.65 86.2 298.35 0 192.35 0 86.25 0 .05 86.3.05 192.3s86.3 192.3 192.3 192.3c48.2 0 92.3-17.8 126.1-47.2L428.05 447c2.6 2.6 6.1 4 9.5 4s6.9-1.3 9.5-4c5.2-5.2 5.2-13.8 0-19zM26.95 192.3c0-91.2 74.2-165.3 165.3-165.3 91.2 0 165.3 74.2 165.3 165.3s-74.1 165.4-165.3 165.4c-91.1 0-165.3-74.2-165.3-165.4z"/></svg>
+        <input type="search" id="tipue_search_input" class="Search__field" placeholder="Search..." autocomplete="on" results=25 autosave=text_search>
+    </div>
+</header>
+<div class="Columns content">
+    <aside class="Columns__left Collapsible">
+        <div class="Collapsible__container">
+            <button type="button" class="Button Collapsible__trigger">
+                <span class="Collapsible__trigger--bar"></span>
+                <span class="Collapsible__trigger--bar"></span>
+                <span class="Collapsible__trigger--bar"></span>
+            </button>
+        </div>
+
+        <div class="Collapsible__content">
+            <!-- Navigation -->
+            <ul class='Nav'><li class='Nav__item  has-children'><a href="#" class="aj-nav folder"><i class="Nav__arrow">&nbsp;</i>Manuel utilisateur</a><ul class='Nav'><li class='Nav__item '><a href="../Manuel_utilisateur/Installation.html">Installation</a></li><li class='Nav__item '><a href="../Manuel_utilisateur/Comment_jouer.html">Comment jouer</a></li></ul></li><li class='Nav__item Nav__item--open has-children'><a href="#" class="aj-nav folder"><i class="Nav__arrow">&nbsp;</i>Manuel technique</a><ul class='Nav'><li class='Nav__item '><a href="../Manuel_technique/Introduction.html">Introduction</a></li><li class='Nav__item '><a href="../Manuel_technique/Grille.html">Grille</a></li><li class='Nav__item Nav__item--active'><a href="../Manuel_technique/Partie.html">Partie</a></li><li class='Nav__item '><a href="../Manuel_technique/Mouvement.html">Mouvement</a></li><li class='Nav__item '><a href="../Manuel_technique/Sauvegarde.html">Sauvegarde</a></li></ul></li><li class='Nav__item  has-children'><a href="#" class="aj-nav folder"><i class="Nav__arrow">&nbsp;</i>Tests unitaires</a><ul class='Nav'><li class='Nav__item '><a href="../Tests_unitaires/Test_grille.html">Test grille</a></li><li class='Nav__item '><a href="../Tests_unitaires/Test_partie.html">Test partie</a></li><li class='Nav__item '><a href="../Tests_unitaires/Test_mouvement.html">Test mouvement</a></li><li class='Nav__item '><a href="../Tests_unitaires/Test_sauvegarde_&_menu.html">Test sauvegarde & menu</a></li></ul></li><li class='Nav__item '><a href="../sources.html">sources</a></li></ul>
+
+            <div class="Links">
+                                    <hr/>
+                                            <a href="https://github.com/BSpirit/2048" target="_blank"><img style='width:32px;padding-rigth:100px;' src='./github.png'/>GitHub Repo</a>
+                        <br />
+                                    
+                                    <div class="CodeToggler">
+                        <hr/>
+                                                    <a class="CodeToggler__button CodeToggler__button--main" href="#">Show Code Blocks Inline</a><br>
+                                            </div>
+                
+                            </div>
+        </div>
+    </aside>
+    <div class="Columns__right ">
+        <div class="Columns__right__content">
+            <div class="doc_content">
+                <article class="Page">
+
+    <div class="Page__header">
+        <h1><a href="../Manuel_technique/Introduction.html">Manuel technique</a> <svg class="Page__header--separator" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 477.175 477.175"><path d="M360.73 229.075l-225.1-225.1c-5.3-5.3-13.8-5.3-19.1 0s-5.3 13.8 0 19.1l215.5 215.5-215.5 215.5c-5.3 5.3-5.3 13.8 0 19.1 2.6 2.6 6.1 4 9.5 4 3.4 0 6.9-1.3 9.5-4l225.1-225.1c5.3-5.2 5.3-13.8.1-19z"/></svg> <a href="../Manuel_technique/Partie.html">Partie</a></h1>
+                    </div>
+
+
+    <div class="s-content">
+        <ul class="TableOfContents">
+<li>
+<p><a href="#page_Auteurs+%3A++Steeve+Jerent+-+Tony+Clonier">Auteurs : <em>Steeve Jerent - Tony Clonier</em></a></p>
+</li>
+<li>
+<p><a href="#page_9+-+Fonction++ajoutValAlea">9 - Fonction <strong>ajoutValAlea</strong></a></p>
+</li>
+<li>
+<p><a href="#page_10+-+Fonction++gagne">10 - Fonction <strong>gagne</strong></a></p>
+</li>
+<li>
+<p><a href="#page_11+-+Fonction++perdu">11 - Fonction <strong>perdu</strong></a></p>
+</li>
+<li>
+<p><a href="#page_12+-+Fonction++finPartie">12 - Fonction <strong>finPartie</strong></a></p>
+</li>
+<li>
+<p><a href="#page_13+-+Fonction++jouer">13 - Fonction <strong>jouer</strong></a></p>
+</li>
+</ul>
+<h4 id="page_Auteurs+%3A++Steeve+Jerent+-+Tony+Clonier">Auteurs : <em>Steeve Jerent - Tony Clonier</em></h4>
+<h2 id="page_9+-+Fonction++ajoutValAlea">9 - Fonction <strong>ajoutValAlea</strong></h2>
+<br>
+<pre><code class="language-c">    /*!
+     *  Ajoute une valeur (2 ou 4 choisi aléatoirement) sur une case vide 
+     *  (elle aussi choisi aleatoirement)
+     *  
+     *  \param p : pointeur sur la partie en cours
+     */
+    void ajouteValAlea(jeu *p){
+        int ligne;
+        int colonne;
+
+        if(p-&gt;nbCasesLibres&gt;0){
+            //On génère des indices (ligne, colonne) jusqu'à tomber sur une case vide
+            do{
+                ligne = rand()%p-&gt;n;
+                colonne = rand()%p-&gt;n;
+            }while(!caseVide(p, ligne, colonne));
+
+            // On assigne 2 ou 4 à la case sélectionnée
+            if(rand()%2)
+                setVal(p, ligne, colonne, 2);
+            else
+                setVal(p, ligne, colonne, 4);
+        }
+    }
+</code></pre>
+<h2 id="page_10+-+Fonction++gagne">10 - Fonction <strong>gagne</strong></h2>
+<br>
+<pre><code class="language-c">    /*!
+     * Retourne 1 si la partie est gagnée, 0 sinon.
+     *
+     *  \param p : Pointeur sur la partie en cours
+     */
+     int gagne(jeu *p){
+        int flag = 0;
+        int i = 0;// indice de ligne
+        int j = 0;// indice de colonne
+
+        //boucles imbriquées pour parcourir la grille
+        while(i&lt;p-&gt;n &amp;&amp; flag==0){
+            j = 0;
+            while(j&lt;p-&gt;n &amp;&amp; flag==0){
+                if(getVal(p, i, j)==p-&gt;valMax)
+                    flag = 1;
+                j++;
+            }
+            i++;
+        }//sortie : grille entièrement parcourue ou une case de la grille a pour valeur p-&gt;valMax (flag==1)
+
+        // flag==1 uniquement si une des cases de la grille a comme valeur p-&gt;valMax
+        return flag;
+    }
+</code></pre>
+<h2 id="page_11+-+Fonction++perdu">11 - Fonction <strong>perdu</strong></h2>
+<br>
+<pre><code class="language-c">    /*!
+     *  Retourne 1 si la partie est perdu,0 sinon.
+     *
+     *  \param p : Pointeur sur la partie en cours
+     */
+    int perdu(jeu *p){
+        //S'il reste des cases libres, on n'a pas perdu
+        if(p-&gt;nbCasesLibres&gt;0)
+            return 0;
+
+        int flag = 1;
+        int i = 0; //indice de ligne
+        int j = 0;// indice de colonne
+
+        //Boucles imbriquées pour parcourir la grille, on commence à la case (0,0)
+        while(i&lt;p-&gt;n &amp;&amp; flag==1){
+            j = 0;
+            while(j&lt;p-&gt;n &amp;&amp; flag==1){
+                // si on arrive à la dernière case de la grille, c'est qu'on a perdu
+                if(i==p-&gt;n-1 &amp;&amp; j==p-&gt;n-1)
+                    flag = 1;
+                // sinon on compare la case actuelle avec celle à droite et celle en dessous	
+                else if(getVal(p, i, j)==getVal(p, i+1, j) || getVal(p, i, j)==getVal(p, i, j+1))
+                    flag = 0;
+                j++;
+            }
+            i++;
+        }
+        /* 
+         *  sortie : grille entièrement parcourue (flag==1, on a perdu) ou
+         *  deux cases adjacentes ont les mêmes valeurs (flag==0 i.e. on n'a pas encore perdu)
+         */
+
+        return flag;
+    }
+</code></pre>
+<h2 id="page_12+-+Fonction++finPartie">12 - Fonction <strong>finPartie</strong></h2>
+<br>
+<pre><code class="language-c">    /*!
+     *  Retourne 1 si la partie est terminé, 0 sinon.
+     *
+     *  \param p : Pointeur sur la partie en cours
+     */
+     int finPartie(jeu *p){
+        return (perdu(p) || gagne(p));
+    }
+</code></pre>
+<h2 id="page_13+-+Fonction++jouer">13 - Fonction <strong>jouer</strong></h2>
+<br>
+<pre><code class="language-c">/*! * Fonction permettant de jouer la partie en cours
+	* (On la suppose initialisée)
+	* Retourne 1 si la partie est terminée (gagnée ou perdu)
+	* Retourne 0 sinon (L'utilisateur a appuyé sur la touche echap)
+	*
+	* \param p : pointeur sur la partie en cours
+	*/
+int jouer(jeu *p){
+	int saisie;
+	int deplacement; // Test s'il y a eu un déplacement
+
+	affichage(p);
+	printf(&quot;Utilisez les flèches pour jouer \n&quot;);
+	printf(&quot;ECHAP : Accéder au menu \n&quot;);
+
+	do{
+		//saisieD retourne -1, 1, 2, 3 ou 4
+		saisie = saisieD();
+		if(saisie&gt;=0){
+			deplacement = mouvement(p, saisie);
+			if(deplacement)
+				ajouteValAlea(p);
+		affichage(p);
+		printf(&quot;Utilisez les flèches pour jouer \n&quot;);
+		printf(&quot;ECHAP : Accéder au menu \n&quot;);
+		}
+	}while(saisie != -1 &amp;&amp; !finPartie(p));
+	//On sort de la boucle si l'utilisateur appuie sur ECHAP ou si la partie est terminée
+
+	//Retourne -1 si l'utilisateur a appuyé sur ECHAP
+	if(saisie==-1)
+		return 0;
+	//Retourne 1 si la partie est terminée (perdu ou gagné)
+	else
+		return 1;
+}
+</code></pre>
+    </div>
+
+        <nav>
+        <ul class="Pager">
+            <li class=Pager--prev><a href="../Manuel_technique/Grille.html">Previous</a></li>            <li class=Pager--next><a href="../Manuel_technique/Mouvement.html">Next</a></li>        </ul>
+    </nav>
+    </article>
+
+            </div>
+        </div>
+    </div>
+</div>
+
+    
+    <!-- jQuery -->
+    <script src="../themes/daux/js/jquery-1.11.3.min.js"></script>
+
+    <!-- hightlight.js -->
+    <script src="../themes/daux/js/highlight.pack.js"></script>
+    <script>hljs.initHighlightingOnLoad();</script>
+
+    <!-- JS -->
+    
+    <script src="../themes/daux/js/daux.js"></script>
+
+            <!-- Tipue Search -->
+        <script type="text/javascript" src="../tipuesearch/tipuesearch.js"></script>
+
+        <script>
+            window.onunload = function(){}; // force $(document).ready to be called on back/forward navigation in firefox
+            $(function() {
+                tipuesearch({
+                    'base_url': '../'
+                });
+            });
+        </script>
+    
+</body>
+</html>

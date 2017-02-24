@@ -1,0 +1,352 @@
+<!DOCTYPE html>
+<!--[if lt IE 7]>       <html class="no-js ie6 oldie" lang="en"> <![endif]-->
+<!--[if IE 7]>          <html class="no-js ie7 oldie" lang="en"> <![endif]-->
+<!--[if IE 8]>          <html class="no-js ie8 oldie" lang="en"> <![endif]-->
+<!--[if gt IE 8]><!-->  <html class="no-js" lang="en"> <!--<![endif]-->
+<head>
+    <title>Sauvegarde - Projet DUT AS - 2048</title>
+    <meta name="description" content="Conception d'un jeux 2048" />
+    <meta name="author" content="I, Me & Myself">
+    <meta charset="UTF-8">
+    <link rel="icon" href="../themes/daux/img/favicon-blue.png" type="image/x-icon">
+    <!-- Mobile -->
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <!-- Font -->
+    <link href='https://fonts.googleapis.com/css?family=Roboto+Slab:400,100,300,700&subset=latin,cyrillic-ext,cyrillic' rel='stylesheet' type='text/css'>
+    <!-- CSS -->
+    <link href='../themes/daux/css/theme-blue.min.css' rel='stylesheet' type='text/css'>
+            <!-- Tipue Search -->
+        <link href="../tipuesearch/tipuesearch.css" rel="stylesheet">
+    
+    <!--[if lt IE 9]>
+    <script src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+</head>
+<body class="">
+    
+<header class="Navbar hidden-print">
+    <a class="Navbar__brand" href="../index.html">Projet DUT AS - 2048</a>
+
+    <div class="Search">
+        <svg class="Search__icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 451 451"><path d="M447.05 428l-109.6-109.6c29.4-33.8 47.2-77.9 47.2-126.1C384.65 86.2 298.35 0 192.35 0 86.25 0 .05 86.3.05 192.3s86.3 192.3 192.3 192.3c48.2 0 92.3-17.8 126.1-47.2L428.05 447c2.6 2.6 6.1 4 9.5 4s6.9-1.3 9.5-4c5.2-5.2 5.2-13.8 0-19zM26.95 192.3c0-91.2 74.2-165.3 165.3-165.3 91.2 0 165.3 74.2 165.3 165.3s-74.1 165.4-165.3 165.4c-91.1 0-165.3-74.2-165.3-165.4z"/></svg>
+        <input type="search" id="tipue_search_input" class="Search__field" placeholder="Search..." autocomplete="on" results=25 autosave=text_search>
+    </div>
+</header>
+<div class="Columns content">
+    <aside class="Columns__left Collapsible">
+        <div class="Collapsible__container">
+            <button type="button" class="Button Collapsible__trigger">
+                <span class="Collapsible__trigger--bar"></span>
+                <span class="Collapsible__trigger--bar"></span>
+                <span class="Collapsible__trigger--bar"></span>
+            </button>
+        </div>
+
+        <div class="Collapsible__content">
+            <!-- Navigation -->
+            <ul class='Nav'><li class='Nav__item  has-children'><a href="#" class="aj-nav folder"><i class="Nav__arrow">&nbsp;</i>Manuel utilisateur</a><ul class='Nav'><li class='Nav__item '><a href="../Manuel_utilisateur/Installation.html">Installation</a></li><li class='Nav__item '><a href="../Manuel_utilisateur/Comment_jouer.html">Comment jouer</a></li></ul></li><li class='Nav__item Nav__item--open has-children'><a href="#" class="aj-nav folder"><i class="Nav__arrow">&nbsp;</i>Manuel technique</a><ul class='Nav'><li class='Nav__item '><a href="../Manuel_technique/Introduction.html">Introduction</a></li><li class='Nav__item '><a href="../Manuel_technique/Grille.html">Grille</a></li><li class='Nav__item '><a href="../Manuel_technique/Partie.html">Partie</a></li><li class='Nav__item '><a href="../Manuel_technique/Mouvement.html">Mouvement</a></li><li class='Nav__item Nav__item--active'><a href="../Manuel_technique/Sauvegarde.html">Sauvegarde</a></li></ul></li><li class='Nav__item  has-children'><a href="#" class="aj-nav folder"><i class="Nav__arrow">&nbsp;</i>Tests unitaires</a><ul class='Nav'><li class='Nav__item '><a href="../Tests_unitaires/Test_grille.html">Test grille</a></li><li class='Nav__item '><a href="../Tests_unitaires/Test_partie.html">Test partie</a></li><li class='Nav__item '><a href="../Tests_unitaires/Test_mouvement.html">Test mouvement</a></li><li class='Nav__item '><a href="../Tests_unitaires/Test_sauvegarde_&_menu.html">Test sauvegarde & menu</a></li></ul></li><li class='Nav__item '><a href="../sources.html">sources</a></li></ul>
+
+            <div class="Links">
+                                    <hr/>
+                                            <a href="https://github.com/BSpirit/2048" target="_blank"><img style='width:32px;padding-rigth:100px;' src='./github.png'/>GitHub Repo</a>
+                        <br />
+                                    
+                                    <div class="CodeToggler">
+                        <hr/>
+                                                    <a class="CodeToggler__button CodeToggler__button--main" href="#">Show Code Blocks Inline</a><br>
+                                            </div>
+                
+                            </div>
+        </div>
+    </aside>
+    <div class="Columns__right ">
+        <div class="Columns__right__content">
+            <div class="doc_content">
+                <article class="Page">
+
+    <div class="Page__header">
+        <h1><a href="../Manuel_technique/Introduction.html">Manuel technique</a> <svg class="Page__header--separator" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 477.175 477.175"><path d="M360.73 229.075l-225.1-225.1c-5.3-5.3-13.8-5.3-19.1 0s-5.3 13.8 0 19.1l215.5 215.5-215.5 215.5c-5.3 5.3-5.3 13.8 0 19.1 2.6 2.6 6.1 4 9.5 4 3.4 0 6.9-1.3 9.5-4l225.1-225.1c5.3-5.2 5.3-13.8.1-19z"/></svg> <a href="../Manuel_technique/Sauvegarde.html">Sauvegarde</a></h1>
+                    </div>
+
+
+    <div class="s-content">
+        <ul class="TableOfContents">
+<li>
+<p><a href="#page_Auteur+%3A++Tony+Clonier">Auteur : <em>Tony Clonier</em></a></p>
+</li>
+<li>
+<p><a href="#page_20+-+Fonction++sauvegardeJeu">20 - Fonction <strong>sauvegardeJeu</strong></a></p>
+</li>
+<li>
+<p><a href="#page_21+-+Fonction++chargementJeu">21 - Fonction <strong>chargementJeu</strong></a></p>
+</li>
+<li>
+<p><a href="#page_22+-+Fonction+suppl%C3%A9mentaire++sauvegardeScore">22 - Fonction supplémentaire <strong>sauvegardeScore</strong></a></p>
+</li>
+<li>
+<p><a href="#page_23+-+Fonction+suppl%C3%A9mentaire++chargementScore">23 - Fonction supplémentaire <strong>chargementScore</strong></a></p>
+</li>
+<li>
+<p><a href="#page_24+-+Fonction++menu">24 - Fonction <strong>menu</strong></a></p>
+</li>
+</ul>
+<h4 id="page_Auteur+%3A++Tony+Clonier">Auteur : <em>Tony Clonier</em></h4>
+<h2 id="page_20+-+Fonction++sauvegardeJeu">20 - Fonction <strong>sauvegardeJeu</strong></h2>
+<br>
+<pre><code class="language-c">/*! * Fonction sauvegardant la partie en cours
+    * Retourne 0 en cas de problème ou si l'utilisateur annule
+    * Retourne 1 sinon
+    *
+    * \param p : pointeur sur la partie en cours
+    */
+    int sauvegardeJeu(jeu *p){
+        FILE *f;
+        char nomF[80]; //Stock le nom du fichier à sauvegarder
+        char saisie;
+        // 418 est la valeur max dédiée pour lancer les tests
+        if(p-&gt;valMax != 418){
+            //On demande à l'utilisateur de choisir un slot de sauvegarde
+            printf(&quot;Veuillez choisir un slot de sauvegarde [1/2/3] [0 pour annuler] \n&quot;);
+            do{
+                scanf(&quot;%c&quot;, &amp;saisie);
+            }while(saisie!= '1' &amp;&amp; saisie!='2' &amp;&amp; saisie!='3' &amp;&amp; saisie!='0');
+
+            if(saisie=='0')
+                return 0;
+
+            //Assigne un fichier à nomF en fonction du slot choisi
+            if(saisie=='1')
+                    strcpy(nomF, &quot;./Saves/Save1.bin&quot;);
+            if(saisie=='2')
+                    strcpy(nomF, &quot;./Saves/Save2.bin&quot;);
+            if(saisie=='3')
+                    strcpy(nomF, &quot;./Saves/Save3.bin&quot;);
+        }else{
+            strcpy(nomF ,&quot;./Saves/test_Iam_a_teampot.bin&quot;);
+        }
+        //On test l'existance du fichier, s'il existe on demande à l'utilisateur s'il souhaite l'écraser
+        f = fopen(nomF, &quot;r&quot;);
+        if(!(f==NULL)){
+            printf(&quot;Une sauvegarde existe déjà, voulez vous l'écraser ?[o/n]\n&quot;);
+            do{
+                scanf(&quot;%c&quot;, &amp;saisie);
+            }while(saisie!='o' &amp;&amp; saisie!='n' &amp;&amp; saisie!='O' &amp;&amp; saisie!='N');
+            //S'il ne souhaite pas l'écraser, on ferme le fichier et retourne 0
+            if(saisie=='n' || saisie=='N'){
+                fclose(f);
+                return 0;
+            }
+        }
+
+        //Sinon on sauvegarde
+        f = fopen(nomF, &quot;wb&quot;);
+
+        if(f==NULL){
+            printf(&quot;Erreur de fopen \n&quot;);
+            return 0;
+        }
+
+        fwrite( &amp;p-&gt;n , sizeof(int) , 1 , f);
+        fwrite( &amp;p-&gt;valMax , sizeof(int) , 1 , f);
+        fwrite( &amp;p-&gt;nbCasesLibres , sizeof(int) , 1 , f);
+        fwrite( &amp;p-&gt;score, sizeof(int), 1, f);
+        fwrite( p-&gt;grille, sizeof(int), p-&gt;n*p-&gt;n, f);
+
+        fclose(f);
+
+        //Retourne 1 si sauvegarde effectuée
+        return 1;
+    }
+</code></pre>
+<h2 id="page_21+-+Fonction++chargementJeu">21 - Fonction <strong>chargementJeu</strong></h2>
+<br>
+<pre><code class="language-c">/*! * Fonction chargeant la dernière partie sauvegardée
+    * Retourne 0 en cas de problème et si la sauvegarde n'existe pas
+    * Retourne 1 sinon
+    *
+    * \param p : pointeur sur la partie en cours
+    */
+    int chargementJeu(jeu *p){
+        FILE *f;
+        char nomF[80];
+        char saisie;
+        if(p-&gt;valMax != 418){
+        //On demande à l'utilisateur quelle sauvegarde il souhaite charger
+        printf(&quot;Veuillez choisir un slot de sauvegarde à charger [1/2/3] [0 pour annuler] \n&quot;);
+        do{
+            scanf(&quot;%c&quot;, &amp;saisie);
+        }while(saisie!= '1' &amp;&amp; saisie!='2' &amp;&amp; saisie!='3' &amp;&amp; saisie!='0');
+
+        if(saisie=='0')
+            return 0;
+
+        //Assigne un fichier à nomF en fonction du slot choisi
+        if(saisie=='1')
+                strcpy(nomF, &quot;./Saves/Save1.bin&quot;);
+        if(saisie=='2')
+                strcpy(nomF, &quot;./Saves/Save2.bin&quot;);
+        if(saisie=='3')
+                strcpy(nomF, &quot;./Saves/Save3.bin&quot;);
+        }else{
+            strcpy(nomF, &quot;./Saves/test_Iam_a_teampot.bin&quot;);
+        }
+        //On test l'existance du fichier, s'il n'existe pas on retourne 0
+        f = fopen(nomF, &quot;rb&quot;);
+        if(f==NULL)
+            return 0;
+
+        //Sinon on charge la sauvegarde
+        fread( &amp;p-&gt;n , sizeof(int) , 1 , f);
+        fread( &amp;p-&gt;valMax , sizeof(int) , 1 , f);
+        fread( &amp;p-&gt;nbCasesLibres , sizeof(int) , 1 , f);
+        fread( &amp;p-&gt;score, sizeof(int), 1, f);
+
+        //On refait une allocation de la grille, dont la taille peut avoir changée
+        p-&gt;grille = (int*)malloc((p-&gt;n*p-&gt;n)*sizeof(int));
+        if(p-&gt;grille==NULL){
+            printf(&quot;Erreur allocation ! \n&quot;);
+            exit(-1);
+        }
+
+        fread(p-&gt;grille, sizeof(int), p-&gt;n*p-&gt;n, f);
+
+        fclose(f);
+
+        //Retourne 1 si chargement effectué
+        return 1;
+    }
+</code></pre>
+<h2 id="page_22+-+Fonction+suppl%C3%A9mentaire++sauvegardeScore">22 - Fonction supplémentaire <strong>sauvegardeScore</strong></h2>
+<br>
+<pre><code class="language-c">/*! * Fonction sauvegardant un score
+    * Retourne 0 en cas de problème
+    * Retourne 1 sinon
+    *
+    * \param score : score à enregistrer
+    */
+int sauvegardeScore(int score){
+    FILE *f;
+    char nom[20];//Pour stocker le nom du jouer
+
+    f = fopen(&quot;./Saves/score.bin&quot;, &quot;ab&quot;);
+    if(f==NULL)
+        return 0;
+
+    //L'utilisateur peut saisir son nom ou annuler l'enregistrement de son score 
+    printf(&quot;Nom du joueur ? [0 pour annuler] \n&quot;);
+    scanf(&quot;%s&quot;, nom);
+    if(nom[0]=='0')
+        return 0;
+
+    //Sauvegarde de son score
+    fwrite(nom, sizeof(nom), 1, f);
+    fwrite( &amp;score, sizeof(int), 1, f);
+
+    fclose(f);
+
+    //Retourne 1 si sauvegarde effectuée
+    return 1;
+}
+</code></pre>
+<h2 id="page_23+-+Fonction+suppl%C3%A9mentaire++chargementScore">23 - Fonction supplémentaire <strong>chargementScore</strong></h2>
+<br>
+<pre><code class="language-c">/*! * Fonction chargeant la liste des scores
+    * Retourne 0 en cas de problème
+    * Retourne 1 sinon
+    *
+    * \param score : score à enregistrer
+    */
+int chargementScore(){
+    FILE *f;
+    char nom[20];//Pour afficher le nom
+    int score;//Pour afficher le score
+
+    f = fopen(&quot;./Saves/score.bin&quot;, &quot;rb&quot;);
+    if(f==NULL)
+        return 0;
+
+    //On parcourt le fichier et affiche les noms et scores des joueurs
+    printf(&quot;Scores : \n&quot;);
+    while(fread( nom, sizeof(nom), 1, f)==1 &amp;&amp; fread( &amp;score, sizeof(int), 1, f)==1)
+        printf(&quot;%s : %d\n&quot;, nom, score);    
+    
+
+    printf(&quot;\n&quot;);
+
+    fclose(f);
+
+    //Retourne 1 si score chargé
+    return 1;
+}
+</code></pre>
+<h2 id="page_24+-+Fonction++menu">24 - Fonction <strong>menu</strong></h2>
+<br>
+<pre><code class="language-c">/*! * Affiche le menu :
+    * 1 - Créer nouvelle partie
+    * 2 - Jouer
+    * 3 - Sauvegarder
+    * 4 - Charger
+    * 5 _ Afficher scores
+    * 6 - Quitter
+    * Retourne la valeur saisie par l'utilisateur
+    */
+int menu(){
+    int choix;
+
+    printf(&quot;\n&quot;);
+    printf(&quot;1 - Créer nouvelle partie \n&quot;);
+    printf(&quot;2 - Jouer \n&quot;);
+    printf(&quot;3 - Sauvegarder \n&quot;);
+    printf(&quot;4 - Charger \n&quot;);
+    printf(&quot;5 - Afficher scores \n&quot;);
+    printf(&quot;6 - Quitter \n&quot;);
+    printf(&quot;\n&quot;);
+
+    do{
+        scanf(&quot;%d&quot;, &amp;choix);
+    }while(choix!=1 &amp;&amp; choix!=2 &amp;&amp; choix!=3 &amp;&amp; choix!=4 &amp;&amp; choix!=5 &amp;&amp; choix!=6);
+
+    return choix;
+}
+</code></pre>
+    </div>
+
+        <nav>
+        <ul class="Pager">
+            <li class=Pager--prev><a href="../Manuel_technique/Mouvement.html">Previous</a></li>            <li class=Pager--next><a href="../Tests_unitaires/Test_grille.html">Next</a></li>        </ul>
+    </nav>
+    </article>
+
+            </div>
+        </div>
+    </div>
+</div>
+
+    
+    <!-- jQuery -->
+    <script src="../themes/daux/js/jquery-1.11.3.min.js"></script>
+
+    <!-- hightlight.js -->
+    <script src="../themes/daux/js/highlight.pack.js"></script>
+    <script>hljs.initHighlightingOnLoad();</script>
+
+    <!-- JS -->
+    
+    <script src="../themes/daux/js/daux.js"></script>
+
+            <!-- Tipue Search -->
+        <script type="text/javascript" src="../tipuesearch/tipuesearch.js"></script>
+
+        <script>
+            window.onunload = function(){}; // force $(document).ready to be called on back/forward navigation in firefox
+            $(function() {
+                tipuesearch({
+                    'base_url': '../'
+                });
+            });
+        </script>
+    
+</body>
+</html>

@@ -1,0 +1,280 @@
+<!DOCTYPE html>
+<!--[if lt IE 7]>       <html class="no-js ie6 oldie" lang="en"> <![endif]-->
+<!--[if IE 7]>          <html class="no-js ie7 oldie" lang="en"> <![endif]-->
+<!--[if IE 8]>          <html class="no-js ie8 oldie" lang="en"> <![endif]-->
+<!--[if gt IE 8]><!-->  <html class="no-js" lang="en"> <!--<![endif]-->
+<head>
+    <title>Test sauvegarde & menu - Projet DUT AS - 2048</title>
+    <meta name="description" content="Conception d'un jeux 2048" />
+    <meta name="author" content="I, Me & Myself">
+    <meta charset="UTF-8">
+    <link rel="icon" href="../themes/daux/img/favicon-blue.png" type="image/x-icon">
+    <!-- Mobile -->
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <!-- Font -->
+    <link href='https://fonts.googleapis.com/css?family=Roboto+Slab:400,100,300,700&subset=latin,cyrillic-ext,cyrillic' rel='stylesheet' type='text/css'>
+    <!-- CSS -->
+    <link href='../themes/daux/css/theme-blue.min.css' rel='stylesheet' type='text/css'>
+            <!-- Tipue Search -->
+        <link href="../tipuesearch/tipuesearch.css" rel="stylesheet">
+    
+    <!--[if lt IE 9]>
+    <script src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+</head>
+<body class="">
+    
+<header class="Navbar hidden-print">
+    <a class="Navbar__brand" href="../index.html">Projet DUT AS - 2048</a>
+
+    <div class="Search">
+        <svg class="Search__icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 451 451"><path d="M447.05 428l-109.6-109.6c29.4-33.8 47.2-77.9 47.2-126.1C384.65 86.2 298.35 0 192.35 0 86.25 0 .05 86.3.05 192.3s86.3 192.3 192.3 192.3c48.2 0 92.3-17.8 126.1-47.2L428.05 447c2.6 2.6 6.1 4 9.5 4s6.9-1.3 9.5-4c5.2-5.2 5.2-13.8 0-19zM26.95 192.3c0-91.2 74.2-165.3 165.3-165.3 91.2 0 165.3 74.2 165.3 165.3s-74.1 165.4-165.3 165.4c-91.1 0-165.3-74.2-165.3-165.4z"/></svg>
+        <input type="search" id="tipue_search_input" class="Search__field" placeholder="Search..." autocomplete="on" results=25 autosave=text_search>
+    </div>
+</header>
+<div class="Columns content">
+    <aside class="Columns__left Collapsible">
+        <div class="Collapsible__container">
+            <button type="button" class="Button Collapsible__trigger">
+                <span class="Collapsible__trigger--bar"></span>
+                <span class="Collapsible__trigger--bar"></span>
+                <span class="Collapsible__trigger--bar"></span>
+            </button>
+        </div>
+
+        <div class="Collapsible__content">
+            <!-- Navigation -->
+            <ul class='Nav'><li class='Nav__item  has-children'><a href="#" class="aj-nav folder"><i class="Nav__arrow">&nbsp;</i>Manuel utilisateur</a><ul class='Nav'><li class='Nav__item '><a href="../Manuel_utilisateur/Installation.html">Installation</a></li><li class='Nav__item '><a href="../Manuel_utilisateur/Comment_jouer.html">Comment jouer</a></li></ul></li><li class='Nav__item  has-children'><a href="#" class="aj-nav folder"><i class="Nav__arrow">&nbsp;</i>Manuel technique</a><ul class='Nav'><li class='Nav__item '><a href="../Manuel_technique/Introduction.html">Introduction</a></li><li class='Nav__item '><a href="../Manuel_technique/Grille.html">Grille</a></li><li class='Nav__item '><a href="../Manuel_technique/Partie.html">Partie</a></li><li class='Nav__item '><a href="../Manuel_technique/Mouvement.html">Mouvement</a></li><li class='Nav__item '><a href="../Manuel_technique/Sauvegarde.html">Sauvegarde</a></li></ul></li><li class='Nav__item Nav__item--open has-children'><a href="#" class="aj-nav folder"><i class="Nav__arrow">&nbsp;</i>Tests unitaires</a><ul class='Nav'><li class='Nav__item '><a href="../Tests_unitaires/Test_grille.html">Test grille</a></li><li class='Nav__item '><a href="../Tests_unitaires/Test_partie.html">Test partie</a></li><li class='Nav__item '><a href="../Tests_unitaires/Test_mouvement.html">Test mouvement</a></li><li class='Nav__item Nav__item--active'><a href="../Tests_unitaires/Test_sauvegarde_&_menu.html">Test sauvegarde & menu</a></li></ul></li><li class='Nav__item '><a href="../sources.html">sources</a></li></ul>
+
+            <div class="Links">
+                                    <hr/>
+                                            <a href="https://github.com/BSpirit/2048" target="_blank"><img style='width:32px;padding-rigth:100px;' src='./github.png'/>GitHub Repo</a>
+                        <br />
+                                    
+                                    <div class="CodeToggler">
+                        <hr/>
+                                                    <a class="CodeToggler__button CodeToggler__button--main" href="#">Show Code Blocks Inline</a><br>
+                                            </div>
+                
+                            </div>
+        </div>
+    </aside>
+    <div class="Columns__right ">
+        <div class="Columns__right__content">
+            <div class="doc_content">
+                <article class="Page">
+
+    <div class="Page__header">
+        <h1><a href="../Tests_unitaires/Test_grille.html">Tests unitaires</a> <svg class="Page__header--separator" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 477.175 477.175"><path d="M360.73 229.075l-225.1-225.1c-5.3-5.3-13.8-5.3-19.1 0s-5.3 13.8 0 19.1l215.5 215.5-215.5 215.5c-5.3 5.3-5.3 13.8 0 19.1 2.6 2.6 6.1 4 9.5 4 3.4 0 6.9-1.3 9.5-4l225.1-225.1c5.3-5.2 5.3-13.8.1-19z"/></svg> <a href="../Tests_unitaires/Test_sauvegarde_&_menu.html">Test sauvegarde & menu</a></h1>
+                    </div>
+
+
+    <div class="s-content">
+        <ul class="TableOfContents">
+<li>
+<p><a href="#page_Auteur+%3A+Jerent+Steeve">Auteur : Jerent Steeve</a></p>
+</li>
+<li>
+<p><a href="#page_1+-+Fonction++test+_+sauvegarde">1 - Fonction <strong>test_sauvegarde</strong></a></p>
+</li>
+<li>
+<p><a href="#page_2+-+Fonction++test+_+chargement">2 - Fonction <strong>test_chargement</strong></a></p>
+</li>
+<li>
+<p><a href="#page_3+-+Fonction++test+_+menu">3 - Fonction <strong>test_menu</strong></a></p>
+</li>
+<li>
+<p><a href="#page_4+-+Fonction++test+_+partie4">4 - Fonction <strong>test_partie4</strong></a></p>
+</li>
+</ul>
+<h3 id="page_Auteur+%3A+Jerent+Steeve">Auteur : Jerent Steeve</h3>
+<h2 id="page_1+-+Fonction++test+_+sauvegarde">1 - Fonction <strong>test_sauvegarde</strong></h2>
+<pre><code class="language-c">    int test_sauvegarde(){
+        int n = 4;
+        // 418 est la valeur max pour lancer les tests en sauvegardeJeu
+        // Histoire : 418 est un code de status http créer par google, pour rire.
+        // signifiant &quot;I'm a teapot&quot; =&gt;  &quot;Je suis une théière&quot;
+        int res;
+        int vMax = 418;
+        jeu jeu_test;
+        jeu * tmp = &amp;jeu_test;
+        initialiseJeu(tmp, n, vMax);
+        
+        
+        ajouteValAlea(tmp);
+        ajouteValAlea(tmp);
+        ajouteValAlea(tmp);
+        ajouteValAlea(tmp);
+        // on crée un fichier de sauvegarde
+        res = sauvegardeJeu(tmp);
+        remove(&quot;./Saves/test_Iam_a_teampot.bin&quot;);
+        if(res != 1)
+            return termine(&quot;La sauvegarde n'a pas été créée. Ou vous avez coupé le dernier test de manière brutale.&quot;);
+        res = sauvegardeJeu(tmp);
+        int essaie = 1;
+        // on vérifie le cas où le choix [n|N] ne fonctionnerait pas
+        do{
+            printf(&quot;\033[33;01mSaisir 'n' ou 'N' pour valider la suppression\n\033[31;01mEssaie : (%d/3)\033[00m\n&quot;, essaie);
+            res = sauvegardeJeu(tmp);
+            essaie++;
+        }while  (essaie&lt;=3 &amp;&amp; res != 0);
+
+        // La supression du fichier n'est pas faite pour exécuter le test_chargement
+        if(essaie &gt; 3)
+            return termine(&quot;Le nombre de tentative est dépassé. le choix [n|N] ne fonctionne pas&quot;);
+        
+        return 1;
+    }
+</code></pre>
+<h2 id="page_2+-+Fonction++test+_+chargement">2 - Fonction <strong>test_chargement</strong></h2>
+<pre><code class="language-c">    int test_chargement(){
+        int n = 4;
+        int res;
+        int vMax = 418;
+        jeu jeu_test;
+        jeu * tmp = &amp;jeu_test;
+        initialiseJeu(tmp, n, vMax);
+
+        // on charge le fichier de sauvegarde pour les tests ./Saves/test_Iam_a_teampot.bin
+        res = chargementJeu(tmp);
+
+        if(res != 1)
+            return termine(&quot;Le chargement n'a pas pu être effectué&quot;);
+        
+        // Supression du fichier de sauvegarde pour les tests
+        remove(&quot;./Saves/test_Iam_a_teampot.bin&quot;);
+        res = chargementJeu(tmp);
+
+        if(res != 0)
+            return termine(&quot;Le chargement ne devait pas être réalisé après supression du fichier de sauvegarde&quot;);
+
+        return 1;
+    }
+</code></pre>
+<h2 id="page_3+-+Fonction++test+_+menu">3 - Fonction <strong>test_menu</strong></h2>
+<pre><code class="language-c">    int test_menu(){
+        // Test special : on fait le testeur rentrer
+        // chaque valeur pour voir si elles correspondent
+        int i=1, choix;
+
+        do{
+            printf(&quot;\033[33;01mEntrez le chiffre 1 et validez avec Entrée\n\033[31;01mEssaie : (%d/3)\033[00m\n&quot;, i);
+            choix = menu();
+            i++;
+        }while(i&lt;=3 &amp;&amp; choix != 1);
+        
+        if(i&gt;3)
+            return termine(&quot;Saisie échouée&quot;);
+        
+        i=1;
+        do{
+            printf(&quot;\033[33;01mEntrez le chiffre 2 et validez avec Entrée\n\033[31;01mEssaie : (%d/3)\033[00m\n&quot;, i);
+            choix = menu();
+            i++;
+        }while(i&lt;=3 &amp;&amp; choix != 2);
+        
+        if(i&gt;3)
+            return termine(&quot;Saisie échouée&quot;);
+        
+        i=1, choix;
+        do{
+            printf(&quot;\033[33;01mEntrez le chiffre 3 et validez avec Entrée\n\033[31;01mEssaie : (%d/3)\033[00m\n&quot;, i);
+            choix = menu();
+            i++;
+        }while(i&lt;=3 &amp;&amp; choix != 3);
+        
+        if(i&gt;3)
+            return termine(&quot;Saisie échouée&quot;);
+        
+        i=1, choix;
+        do{
+            printf(&quot;\033[33;01mEntrez le chiffre 4 et validez avec Entrée\n\033[31;01mEssaie : (%d/3)\033[00m\n&quot;, i);
+            choix = menu();
+            i++;
+        }while(i&lt;=3 &amp;&amp; choix != 4);
+        
+        if(i&gt;3)
+            return termine(&quot;Saisie échouer&quot;);
+        
+        i=1, choix;
+        do{
+            printf(&quot;\033[33;01mEntrez le chiffre 5 et validez avec Entrée\n\033[31;01mEssaie : (%d/3)\033[00m\n&quot;, i);
+            choix = menu();
+            i++;
+        }while(i&lt;=3 &amp;&amp; choix != 5);
+        
+        if(i&gt;3)
+            return termine(&quot;Saisie échouée&quot;);
+        
+        i=1, choix;
+        do{
+            printf(&quot;\033[33;01mEntrez le chiffre 6 et validez avec Entrée\n\033[31;01mEssaie : (%d/3)\033[00m\n&quot;, i);
+            choix = menu();
+            i++;
+        }while(i&lt;=3 &amp;&amp; choix != 6);
+        
+        if(i&gt;3)
+            return termine(&quot;Saisie échouée&quot;);
+        
+        return 1;
+    }
+
+</code></pre>
+<h2 id="page_4+-+Fonction++test+_+partie4">4 - Fonction <strong>test_partie4</strong></h2>
+<pre><code class="language-c">    void test_partie4(){
+        int somme = 0;
+        somme += test_sauvegarde();
+        somme += test_chargement();
+        somme += test_menu();
+        
+
+        if(somme != 3)
+            termine(&quot;TOUS LES TESTS DE LA PARTIE 4 NE SONT PAS PASSES !&quot;);
+        else{
+            printf(&quot;\033[32;01m#########################\n&quot;);
+            printf(&quot;#   TESTS PARTIE 4 OK   #\n&quot;);
+            printf(&quot;######################### \033[00m\n&quot;);
+        }
+    }
+</code></pre>
+    </div>
+
+        <nav>
+        <ul class="Pager">
+            <li class=Pager--prev><a href="../Tests_unitaires/Test_mouvement.html">Previous</a></li>            <li class=Pager--next><a href="../sources.html">Next</a></li>        </ul>
+    </nav>
+    </article>
+
+            </div>
+        </div>
+    </div>
+</div>
+
+    
+    <!-- jQuery -->
+    <script src="../themes/daux/js/jquery-1.11.3.min.js"></script>
+
+    <!-- hightlight.js -->
+    <script src="../themes/daux/js/highlight.pack.js"></script>
+    <script>hljs.initHighlightingOnLoad();</script>
+
+    <!-- JS -->
+    
+    <script src="../themes/daux/js/daux.js"></script>
+
+            <!-- Tipue Search -->
+        <script type="text/javascript" src="../tipuesearch/tipuesearch.js"></script>
+
+        <script>
+            window.onunload = function(){}; // force $(document).ready to be called on back/forward navigation in firefox
+            $(function() {
+                tipuesearch({
+                    'base_url': '../'
+                });
+            });
+        </script>
+    
+</body>
+</html>

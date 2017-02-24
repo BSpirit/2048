@@ -1,0 +1,599 @@
+<!DOCTYPE html>
+<!--[if lt IE 7]>       <html class="no-js ie6 oldie" lang="en"> <![endif]-->
+<!--[if IE 7]>          <html class="no-js ie7 oldie" lang="en"> <![endif]-->
+<!--[if IE 8]>          <html class="no-js ie8 oldie" lang="en"> <![endif]-->
+<!--[if gt IE 8]><!-->  <html class="no-js" lang="en"> <!--<![endif]-->
+<head>
+    <title>Test mouvement - Projet DUT AS - 2048</title>
+    <meta name="description" content="Conception d'un jeux 2048" />
+    <meta name="author" content="I, Me & Myself">
+    <meta charset="UTF-8">
+    <link rel="icon" href="../themes/daux/img/favicon-blue.png" type="image/x-icon">
+    <!-- Mobile -->
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <!-- Font -->
+    <link href='https://fonts.googleapis.com/css?family=Roboto+Slab:400,100,300,700&subset=latin,cyrillic-ext,cyrillic' rel='stylesheet' type='text/css'>
+    <!-- CSS -->
+    <link href='../themes/daux/css/theme-blue.min.css' rel='stylesheet' type='text/css'>
+            <!-- Tipue Search -->
+        <link href="../tipuesearch/tipuesearch.css" rel="stylesheet">
+    
+    <!--[if lt IE 9]>
+    <script src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+</head>
+<body class="">
+    
+<header class="Navbar hidden-print">
+    <a class="Navbar__brand" href="../index.html">Projet DUT AS - 2048</a>
+
+    <div class="Search">
+        <svg class="Search__icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 451 451"><path d="M447.05 428l-109.6-109.6c29.4-33.8 47.2-77.9 47.2-126.1C384.65 86.2 298.35 0 192.35 0 86.25 0 .05 86.3.05 192.3s86.3 192.3 192.3 192.3c48.2 0 92.3-17.8 126.1-47.2L428.05 447c2.6 2.6 6.1 4 9.5 4s6.9-1.3 9.5-4c5.2-5.2 5.2-13.8 0-19zM26.95 192.3c0-91.2 74.2-165.3 165.3-165.3 91.2 0 165.3 74.2 165.3 165.3s-74.1 165.4-165.3 165.4c-91.1 0-165.3-74.2-165.3-165.4z"/></svg>
+        <input type="search" id="tipue_search_input" class="Search__field" placeholder="Search..." autocomplete="on" results=25 autosave=text_search>
+    </div>
+</header>
+<div class="Columns content">
+    <aside class="Columns__left Collapsible">
+        <div class="Collapsible__container">
+            <button type="button" class="Button Collapsible__trigger">
+                <span class="Collapsible__trigger--bar"></span>
+                <span class="Collapsible__trigger--bar"></span>
+                <span class="Collapsible__trigger--bar"></span>
+            </button>
+        </div>
+
+        <div class="Collapsible__content">
+            <!-- Navigation -->
+            <ul class='Nav'><li class='Nav__item  has-children'><a href="#" class="aj-nav folder"><i class="Nav__arrow">&nbsp;</i>Manuel utilisateur</a><ul class='Nav'><li class='Nav__item '><a href="../Manuel_utilisateur/Installation.html">Installation</a></li><li class='Nav__item '><a href="../Manuel_utilisateur/Comment_jouer.html">Comment jouer</a></li></ul></li><li class='Nav__item  has-children'><a href="#" class="aj-nav folder"><i class="Nav__arrow">&nbsp;</i>Manuel technique</a><ul class='Nav'><li class='Nav__item '><a href="../Manuel_technique/Introduction.html">Introduction</a></li><li class='Nav__item '><a href="../Manuel_technique/Grille.html">Grille</a></li><li class='Nav__item '><a href="../Manuel_technique/Partie.html">Partie</a></li><li class='Nav__item '><a href="../Manuel_technique/Mouvement.html">Mouvement</a></li><li class='Nav__item '><a href="../Manuel_technique/Sauvegarde.html">Sauvegarde</a></li></ul></li><li class='Nav__item Nav__item--open has-children'><a href="#" class="aj-nav folder"><i class="Nav__arrow">&nbsp;</i>Tests unitaires</a><ul class='Nav'><li class='Nav__item '><a href="../Tests_unitaires/Test_grille.html">Test grille</a></li><li class='Nav__item '><a href="../Tests_unitaires/Test_partie.html">Test partie</a></li><li class='Nav__item Nav__item--active'><a href="../Tests_unitaires/Test_mouvement.html">Test mouvement</a></li><li class='Nav__item '><a href="../Tests_unitaires/Test_sauvegarde_&_menu.html">Test sauvegarde & menu</a></li></ul></li><li class='Nav__item '><a href="../sources.html">sources</a></li></ul>
+
+            <div class="Links">
+                                    <hr/>
+                                            <a href="https://github.com/BSpirit/2048" target="_blank"><img style='width:32px;padding-rigth:100px;' src='./github.png'/>GitHub Repo</a>
+                        <br />
+                                    
+                                    <div class="CodeToggler">
+                        <hr/>
+                                                    <a class="CodeToggler__button CodeToggler__button--main" href="#">Show Code Blocks Inline</a><br>
+                                            </div>
+                
+                            </div>
+        </div>
+    </aside>
+    <div class="Columns__right ">
+        <div class="Columns__right__content">
+            <div class="doc_content">
+                <article class="Page">
+
+    <div class="Page__header">
+        <h1><a href="../Tests_unitaires/Test_grille.html">Tests unitaires</a> <svg class="Page__header--separator" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 477.175 477.175"><path d="M360.73 229.075l-225.1-225.1c-5.3-5.3-13.8-5.3-19.1 0s-5.3 13.8 0 19.1l215.5 215.5-215.5 215.5c-5.3 5.3-5.3 13.8 0 19.1 2.6 2.6 6.1 4 9.5 4 3.4 0 6.9-1.3 9.5-4l225.1-225.1c5.3-5.2 5.3-13.8.1-19z"/></svg> <a href="../Tests_unitaires/Test_mouvement.html">Test mouvement</a></h1>
+                    </div>
+
+
+    <div class="s-content">
+        <ul class="TableOfContents">
+<li>
+<p><a href="#page_Auteur+%3A+Jerent+Steeve">Auteur : Jerent Steeve</a></p>
+</li>
+<li>
+<p><a href="#page_1+-+Fonction++test+_+mouvementLigne">1 - Fonction <strong>test_mouvementLigne</strong></a></p>
+</li>
+<li>
+<p><a href="#page_2+-+Fonction++test+_+mouvementLignes">2 - Fonction <strong>test_mouvementLignes</strong></a></p>
+</li>
+<li>
+<p><a href="#page_3+-+Fonction++test+_+mouvementColonne">3 - Fonction <strong>test_mouvementColonne</strong></a></p>
+</li>
+<li>
+<p><a href="#page_4+-+Fonction++test+_+mouvementColonnes">4 - Fonction <strong>test_mouvementColonnes</strong></a></p>
+</li>
+<li>
+<p><a href="#page_5+-+Fonction++test+_+mouvement">5 - Fonction <strong>test_mouvement</strong></a></p>
+</li>
+<li>
+<p><a href="#page_6+-+Fonction++test+_+saisieD">6 - Fonction <strong>test_saisieD</strong></a></p>
+</li>
+<li>
+<p><a href="#page_7+-+Fonction++test+_+jouer">7 - Fonction <strong>test_jouer</strong></a></p>
+</li>
+<li>
+<p><a href="#page_8+-+Fonction++test+_+partie3">8 - Fonction <strong>test_partie3</strong></a></p>
+</li>
+</ul>
+<h3 id="page_Auteur+%3A+Jerent+Steeve">Auteur : Jerent Steeve</h3>
+<h2 id="page_1+-+Fonction++test+_+mouvementLigne">1 - Fonction <strong>test_mouvementLigne</strong></h2>
+<pre><code class="language-c">    int test_mouvementLigne(){
+        // initialisation d'une partie
+        int n = 4;
+        int vMax = 2048;
+        jeu jeu_test;
+        jeu * tmp = &amp;jeu_test;
+        initialiseJeu(tmp, n, vMax);
+
+        // On test un mouvement vers la droite impossible car on sortirait de la grille
+        setVal(tmp, 0, 3, 2);
+        int res = mouvementLigne(tmp, 0, -1);
+        if (res != 0)
+            return termine(&quot;ml - Le mouvement vers la droite à été executé&quot;);
+        
+        // On test si le mouvement vers la gauche peut être réalisé et si la valeur de la
+        // case précédente est reinitialisée.
+        res = mouvementLigne(tmp, 0, 1);
+        
+        if(getVal(tmp, 0, 0) == 0)
+            return termine(&quot;ml - Le mouvement sur la ligne est incorrect.&quot;);
+        
+        if (res != 1)
+            return termine (&quot;ml - Le mouvement n'as pas été executé.&quot;);
+        
+        // On rempli le tableau de manière à ce que les valeurs ne puissent pas être bougées
+        setVal(tmp, 0, 1, 32);
+        setVal(tmp, 0, 2, 4);
+        setVal(tmp, 0, 3, 2);
+        res = mouvementLigne(tmp, 0, -1);
+        if(res != 0)
+            return termine(&quot;ml - Le mouvement vers la droite à été effectué.&quot;);
+        
+        res = mouvementLigne(tmp, 0, 1);
+        if(res != 0)
+            return termine(&quot;ml - Le mouvement vers la gauche à été effectué.&quot;);
+
+        // on set la case [0,3] à 4 afin de fusionner cet élément avec la case [0,4]
+        // qui contient 4 lors du mouvement de la ligne 0, on testera la case précédente afin
+        // de vérifier si elle est réinitialisée et que la nouvelle case vaut 8, on testera aussi
+        // que le mouvement est effectué
+        setVal(tmp, 0, 3, 4);
+        res = mouvementLigne(tmp, 0, -1);
+
+        if(getVal(tmp, 0, 3) != 8)
+            return termine(&quot;ml - La dernier case [0, 3] n'est pas égale à 8&quot;);
+        
+        if(getVal(tmp, 0, 0) != 0)
+            return termine(&quot;ml - La valeur de la case [0,0] n'est pas reinitialisée.&quot;);
+        
+        if(res != 1)
+            return termine(&quot;ml - Le mouvement vers la droite n'a pas été effectué.&quot;);
+        
+        // on modifie la valeur de la case [0,0] à 2, et on effectue un mouvement vers la gauche
+        // on vérifie la valeur de la case [0,0] si elle vaut 4  et si la case [0,3]
+        setVal(tmp, 0, 0, 2);    
+        res = mouvementLigne(tmp, 0, 1);
+        
+        if(getVal(tmp, 0, 0) != 4)
+            return termine(&quot;ml - La valeur de la case [0,0] n'est pas égale à 4&quot;);
+        
+        if(getVal(tmp, 0, 3) != 0)
+            return termine(&quot;ml - La valeur de la case [0,3] n'est pas réinitialisée.&quot;);
+        
+        // On modifie des valeurs sur la ligne 0. pour tester encore la fusion des cases si similaires
+        setVal(tmp, 0, 2, 32);
+        setVal(tmp, 0, 3, 64);
+        res = mouvementLigne(tmp, 0, -1);
+
+        if(getVal(tmp, 0, 2) != 64)
+            return termine(&quot;ml - La valeur de la case [0,2] n'est pas égale à 64.&quot;);
+
+        if(getVal(tmp, 0, 3) != 64)
+            return termine(&quot;ml - La valeur de la case [0,3] n'est pas égale à 64.&quot;);
+        
+        return 1;
+    }
+</code></pre>
+<h2 id="page_2+-+Fonction++test+_+mouvementLignes">2 - Fonction <strong>test_mouvementLignes</strong></h2>
+<pre><code class="language-c">    int test_mouvementLignes(){
+        int n = 2;
+        int vMax = 2048;
+        jeu jeu_test;
+        jeu * tmp = &amp;jeu_test;
+        initialiseJeu(tmp, n, vMax);
+
+        setVal(tmp, 0, 1, 2);
+        setVal(tmp, 1, 1, 2);
+        
+        // Test mouvement vers la Droite de toutes les lignes
+        int res = mouvementLignes(tmp, -1);
+
+        if(res != 0)
+            return termine(&quot;mls - Le mouvement sur les lignes est effectué.&quot;);
+        
+        // Test mouvement vers la Gauche de toutes les lignes
+        res = mouvementLignes(tmp, 1);
+        
+        if(res != 1)
+            return termine(&quot;mls - 1 - Le mouvement sur les lignes n'est pas effectué.&quot;);
+
+        // on set les mêmes valeurs dans toutes les cases et on réalise un test
+        // vers la droite, en verifiant si les bonnes valeurs sont assignées dans la grille. 
+        setVal(tmp, 0, 1, 2);
+        setVal(tmp, 1, 1, 2);
+        res = mouvementLignes(tmp, -1);
+
+        if(res != 1)
+            return termine(&quot;mls - 2 - Le mouvement sur les lignes n'est pas été effectué.&quot;);
+        
+        if(getVal(tmp, 0, 1) != 4 || getVal(tmp, 1, 1) != 4)
+            return termine(&quot;mls - Le mouvement n'a pas donné 4 sur les cases [0,1] ou [1,1]&quot;);
+        
+        if(getVal(tmp, 1, 0) != 0 || getVal(tmp, 0, 0) != 0)
+            return termine(&quot;mls - Le mouvement n'a pas donné 4 sur les cases [0,1] ou [1,1]&quot;);
+        
+        // On refait un mouvement vers la droite après avoir réalisé le test précedent et avoir modifié la ligne du bas.
+        setVal(tmp, 1, 1, 0);
+        setVal(tmp, 1, 0, 2);
+
+        res = mouvementLignes(tmp, -1);
+
+        if(res != 1)
+            return termine(&quot;mls - Aucun mouvement vers la droite detecté.&quot;);
+
+        return 1;
+    }
+</code></pre>
+<h2 id="page_3+-+Fonction++test+_+mouvementColonne">3 - Fonction <strong>test_mouvementColonne</strong></h2>
+<pre><code class="language-c">    int test_mouvementColonne(){
+        int n = 2;
+        int vMax = 2048;
+        jeu jeu_test;
+        jeu * tmp = &amp;jeu_test;
+        initialiseJeu(tmp, n, vMax);
+
+        setVal(tmp, 0, 0, 2);
+        setVal(tmp, 1, 1, 2);
+
+        // On effectue un mouvement vers le bas pour la colonne 1 (impossible)
+        int res = mouvementColonne(tmp, 1, -1);
+
+        if(res != 0)
+            return termine(&quot;mc - 1 - Aucune case ne devrait bouger.&quot;);
+        
+        // On effectue un mouvement vers le haut pour la colonne 0 (impossible)
+        res = mouvementColonne(tmp, 0, 1);
+        if(res != 0)
+            return termine(&quot;mc - 2 - Aucune case ne devrait bouger.&quot;);
+        
+        // On remplit la grille et on fait un mouvement vers le haut pour la colonne 1,
+        // puis on vérifie les valeurs puis on refait la même expérience avec la colonne 0 que l'on
+        // fait descendre.
+        setVal(tmp, 0, 1, 2);
+        setVal(tmp, 1, 0, 2);
+        res = mouvementColonne(tmp, 1, 1);
+
+        if(res != 1)
+            return termine(&quot;mc - 1 - Aucune case n'a bougé&quot;);
+        
+        if (getVal(tmp, 0, 1) != 4)
+            return termine(&quot;mc - La valeur de la case [0,1] devrait être égale à 4&quot;);
+        
+        if(getVal(tmp, 1, 1) != 0)
+            return termine(&quot;mc - La valeur de la case [1,1] n'a pas été reinitialisée.&quot;);
+        
+        res = mouvementColonne(tmp, 0, -1);
+
+        if(res != 1)
+            return termine(&quot;mc - 2 - Aucune case n'a bougé.&quot;);
+        
+        if(getVal(tmp, 1, 0) != 4)
+            return termine(&quot;mc - La valeur de la case [1,0] devrait être égale à 4&quot;);
+        
+        if(getVal(tmp, 0, 0) != 0)
+            return termine(&quot;mc - La valeur de la case [0,0] n'a pas été reinitialisée.&quot;);
+        // On test si 2 valeurs differentes vont fusionner lors d'un mouvement et on vérifie les valeurs des cases
+        setVal(tmp, 0,0, 32);
+        res = mouvementColonne(tmp, 0, 1);
+
+        if(res != 0)
+            return termine(&quot;mc - Le mouvement effectué est interdit.&quot;);
+        
+        if(getVal(tmp, 0, 0) != 32)
+            return termine(&quot;mc - La valeur de la case [0,0] à été changée.&quot;);
+
+        return 1;
+    }
+</code></pre>
+<h2 id="page_4+-+Fonction++test+_+mouvementColonnes">4 - Fonction <strong>test_mouvementColonnes</strong></h2>
+<pre><code class="language-c">    int test_mouvementColonnes(){
+        int n = 2;
+        int vMax = 2048;
+        jeu jeu_test;
+        jeu * tmp = &amp;jeu_test;
+        initialiseJeu(tmp, n, vMax);
+
+        // On ajoute des valeurs sur la ligne du bas de la grille
+        // on réalise un mouvement vers le haut puis le bas.
+        setVal(tmp, 0, 1, 2);
+        setVal(tmp, 1, 0, 2);
+        int res = mouvementColonnes(tmp, 1);
+
+        if(res != 1)
+            return termine(&quot;mcs - 1 - Aucune case n'a bougé.&quot;);
+        
+        res = mouvementColonnes(tmp, -1);
+        if(res != 1)
+            return termine(&quot;mcs - 2 - Aucune case n'a bougé.&quot;);
+        
+        // on test si on peut sortir de la grille avec les mouvement vers le HAUT
+        // et BAS
+        res = mouvementColonnes(tmp, -1);
+
+        if(res != 0)
+            return termine(&quot;mcs - 1 - Aucune case ne devait bouger.&quot;);
+        
+        mouvementColonnes(tmp, 1);
+        res = mouvementColonnes(tmp, 1);
+
+        if(res != 0)
+            return termine(&quot;mcs - 2 - Aucune case ne devait bouger.&quot;);
+        
+        // On modifie les valeur de la grille pour empêcher les mouvements
+        setVal(tmp, 1, 0, 2);
+        setVal(tmp, 1, 1, 4);
+
+        res = mouvementColonnes(tmp, -1);
+
+        if(res != 1)
+            return termine(&quot;mcs - 3 - Aucune case n'a bougé.&quot;);
+        
+        if(getVal(tmp, 1, 1) != 4)
+            return termine(&quot;mcs - La valeur de la case [1,1] ne devait pas changer.&quot;);
+
+        return 1;
+    }
+</code></pre>
+<h2 id="page_5+-+Fonction++test+_+mouvement">5 - Fonction <strong>test_mouvement</strong></h2>
+<pre><code class="language-c">    int test_mouvement(){
+        int n = 2;
+        int vMax = 2048;
+        jeu jeu_test;
+        jeu * tmp = &amp;jeu_test;
+        initialiseJeu(tmp, n, vMax);
+        
+        // On réalise un tour de la grille et on vérifie les valeurs des cases de la grille
+        // BAS - GAUCHE - HAUT - DROITE
+        setVal(tmp, 0, 1, 2);
+        int res = mouvement(tmp, 0);
+        if(res != 1)
+            return termine(&quot;m - Le mouvement vers le bas a echoué&quot;);
+        
+        if(getVal(tmp, 0, 1) != 0)
+            return termine(&quot;La valeur de la case [0,1] n'a pas été réinitialisée.&quot;);
+        
+        res = mouvement(tmp, 3);
+
+        if(res != 1)
+            return termine(&quot;Le mouvement vers la gauche a echoué&quot;);
+        
+        if(getVal(tmp, 1, 1) != 0)
+            return termine(&quot;La valeur de la case [1,1] n'a pas été réinitialisé.&quot;);
+        
+        res = mouvement(tmp, 2);
+        if(res != 1)
+            return termine(&quot;le mouvement vers le haut a échoué&quot;);
+        
+        if(getVal(tmp, 1, 0) != 0)
+            return termine(&quot;La valeur de la case [1,0] n'a pas été réinitialisé.&quot;);
+        
+        res = mouvement(tmp, 1);
+        if(res != 1)
+            return termine(&quot;Le mouvement vers la droite a echoué.&quot;);
+        
+        if(getVal(tmp, 0, 0) != 0)
+            return termine(&quot;La valeur de la case [0,0] n'a pas été réinitialisé.&quot;);
+        
+        // On modifie les valeurs de la grille
+        setVal(tmp, 0, 0, 32);
+        setVal(tmp, 1, 0, 64);
+        setVal(tmp, 1, 1, 2);
+
+        // On réalise un mouvement vers la Gauche (impossible)
+        res = mouvement(tmp, 3);
+
+        if(res != 0)
+            return termine(&quot;les cases ne devraient pas bouger vers la gauche&quot;);
+        
+        // On réalise un mouvement vers bas (possible) et on verifie la valeur dans la grille
+        res = mouvement(tmp, 0);
+        if(res != 1)
+            return termine(&quot;la case [0,1] devait bouger sur la case [1,1]&quot;);
+        
+        if(getVal(tmp, 1,1) != 4)
+            return termine(&quot;La valeur de la case [1,1] n'est pas égale à 4.&quot;);
+        
+        // On test de sortir de la grille avec cette fonction
+        res = mouvement(tmp, 0);
+        if(res != 0)
+            return termine(&quot;m - 1 - Mouvement interdit&quot;);
+        
+        mouvement(tmp, 1);    
+        res = mouvement(tmp, 1);
+        if(res != 0)
+            return termine(&quot;m - 2 - Mouvement interdit&quot;);
+
+        return 1;
+    }
+</code></pre>
+<h2 id="page_6+-+Fonction++test+_+saisieD">6 - Fonction <strong>test_saisieD</strong></h2>
+<pre><code class="language-c">    int test_saisieD(){
+        /**
+        *  Fonction Spéciale interaction avec l'utilisateur :
+        *  L'utilisateur doit tester si les touches qu'on lui demande sont
+        *  correctes. (3 essaies possible par touche)
+        */
+        printf(&quot;\033[33;01mTest interactif - Clavier \033[00m\n&quot;);
+        printf(&quot;Il n'y a que 5 touches fonctionnelles lors de ce jeu \n - ECHAP \n - Flèche 'HAUT' \
+        \n - Flèche 'BAS' \n - Flèche 'DROITE' \n - Flèche 'GAUCHE' \
+        \n \033[31;01m(3 essaie par Touche)\033[00m\n&quot;);
+        int res, essaie = 1;
+        do{
+            printf(&quot;Appuyez sur la touche 'ECHAP' (%d/3)\n&quot;, essaie);
+            fflush(stdout);
+            res = saisieD();
+            essaie++;
+        }while(res != -1 &amp;&amp; essaie &lt;= 3);
+
+        if(essaie &gt; 3)
+            return termine(&quot;La Touche echap ne fonctionne pas. (ou c'est une erreur de saisie volontaire)&quot;);
+
+        essaie = 1;
+        do{
+            printf(&quot;Appuyez sur la flèche 'HAUT' (%d/3)\n&quot;, essaie);
+            fflush(stdout);
+            res = saisieD();
+            essaie++;
+        }while(res != 2 &amp;&amp; essaie &lt;= 3);
+        
+        if(essaie &gt; 3)
+            return termine(&quot;la flèche 'HAUT' ne fonctionne pas. (ou c'est une erreur de saisie volontaire)&quot;);
+        
+        essaie = 1;
+        do{
+            printf(&quot;Appuyez sur la flèche 'BAS' (%d/3)\n&quot;, essaie);
+            fflush(stdout);
+            res = saisieD();
+            essaie++;
+        }while(res != 0 &amp;&amp; essaie &lt;= 3);
+        if(essaie &gt; 3)
+            return termine(&quot;La flèche 'BAS' ne fonctionne pas. (ou c'est une erreur de saisie volontaire)&quot;);
+
+        essaie = 1;
+        do{
+            printf(&quot;Appuyez sur la flèche 'DROITE' (%d/3)\n&quot;, essaie);
+            fflush(stdout);
+            res = saisieD();
+            essaie++;
+        }while(res != 1 &amp;&amp; essaie &lt;= 3);
+        if(essaie &gt; 3)
+            return termine(&quot;la flèche 'DROITE' ne fonctionne pas. (ou c'est une erreur de saisie volontaire)&quot;);
+
+        essaie = 1;
+        do{
+            printf(&quot;Appuyez sur la flèche 'GAUCHE' (%d/3)\n&quot;, essaie);
+            fflush(stdout);
+            res = saisieD();
+            essaie++;
+        }while(res != 3 &amp;&amp; essaie &lt;= 3);
+        if(essaie &gt; 3)
+            return termine(&quot;la flèche 'GAUCHE' ne fonctionne pas. (ou c'est une erreur de saisie volontaire)&quot;);
+        return 1;
+    }
+</code></pre>
+<h2 id="page_7+-+Fonction++test+_+jouer">7 - Fonction <strong>test_jouer</strong></h2>
+<pre><code class="language-c">    int test_jouer(){
+        /**
+        *  Fonction Spéciale : Propose 3 situations de jeu
+        *  demandant une interaction de l'utilisateur
+        *
+        */
+        int n = 2;
+        int vMax = 2048;
+        jeu jeu_test;
+        jeu * tmp = &amp;jeu_test;
+        initialiseJeu(tmp, n, vMax);
+        setVal(tmp, 0, 1, 2);
+        int res, essaie = 1;
+        do{
+            printf(&quot;\033[34;01mUne partie va être lancée Appuyez sur echap. (%d/3)\033[00m\n&quot;, essaie);
+            fflush(stdout);
+            sleep(2);
+            res = jouer(tmp);
+            essaie++;
+        }while(res != 0 &amp;&amp; essaie &lt;= 3);
+
+        if(essaie &gt; 3 &amp;&amp; res != 0)
+            return termine(&quot;La partie ne renvoie pas 0 ou vous n'appuyez pas sur 'ECHAP'&quot;);
+
+        setVal(tmp, 0, 0, 1045);
+        setVal(tmp, 0, 1, 1046);
+        setVal(tmp, 1, 0, 1047);
+        setVal(tmp, 1, 1, 1049);
+        essaie = 1;
+        do{
+            printf(&quot;\033[34;01mUne partie va être lancée Appuyez sur flèche directionnelle. (%d/3)\033[00m\n&quot;, essaie);
+            fflush(stdout);
+            sleep(2);
+            res = jouer(tmp);
+            essaie++;
+        }while(res != 1 &amp;&amp; essaie &lt;= 3);
+
+        if(essaie &gt; 3 &amp;&amp; res != 0)
+            return termine(&quot;La partie ne renvoie pas 1 ou vous n'appuyez pas une flèche directionnelle.&quot;);
+        
+        setVal(tmp, 0, 0, 0);
+        setVal(tmp, 0, 1, 0);
+        setVal(tmp, 1, 0, 0);
+        setVal(tmp, 1, 1, 2048);
+        essaie = 1;
+        do{
+            printf(&quot;\033[34;01mUne partie va être lancée Appuyez sur flèche directionnelle. (%d/3)\033[00m\n&quot;, essaie);
+            fflush(stdout);
+            sleep(2);
+            res = jouer(tmp);
+            essaie++;
+        }while(res != 1 &amp;&amp; essaie &lt;= 3);
+
+        if(essaie &gt; 3 &amp;&amp; res != 0)
+            return termine(&quot;La partie ne renvoie pas 1 ou vous n'appuyez pas une flèche directionnelle.&quot;);
+        return 1;
+    }
+
+</code></pre>
+<h2 id="page_8+-+Fonction++test+_+partie3">8 - Fonction <strong>test_partie3</strong></h2>
+<pre><code class="language-c">    void test_partie3(){
+        int somme = 0;
+        somme += test_mouvementLigne();
+        somme += test_mouvementLignes();
+        somme += test_mouvementColonne();
+        somme += test_mouvementColonnes();
+        somme += test_mouvement();
+        somme += test_saisieD();
+        if(somme == 6)
+            somme += test_jouer();
+
+        if(somme != 7)
+            termine(&quot;TOUS LES TESTS DE LA PARTIE 3 NE SONT PAS PASSES !&quot;);
+        else{
+            printf(&quot;\033[32;01m#########################\n&quot;);
+            printf(&quot;#   TESTS PARTIE 3 OK   #\n&quot;);
+            printf(&quot;######################### \033[00m\n&quot;);
+        }
+    }
+</code></pre>
+    </div>
+
+        <nav>
+        <ul class="Pager">
+            <li class=Pager--prev><a href="../Tests_unitaires/Test_partie.html">Previous</a></li>            <li class=Pager--next><a href="../Tests_unitaires/Test_sauvegarde_&_menu.html">Next</a></li>        </ul>
+    </nav>
+    </article>
+
+            </div>
+        </div>
+    </div>
+</div>
+
+    
+    <!-- jQuery -->
+    <script src="../themes/daux/js/jquery-1.11.3.min.js"></script>
+
+    <!-- hightlight.js -->
+    <script src="../themes/daux/js/highlight.pack.js"></script>
+    <script>hljs.initHighlightingOnLoad();</script>
+
+    <!-- JS -->
+    
+    <script src="../themes/daux/js/daux.js"></script>
+
+            <!-- Tipue Search -->
+        <script type="text/javascript" src="../tipuesearch/tipuesearch.js"></script>
+
+        <script>
+            window.onunload = function(){}; // force $(document).ready to be called on back/forward navigation in firefox
+            $(function() {
+                tipuesearch({
+                    'base_url': '../'
+                });
+            });
+        </script>
+    
+</body>
+</html>

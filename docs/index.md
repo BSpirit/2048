@@ -1,1 +1,0 @@
-© Copyright 2017
